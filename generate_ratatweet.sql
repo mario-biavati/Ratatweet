@@ -20,7 +20,7 @@ use RATATWEET;
 -- _____________ 
 
 create table USER (
-     IDuser bigint not null,
+     IDuser bigint not null auto_increment,
      username varchar(50) not null,
      password varchar(50) not null, 
      bio varchar(50),
@@ -36,7 +36,7 @@ create table RECIPE (
      PRIMARY KEY (IDPost));
 
 create table POST (
-     IDPost bigint not null,
+     IDPost bigint not null auto_increment,
      pic varchar(50),
      title varchar(50) not null, 
      description varchar(150) not null, 
@@ -52,7 +52,7 @@ alter table RECIPE add constraint FKIDpost
      references POST (IDpost);
 
 create table COMMENT (
-     IDcomment bigint not null,
+     IDcomment bigint not null auto_increment,
      text varchar(50),
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDpost bigint not null,
@@ -74,10 +74,12 @@ create table FOLLOWER (
      IDfollower bigint not null,
      IDfollowed bigint not null,
      notification boolean default '1',
+     FOREIGN KEY (IDfollower) references USER(IDuser),
+     FOREIGN KEY (IDfollowed) references USER(IDuser),
      PRIMARY KEY (IDfollower, IDfollowed));
 
 create table NOTIFICATION (
-     IDnotification bigint not null,
+     IDnotification bigint not null auto_increment,
      type ENUM ('Follow','Comment','Post', 'Recipe'),
      IDuser bigint not null,  
      notifier bigint not null,  
@@ -87,3 +89,17 @@ create table NOTIFICATION (
      FOREIGN KEY (notifier) references USER(IDuser),
      FOREIGN KEY (IDpost) references POST(IDpost),
      PRIMARY KEY (IDnotification));
+
+create table CATEGORY (
+	IDcategory bigint not null auto_increment,
+    description varchar(50) not null, 
+    pic varchar(50) default "default_category.png",
+    PRIMARY KEY (IDcategory));
+
+create table CATEGORY_RECIPE (
+	IDcategory bigint not null,
+    IDrecipe bigint not null,
+    FOREIGN KEY (IDcategory) references CATEGORY(IDcategory),
+    FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
+    PRIMARY KEY (IDcategory, IDrecipe));
+    
