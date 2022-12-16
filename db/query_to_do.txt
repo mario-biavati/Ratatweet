@@ -1,0 +1,20 @@
+-Inserimento nuovo Utente;
+-Creazione di un Post;
+-Creazione di una Ricetta, con annesse Categorie;
+-Inserimento di un Commento ad un Post;
+-Inserimento di un Rating ad un Post;
+-Inserimento di un Follower;
+-Creazione di una notifica;
+
+-Controllo username e password: login;
+-Ottenimento Post di un utente;
+-Ottenimento Follower e Followed di un Utente;
+-Ottenimento Post di utenti followed da un Utente;
+-Ottenimento Rating medio di un utente;
+-Ottenimento Notifiche di un utente;
+
+-Ricerca di un Post;
+-Ricerca di una Ricetta;
+-Ricerca di una Categoria;
+-Ricerca di un Utente;
+-Attivazione/Disattivazione notifiche per un utente;
