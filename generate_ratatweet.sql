@@ -91,15 +91,22 @@ create table NOTIFICATION (
      PRIMARY KEY (IDnotification));
 
 create table CATEGORY (
-	IDcategory bigint not null auto_increment,
+    IDcategory bigint not null auto_increment,
     description varchar(50) not null, 
     pic varchar(50) default "default_category.png",
     PRIMARY KEY (IDcategory));
 
 create table CATEGORY_RECIPE (
-	IDcategory bigint not null,
+    IDcategory bigint not null,
     IDrecipe bigint not null,
     FOREIGN KEY (IDcategory) references CATEGORY(IDcategory),
     FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
     PRIMARY KEY (IDcategory, IDrecipe));
+
+create table SAVED_RECIPE (
+     IDuser bigint not null,
+     IDrecipe bigint not null,
+     FOREIGN KEY (IDuser) references USER(IDuser),
+     FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
+     PRIMARY KEY (IDuser, IDrecipe));
     
