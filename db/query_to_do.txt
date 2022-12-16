@@ -1,20 +1,20 @@
--Inserimento nuovo Utente;
+-Inserimento nuovo Utente;  OK
 -Creazione di un Post;
--Creazione di una Ricetta, con annesse Categorie;
+-Creazione di una Ricetta, con annesse Categorie;   OK
 -Inserimento di un Commento ad un Post;
--Inserimento di un Rating ad un Post;
+-Inserimento di un Rating ad un Post;   OK
 -Inserimento di un Follower;
--Creazione di una notifica;
+-Creazione di una notifica; OK
 
 -Controllo username e password: login;
--Ottenimento Post di un utente;
+-Ottenimento Post di un utente; OK
 -Ottenimento Follower e Followed di un Utente;
--Ottenimento Post di utenti followed da un Utente;
+-Ottenimento Post di utenti followed da un Utente;  OK
 -Ottenimento Rating medio di un utente;
--Ottenimento Notifiche di un utente;
+-Ottenimento Notifiche di un utente;    OK
 
--Ricerca di un Post;
--Ricerca di una Ricetta;
+-Ricerca di un Post; Ottenimento post casuali
+-Ricerca di una Ricetta;    OK
 -Ricerca di una Categoria;
--Ricerca di un Utente;
+-Ricerca di un Utente;  OK
 -Attivazione/Disattivazione notifiche per un utente;

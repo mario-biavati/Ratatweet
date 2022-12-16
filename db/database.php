@@ -8,35 +8,73 @@ class DatabaseHelper{
             die("Connection failed: " . $db->connect_error);
         }        
     }
-
-    public function getRandomPosts($n){
-        $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
-        $stmt->bind_param('i',$n);
+    //Query inserimento nuovo utente (con ID autoincrement)
+    public function insertUser($username, $password, $bio, $pic){
+        $stmt = $this->db->prepare("INSERT INTO USER (username, password, bio, pic) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param('ssss',$username, $password, $bio, $pic);
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->insert_id;
     }
-
-    public function getCategories(){
-        $stmt = $this->db->prepare("SELECT * FROM categoria");
+    //Query inserimento nuovo utente (con ID specificato)
+    public function insertUser($id, $username, $password, $bio, $pic){
+        $stmt = $this->db->prepare("INSERT INTO USER (IDuser, username, password, bio, pic) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param('issss',$id, $username, $password, $bio, $pic);
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->insert_id;
     }
-
-    public function getCategoryById($idcategory){
-        $stmt = $this->db->prepare("SELECT nomecategoria FROM categoria WHERE idcategoria=?");
-        $stmt->bind_param('i',$idcategory);
+    //Query inserimento nuova ricetta
+    public function insertRecipe($idPost, $ingredients, $method){
+        $stmt = $this->db->prepare("INSERT INTO RECIPE (IDpost, ingredients, method) VALUES (?, ?, ?)");
+        $stmt->bind_param('iss',$idPost, $ingredients, $method);
         $stmt->execute();
-        $result = $stmt->get_result();
 
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->insert_id;
     }
+    //Query inserimento categorie di una ricetta
+    public function insertRecipeCategory($idcategory, $idrecipe){
+        $stmt = $this->db->prepare("INSERT INTO CATEGORY_RECIPE (IDcategory, IDrecipe) VALUES (?, ?)");
+        $stmt->bind_param('ii',$idcategory, $idrecipe);
+        $stmt->execute();
 
-    public function getPosts($n=-1){
-        $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore WHERE autore=idautore ORDER BY dataarticolo DESC";
+        return $stmt->insert_id;
+    }
+    //Query inserimento nuova categoria (con pic)
+    public function insertCategory($description, $pic){
+        $stmt = $this->db->prepare("INSERT INTO CATEGORY (description, pic) VALUES (?, ?)");
+        $stmt->bind_param('ss',$description, $pic);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+    //Query inserimento nuova categoria (senza pic)
+    public function insertCategory($description){
+        $stmt = $this->db->prepare("INSERT INTO CATEGORY (description) VALUES (?)");
+        $stmt->bind_param('i',$description);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+    //Query inserimento rating ad un post
+    public function insertRating($idUser, $idPost, $rating){
+        $stmt = $this->db->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?)");
+        $stmt->bind_param('iii',$idUser, $idPost, $rating);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+    //Query inserimento notifica
+    public function insertNotification($type, $idUser, $notifier, $idPost){
+        $stmt = $this->db->prepare("INSERT INTO RATING (type, IDuser, notifier, IDpost) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param('siii',$type, $idUser, $notifier, $idPost);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+    //Query ottenimento post di un utente (limit n, se n=-1: no limit)
+    public function getUserPosts($idUser, $n=-1){
+        query = "SELECT IDPost, pic, title, description, date, IDuser, IDrecipe FROM POST ORDER BY date DESC";
         if($n > 0){
             $query .= " LIMIT ?";
         }
@@ -49,112 +87,79 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function getPostById($id){
-        $query = "SELECT idarticolo, titoloarticolo, imgarticolo, testoarticolo, dataarticolo, nome FROM articolo, autore WHERE idarticolo=? AND autore=idautore";
+    //Query ottenimento post di utenti seguiti da User 
+    //-limit "n", se n=-1: no limit
+    //-idUser "User", se id=-1: no user -> random
+    public function getFollowedRandomPosts($idUser=-1, $n=-1){
+        if($idUser!=-1) {
+            query = "SELECT IDPost, pic, title, description, date, IDuser, IDrecipe FROM POST, FOLLOWER 
+            WHERE FOLLOWER.IDfollower=? AND POST.IDuser=FOLLOWER.IDfollowed
+            ORDER BY date DESC";
+        }
+        else {
+            query = "SELECT IDPost, pic, title, description, date, IDuser, IDrecipe FROM POST
+            ORDER BY RAND()";
+        }
+        if($n > 0){
+            $query .= " LIMIT ?";
+        }
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$id);
+        if($idUser!=-1) {
+            $stmt->bind_param('i',$idUser);
+        }
+        if($n > 0){
+            $stmt->bind_param('i',$n);
+        }
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function getPostByCategory($idcategory){
-        $query = "SELECT idarticolo, titoloarticolo, imgarticolo, anteprimaarticolo, dataarticolo, nome FROM articolo, autore, articolo_ha_categoria WHERE categoria=? AND autore=idautore AND idarticolo=articolo";
+    //Query ottenimento notifiche di un utente
+    public function getNotifications($idUser){
+        query = "SELECT * FROM NOTIFICATION WHERE IDuser=? ORDER BY date DESC";
+        if($n > 0){
+            $query .= " LIMIT ?";
+        }
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$idcategory);
+        $stmt->bind_param('i',$idUser);
+        if($n > 0){
+            $stmt->bind_param('i',$n);
+        }
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function getPostByIdAndAuthor($id, $idauthor){
-        $query = "SELECT idarticolo, anteprimaarticolo, titoloarticolo, imgarticolo, testoarticolo, dataarticolo, (SELECT GROUP_CONCAT(categoria) FROM articolo_ha_categoria WHERE articolo=idarticolo GROUP BY articolo) as categorie FROM articolo WHERE idarticolo=? AND autore=?";
+    //Query ottenimento di una ricetta
+    public function getRecipe($idPost){
+        query = "SELECT * FROM RECIPE WHERE IDpost=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$id, $idauthor);
+        $stmt->bind_param('i',$idPost);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function getPostByAuthorId($id){
-        $query = "SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo WHERE autore=?";
+    //Query ottenimento di un utente (dal suo ID)
+    public function getUser($idUser){
+        query = "SELECT * FROM USER WHERE IDuser=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$id);
+        $stmt->bind_param('i',$idUser);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function insertArticle($titoloarticolo, $testoarticolo, $anteprimaarticolo, $dataarticolo, $imgarticolo, $autore){
-        $query = "INSERT INTO articolo (titoloarticolo, testoarticolo, anteprimaarticolo, dataarticolo, imgarticolo, autore) VALUES (?, ?, ?, ?, ?, ?)";
+    //Query ottenimento di un utente (dal suo username)
+    public function getUser($username){
+        query = "SELECT * FROM USER WHERE username=?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('sssssi',$titoloarticolo, $testoarticolo, $anteprimaarticolo, $dataarticolo, $imgarticolo, $autore);
-        $stmt->execute();
-        
-        return $stmt->insert_id;
-    }
-
-    public function updateArticleOfAuthor($idarticolo, $titoloarticolo, $testoarticolo, $anteprimaarticolo, $imgarticolo, $autore){
-        $query = "UPDATE articolo SET titoloarticolo = ?, testoarticolo = ?, anteprimaarticolo = ?, imgarticolo = ? WHERE idarticolo = ? AND autore = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ssssii',$titoloarticolo, $testoarticolo, $anteprimaarticolo, $imgarticolo, $idarticolo, $autore);
-        
-        return $stmt->execute();
-    }
-
-    public function deleteArticleOfAuthor($idarticolo, $autore){
-        $query = "DELETE FROM articolo WHERE idarticolo = ? AND autore = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$idarticolo, $autore);
-        $stmt->execute();
-        var_dump($stmt->error);
-        return true;
-    }
-
-    public function insertCategoryOfArticle($articolo, $categoria){
-        $query = "INSERT INTO articolo_ha_categoria (articolo, categoria) VALUES (?, ?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$articolo, $categoria);
-        return $stmt->execute();
-    }
-
-    public function deleteCategoryOfArticle($articolo, $categoria){
-        $query = "DELETE FROM articolo_ha_categoria WHERE articolo = ? AND categoria = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ii',$articolo, $categoria);
-        return $stmt->execute();
-    }
-
-    public function deleteCategoriesOfArticle($articolo){
-        $query = "DELETE FROM articolo_ha_categoria WHERE articolo = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('i',$articolo);
-        return $stmt->execute();
-    }
-
-    public function getAuthors(){
-        $query = "SELECT username, nome, GROUP_CONCAT(DISTINCT nomecategoria) as argomenti FROM categoria, articolo, autore, articolo_ha_categoria WHERE idarticolo=articolo AND categoria=idcategoria AND autore=idautore AND attivo=1 GROUP BY username, nome";
-        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$username);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function checkLogin($username, $password){
-        $query = "SELECT idautore, username, nome FROM autore WHERE attivo=1 AND username = ? AND password = ?";
-        $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss',$username, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }    
-
 }
 ?>
