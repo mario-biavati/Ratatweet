@@ -13,6 +13,86 @@ class DatabaseHelper{
         $stmt = $this->db->prepare("INSERT INTO USER (username, password, bio, pic) VALUES (?, ?, ?, ?)");
         $stmt->bind_param('ssss',$username, $password, $bio, $pic);
         $stmt->execute();
+        return $stmt->insert_id;
+    }
+    // Query creazione di un post
+    public function createPost($title, $pic, $description, $IDuser, $IDrecipe){
+        $query = "INSERT INTO POST(title, pic, description, IDuser, IDrecipe) VALUES (?,?,?,?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sssii',$title, $pic, $description, $IDuser, $IDrecipe);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    // Query creazione di un commento a un post
+    public function addCommentOnPost($IDpost, $IDuser, $text){
+        $query = "INSERT INTO COMMENT(text, IDpost, IDuser) VALUES (?,?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('sii',$text, $IDpost, $IDuser);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    // Query creazione di una risposta a un commento
+    public function addReplyOnComment($IDpost, $IDuser, $text, $IDcomment){
+        $query = "INSERT INTO COMMENT(text, IDpost, IDuser, IDcomment) VALUES (?,?,?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('siii',$text, $IDpost, $IDuser, $IDcomment);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    // Query di aggiunta di un follower
+    public function addFollower($IDfollower, $IDfollowed){
+        $query = "INSERT INTO FOLLOWER(IDfollower, IDfollowed) VALUES (?,?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ii', $IDfollower, $IDfollowed);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    // Query di attivazione/deattivazione notifiche
+    public function enableNotifications($IDuser, $IDfollowed, $value){
+        $query = "UPDATE FOLLOWER SET notification=? WHERE IDfollower=? AND IDfollowed=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('iii', $value, $IDuser, $IDfollowed);
+        return $stmt->execute();
+    }
+
+    // Query di login
+    public function login($username, $password){
+        $query = "SELECT IDuser, username, password, bio, pic FROM USER WHERE username=? AND password=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ss',$username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Query di ottenimento dei follower
+    public function getFollowers($IDuser){
+        $query = "SELECT IDuser, username, pic FROM FOLLOWER, USER WHERE IDfollowed=? AND IDuser=IDfollower";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$IDuser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Query di ottenimento statistiche di un utente (post, follower, followed, avg_rating)
+    public function getFollowers($IDuser){
+        $query = "SELECT post, follower, followed, avg_rating FROM (SELECT COUNT(IDpost) AS post FROM POST WHERE IDuser=?), (SELECT COUNT(IDfollower) AS follower FROM FOLLOWER WHERE IDfollowed=?), (SELECT COUNT(IDfollowed) AS followed FROM FOLLOWER WHERE IDfollower=?), (SELECT AVG(rating) AS avg_rating FROM POST WHERE IDuser=?)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('ssss',$IDuser,$IDuser,$IDuser,$IDuser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getRandomPosts($n){
+        $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
+        $stmt->bind_param('i',$n);
+        $stmt->execute();
 
         return $stmt->insert_id;
     }

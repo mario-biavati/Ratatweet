@@ -38,7 +38,7 @@ create table RECIPE (
 create table POST (
      IDPost bigint not null auto_increment,
      pic varchar(50),
-     title varchar(50) not null, 
+     title char(50) not null, 
      description varchar(150) not null, 
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDuser bigint not null,
@@ -73,7 +73,7 @@ create table RATING (
 create table FOLLOWER (
      IDfollower bigint not null,
      IDfollowed bigint not null,
-     notification boolean default '1',
+     notification boolean default TRUE,
      FOREIGN KEY (IDfollower) references USER(IDuser),
      FOREIGN KEY (IDfollowed) references USER(IDuser),
      PRIMARY KEY (IDfollower, IDfollowed));
