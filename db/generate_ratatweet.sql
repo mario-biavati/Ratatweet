@@ -47,6 +47,8 @@ create table POST (
      FOREIGN KEY (IDrecipe) references USER(IDuser),
      PRIMARY KEY (IDPost));
 
+alter table POST add FULLTEXT (title, description);
+
 alter table RECIPE add constraint FKIDpost
      foreign key (IDpost)
      references POST (IDpost);
@@ -92,7 +94,7 @@ create table NOTIFICATION (
 
 create table CATEGORY (
     IDcategory bigint not null auto_increment,
-    description varchar(50) not null, 
+    name varchar(50) not null, 
     pic varchar(50) default "default_category.png",
     PRIMARY KEY (IDcategory));
 
@@ -109,4 +111,9 @@ create table SAVED_RECIPE (
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
      PRIMARY KEY (IDuser, IDrecipe));
+
+CREATE VIEW INFOPOST AS 
+     SELECT IDpost, AVG(rating) as avgRating, COUNT(IDcomment) as numComments 
+     FROM POST, RATING, COMMENT 
+     WHERE POST.IDpost = RATING.IDpost AND POST.IDpost = COMMENT.IDpost;
     

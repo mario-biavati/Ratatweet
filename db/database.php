@@ -89,13 +89,6 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getRandomPosts($n){
-        $stmt = $this->db->prepare("SELECT idarticolo, titoloarticolo, imgarticolo FROM articolo ORDER BY RAND() LIMIT ?");
-        $stmt->bind_param('i',$n);
-        $stmt->execute();
-
-        return $stmt->insert_id;
-    }
     //Query inserimento nuovo utente (con ID specificato)
     public function insertUser($id, $username, $password, $bio, $pic){
         $stmt = $this->db->prepare("INSERT INTO USER (IDuser, username, password, bio, pic) VALUES (?, ?, ?, ?)");
@@ -154,7 +147,7 @@ class DatabaseHelper{
     }
     //Query ottenimento post di un utente (limit n, se n=-1: no limit)
     public function getUserPosts($idUser, $n=-1){
-        query = "SELECT IDPost, pic, title, description, date, IDuser, IDrecipe FROM POST ORDER BY date DESC";
+        $query = "SELECT IDpost, pic, title, description, date, IDuser, IDrecipe FROM POST ORDER BY date DESC";
         if($n > 0){
             $query .= " LIMIT ?";
         }
@@ -167,18 +160,30 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    // Query che ritorna le info di un post usando il suo ID
+    function getPostByID($IDPost) {
+        $query = "SELECT IDpost, pic, title, avgRating, numComments, description, POST.date, IDuser, username, IDrecipe FROM POST, INFOPOST, USER
+        WHERE POST.IDpost=? AND INFOPOST.IDpost=POST.IDost AND POST.IDuser=USER.IDuser";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$IDPost);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     //Query ottenimento post di utenti seguiti da User 
     //-limit "n", se n=-1: no limit
     //-idUser "User", se id=-1: no user -> random
     public function getFollowedRandomPosts($idUser=-1, $n=-1){
         if($idUser!=-1) {
-            query = "SELECT IDPost, pic, title, description, date, IDuser, IDrecipe FROM POST, FOLLOWER 
+            $query = "SELECT IDpost FROM POST, FOLLOWER
             WHERE FOLLOWER.IDfollower=? AND POST.IDuser=FOLLOWER.IDfollowed
             ORDER BY date DESC";
         }
         else {
-            query = "SELECT IDPost, pic, title, description, date, IDuser, IDrecipe FROM POST
-            ORDER BY RAND()";
+            $query = "SELECT IDpost ORDER BY RAND()";
         }
         if($n > 0){
             $query .= " LIMIT ?";
@@ -197,7 +202,7 @@ class DatabaseHelper{
     }
     //Query ottenimento notifiche di un utente
     public function getNotifications($idUser){
-        query = "SELECT * FROM NOTIFICATION WHERE IDuser=? ORDER BY date DESC";
+        $query = "SELECT * FROM NOTIFICATION WHERE IDuser=? ORDER BY date DESC";
         if($n > 0){
             $query .= " LIMIT ?";
         }
@@ -213,7 +218,7 @@ class DatabaseHelper{
     }
     //Query ottenimento di una ricetta
     public function getRecipe($idPost){
-        query = "SELECT * FROM RECIPE WHERE IDpost=?";
+        $query = "SELECT * FROM RECIPE WHERE IDpost=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$idPost);
         $stmt->execute();
@@ -223,7 +228,7 @@ class DatabaseHelper{
     }
     //Query ottenimento di un utente (dal suo ID)
     public function getUser($idUser){
-        query = "SELECT * FROM USER WHERE IDuser=?";
+        $query = "SELECT * FROM USER WHERE IDuser=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('i',$idUser);
         $stmt->execute();
@@ -233,9 +238,38 @@ class DatabaseHelper{
     }
     //Query ottenimento di un utente (dal suo username)
     public function getUser($username){
-        query = "SELECT * FROM USER WHERE username=?";
+        $query = "SELECT * FROM USER WHERE username=?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s',$username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //Query ricerca post, categorie, utenti 
+    public function search($string, $n=50){
+        $searchWords = explode(" ", $string);
+        $categories = array();
+        foreach ($searchWords as $word)
+        {
+            if ($word[0] == "#") {
+                array_push($categories, substr($word, 1));
+            }
+        }
+
+        $query = "SELECT IDpost  FROM POST, CATEGORY, CATEGORY_RECIPE, RECI
+         WHERE MATCH (title,description) AGAINST (?) > 0";
+        
+
+        if (count($categories) > 0) {
+            $query .= " AND CATEGORY_RECIPE.IDrecipe=RECIPE.IDpost AND CATEGORY.IDcategory=CATEGORY_RECIPE.IDcategory AND POST.IDrecipe=RECIPE.IDpost 
+             AND CATEGORY.name IN (".implode(",",$categories).")";
+        }
+
+        $query .= " ORDER BY score DESC LIMIT=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('s',$string);
+        $stmt->bind_param('i',$n);
         $stmt->execute();
         $result = $stmt->get_result();
 
