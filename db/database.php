@@ -80,7 +80,7 @@ class DatabaseHelper{
     }
 
     // Query di ottenimento statistiche di un utente (post, follower, followed, avg_rating)
-    public function getFollowers($IDuser){
+    public function getUserStats($IDuser){
         $query = "SELECT post, follower, followed, avg_rating FROM (SELECT COUNT(IDpost) AS post FROM POST WHERE IDuser=?), (SELECT COUNT(IDfollower) AS follower FROM FOLLOWER WHERE IDfollowed=?), (SELECT COUNT(IDfollowed) AS followed FROM FOLLOWER WHERE IDfollower=?), (SELECT AVG(rating) AS avg_rating FROM POST WHERE IDuser=?)";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ssss',$IDuser,$IDuser,$IDuser,$IDuser);
