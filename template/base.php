@@ -30,7 +30,11 @@
                     <a href="#"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/></a>
                 </div>
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
-                    <a href="#"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                    <a href="#" class="position-relative"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </a>
                 </div>
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
                     <a href="#"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/></a>
@@ -43,25 +47,24 @@
         <!--Desktop-->
         <div class="d-none d-md-block">
             <div class="fixed-top col-1 col-lg-3 border-dark border-end d-flex flex-column bg-info text-dark p-3">
-                <div class="d-flex mt-2 mb-3 p-1">
-                    <a href="#" class="d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Search</h5></a>
-                </div>
+                <a href="#" class="d-flex mt-2 mb-3 p-1 d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Search</h5></a>
                 <div class="collapse justify-content-center" id="collapseSearchMD">
                     <input type="search" id="searchBarMD" class="form-control d-lg-none" placeholder="..." aria-label="Search" style="max-height: 40px"/>
                     <input type="search" id="searchBarLG" class="form-control d-none d-lg-block" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
                 </div>
-                <div class="d-flex mt-3 mb-3 p-1">
-                    <a href="#" class="d-flex text-decoration-none text-dark"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Home</h5></a>
-                </div>
-                <div class="d-flex mt-3 mb-3 p-1">
-                    <a href="#" class="d-flex text-decoration-none text-dark"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Notifications</h5></a>
-                </div>
-                <div class="d-flex mt-3 mb-3 p-1">
-                    <a href="#" class="d-flex text-decoration-none text-dark"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Recipes</h5></a>
-                </div>
-                <div class="d-flex mt-3 mb-3 p-1">
-                    <a href="#" class="d-flex text-decoration-none text-dark"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Profile</h5></a>
-                </div>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Home</h5></a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark">
+                    <div class="position-relative">
+                        <img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                            <span class="visually-hidden">unread messages
+                            </span>
+                        </span>
+                    </div>
+                    <h5 class="d-none d-lg-block ms-5">Notifications</h5>
+                </a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Recipes</h5></a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Profile</h5></a>
                 <div class="d-flex" style="min-height: 100vh">
 
                 </div>
