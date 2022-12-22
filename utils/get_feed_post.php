@@ -12,7 +12,7 @@ if (isset($_GET["idPost"]))
                     <h1> {$postData["title"]} </h1>
                 </a>
                 <a href="">
-                    <h2> {$postData["username"]} </h"2>
+                    <h2> {$postData["username"]} </h2>
                 </a>
                 <input type="image" src="img/recipe-icon.png" alt="Save recipe" onclick="">
             </header>
@@ -20,7 +20,6 @@ if (isset($_GET["idPost"]))
                 <div>
                     <img src="{$postData["pic"]}" alt="{$postData["title"]}" />
                 </div>
-                <p>{$postData["description"]}</p>
             </section>
             <footer>
                 <div alt="Average rating">

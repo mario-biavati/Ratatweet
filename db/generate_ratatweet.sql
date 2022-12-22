@@ -37,12 +37,12 @@ create table RECIPE (
 
 create table POST (
      IDPost bigint not null auto_increment,
-     pic varchar(50),
+     pic varchar(50) not null,
      title char(50) not null, 
-     description varchar(150) not null, 
+     description varchar(150), 
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDuser bigint not null,
-     IDrecipe bigint,
+     IDrecipe bigint not null,
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (IDrecipe) references USER(IDuser),
      PRIMARY KEY (IDPost));
@@ -87,6 +87,7 @@ create table NOTIFICATION (
      notifier bigint not null,  
      IDpost bigint,  
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
+     seen BOOLEAN DEFAULT false;
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (notifier) references USER(IDuser),
      FOREIGN KEY (IDpost) references POST(IDpost),
@@ -113,7 +114,7 @@ create table SAVED_RECIPE (
      PRIMARY KEY (IDuser, IDrecipe));
 
 CREATE VIEW INFOPOST AS 
-     SELECT IDpost, AVG(rating) as avgRating, COUNT(IDcomment) as numComments 
+     SELECT IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 
      FROM POST, RATING, COMMENT 
      WHERE POST.IDpost = RATING.IDpost AND POST.IDpost = COMMENT.IDpost;
     

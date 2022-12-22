@@ -173,6 +173,18 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    //Query che ritorna i commenti associati ad un post
+    function getCommentsByPostID($IDPost) {
+        $query = "SELECT IDcomment, text, date, IDpost, USER.IDuser, username, IDparent FROM COMMENT, USER
+        WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDpost=?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$IDPost);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     //Query ottenimento post di utenti seguiti da User 
     //-limit "n", se n=-1: no limit
     //-idUser "User", se id=-1: no user -> random
@@ -200,8 +212,19 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    //Query ottenimento notifiche di un utente
+    //Query ottenimento delle notifiche non visualizzate di un utente
     public function getNotifications($idUser){
+        $query = "SELECT * FROM NOTIFICATION WHERE IDuser=? AND seen=false ORDER BY date DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param('i',$idUser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //Query ottenimento di tutte le notifiche di un utente
+    public function getAllNotifications($idUser, $n=20){
         $query = "SELECT * FROM NOTIFICATION WHERE IDuser=? ORDER BY date DESC";
         if($n > 0){
             $query .= " LIMIT ?";
