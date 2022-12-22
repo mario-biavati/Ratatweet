@@ -14,31 +14,59 @@
         }
         ?>
     </header>
-    <nav>
+    <nav id="navBar">
         <!--Mobile-->
         <div class="d-md-none container">
             <div class="d-flex border-top border-dark fixed-bottom">
-                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 25%">
-                    <input type="image" src="https://cdn-icons-png.flaticon.com/512/151/151773.png" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <input type="image" src="img/search-icon.png" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
                 </div>
                 <div class="col-9 bg-info collapse collapse-horizontal" id="collapseSearch">
                     <div class="p-2">
-                        <input type="search" id="searchBar" class="form-control" placeholder="Type here" aria-label="Search" style="max-height: 30px; width: 70vw"/>
+                        <input type="search" id="searchBar" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 30px; width: 73vw"/>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 25%">Two</div>
-                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 25%">Three</div>
-                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 25%">Four</div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#" class="position-relative"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                </div>
             </div>
         </div>
         <!--Desktop-->
-        <div class="d-none d-md-block fixed-bottom">
-            <div class="vh-100 vw-100">
-                <div class="h-100 w-25 bg-info">
-                    <div class="h-auto p-2 bg-info">One</div>
-                    <div class="h-auto p-2 bg-info">Two</div>
-                    <div class="h-auto p-2 bg-info">Three</div>
-                    <div class="h-auto p-2 bg-info">Four</div>
+        <div class="d-none d-md-block">
+            <div class="fixed-top col-1 col-lg-3 border-dark border-end d-flex flex-column bg-info text-dark p-3">
+                <a href="#" class="d-flex mt-2 mb-3 p-1 d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Search</h5></a>
+                <div class="collapse justify-content-center" id="collapseSearchMD">
+                    <input type="search" id="searchBarMD" class="form-control d-lg-none" placeholder="..." aria-label="Search" style="max-height: 40px"/>
+                    <input type="search" id="searchBarLG" class="form-control d-none d-lg-block" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
+                </div>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Home</h5></a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark">
+                    <div class="position-relative">
+                        <img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                            <span class="visually-hidden">unread messages
+                            </span>
+                        </span>
+                    </div>
+                    <h5 class="d-none d-lg-block ms-5">Notifications</h5>
+                </a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Recipes</h5></a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Profile</h5></a>
+                <div class="d-flex" style="min-height: 100vh">
+
                 </div>
             </div>
         </div>
