@@ -14,7 +14,7 @@
         }
         ?>
     </header>
-    <nav>
+    <nav id="navBar">
         <!--Mobile-->
         <div class="d-md-none container">
             <div class="d-flex border-top border-dark fixed-bottom">
