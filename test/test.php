@@ -7,4 +7,7 @@ var_dump($dbh->getUserByID(2));
 
 echo "<br>Test getPostById=";
 var_dump($dbh->getPostByID(3));
+
+echo "<br>Test search(Pasta)=";
+var_dump($dbh->search("Pasta"));
 ?>

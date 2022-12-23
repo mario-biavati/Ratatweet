@@ -276,19 +276,20 @@ class DatabaseHelper{
             }
         }
 
-        $query = "SELECT IDpost  FROM POST, CATEGORY, CATEGORY_RECIPE, RECI
-         WHERE MATCH (title,description) AGAINST (?) > 0";
-        
+        $query = "SELECT POST.IDpost FROM POST";
+        if (count($categories) > 0) {
+            $query .= ", CATEGORY, CATEGORY_RECIPE, RECIPE";
+        }
+        $query .= " WHERE MATCH(title,description) AGAINST(?) > 0";
 
         if (count($categories) > 0) {
             $query .= " AND CATEGORY_RECIPE.IDrecipe=RECIPE.IDpost AND CATEGORY.IDcategory=CATEGORY_RECIPE.IDcategory AND POST.IDrecipe=RECIPE.IDpost 
              AND CATEGORY.name IN (".implode(",",$categories).")";
         }
 
-        $query .= " ORDER BY score DESC LIMIT=?";
+        $query .= " ORDER BY POST.IDpost DESC LIMIT ?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('s',$string);
-        $stmt->bind_param('i',$n);
+        $stmt->bind_param('si',$string,$n);
         $stmt->execute();
         $result = $stmt->get_result();
 
