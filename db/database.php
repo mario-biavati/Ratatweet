@@ -287,9 +287,9 @@ class DatabaseHelper{
              AND CATEGORY.name IN (".implode(",",$categories).")";
         }
 
-        $query .= " ORDER BY POST.IDpost DESC LIMIT ?";
+        $query .= " ORDER BY MATCH(title,description) AGAINST(?) DESC LIMIT ?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('si',$string,$n);
+        $stmt->bind_param('ssi', $string, $string, $n);
         $stmt->execute();
         $result = $stmt->get_result();
 
