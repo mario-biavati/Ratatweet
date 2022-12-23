@@ -6,7 +6,10 @@ INSERT INTO USER(IDuser,username,password)
 VALUES (1,"Asprosapore","ciao"),
 (2,"LERCIO","ciao"),
 (3,"CakeSlayer_69","ciao"),
-(4,"Luigi","ciao");
+(4,"Luigi","ciao"),
+(5,"Marco","ciao"),
+(6,"G","ciao"),
+(7,"Eritropioetina","ciao");
 
 INSERT INTO POST(IDpost, pic, title, description, IDuser, IDrecipe)
 VALUES (1,"default_post.png","Crema Catalana","buonissima cremina dolce",1,1),
