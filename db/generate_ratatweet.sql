@@ -114,7 +114,12 @@ create table SAVED_RECIPE (
      PRIMARY KEY (IDuser, IDrecipe));
 
 CREATE VIEW INFOPOST AS 
-     SELECT POST.IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 
-     FROM POST, RATING, COMMENT 
-     WHERE POST.IDpost = RATING.IDpost AND POST.IDpost = COMMENT.IDpost;
+     SELECT A.IDpost, avgRating, numComments
+     FROM (SELECT POST.IDpost, COALESCE(AVG(rating), 0) as avgRating
+          FROM POST LEFT JOIN RATING ON POST.IDpost=RATING.IDpost
+          GROUP BY POST.IDpost) AS A,
+          (SELECT POST.IDpost, COUNT(IDcomment) as numComments
+          FROM POST LEFT JOIN COMMENT ON POST.IDpost=COMMENT.IDpost
+          GROUP BY POST.IDpost) AS B
+     WHERE A.IDpost = B.IDpost;
     
