@@ -19,7 +19,7 @@ use RATATWEET;
 -- Tables Section
 -- _____________ 
 
-create table USER (
+create table `USER` (
      IDuser bigint not null auto_increment,
      username varchar(50) not null,
      password varchar(50) not null, 
@@ -87,7 +87,7 @@ create table NOTIFICATION (
      notifier bigint not null,  
      IDpost bigint,  
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
-     seen BOOLEAN DEFAULT false;
+     seen BOOLEAN DEFAULT false,
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (notifier) references USER(IDuser),
      FOREIGN KEY (IDpost) references POST(IDpost),
@@ -114,7 +114,7 @@ create table SAVED_RECIPE (
      PRIMARY KEY (IDuser, IDrecipe));
 
 CREATE VIEW INFOPOST AS 
-     SELECT IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 
+     SELECT POST.IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 
      FROM POST, RATING, COMMENT 
      WHERE POST.IDpost = RATING.IDpost AND POST.IDpost = COMMENT.IDpost;
     
