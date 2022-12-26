@@ -32,22 +32,21 @@ create table `USER` (
 create table RECIPE (
      IDpost bigint not null,
      ingredients varchar(150) not null,
-     method varchar(150) not null,
+     method TEXT not null,
      PRIMARY KEY (IDPost));
 
 create table POST (
      IDPost bigint not null auto_increment,
      pic varchar(50) not null,
      title char(50) not null, 
-     description varchar(150), 
+     description TEXT, 
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDuser bigint not null,
      IDrecipe bigint not null,
+     FULLTEXT KEY title (title, description), 
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (IDrecipe) references USER(IDuser),
      PRIMARY KEY (IDPost));
-
-alter table POST add FULLTEXT (title, description);
 
 alter table RECIPE add constraint FKIDpost
      foreign key (IDpost)
@@ -55,7 +54,7 @@ alter table RECIPE add constraint FKIDpost
 
 create table COMMENT (
      IDcomment bigint not null auto_increment,
-     text varchar(50),
+     text TEXT,
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDpost bigint not null,
      IDuser bigint not null,
@@ -114,7 +113,7 @@ create table SAVED_RECIPE (
      PRIMARY KEY (IDuser, IDrecipe));
 
 CREATE VIEW INFOPOST AS 
-     SELECT POST.IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 
+     SELECT IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 
      FROM POST, RATING, COMMENT 
      WHERE POST.IDpost = RATING.IDpost AND POST.IDpost = COMMENT.IDpost;
     
