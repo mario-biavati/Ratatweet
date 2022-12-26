@@ -16,4 +16,7 @@ var_dump($dbh->addFollower(2,5));
 
 echo "<br>Test enableNotifications()=";
 var_dump($dbh->enableNotifications(2,5,false));
+
+echo "<br>Test getFollowedRandomPosts()=";
+var_dump($dbh->getFollowedRandomPosts(2));
 ?>

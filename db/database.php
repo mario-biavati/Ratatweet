@@ -184,24 +184,23 @@ class DatabaseHelper{
     //Query ottenimento post di utenti seguiti da User 
     //-limit "n", se n=-1: no limit
     //-idUser "User", se id=-1: no user -> random
-    public function getFollowedRandomPosts($idUser=-1, $n=-1){
+    public function getFollowedRandomPosts($idUser=-1, $n=50, $offset=0){
         if($idUser!=-1) {
             $query = "SELECT IDpost FROM POST, FOLLOWER
             WHERE FOLLOWER.IDfollower=? AND POST.IDuser=FOLLOWER.IDfollowed
             ORDER BY date DESC";
         }
         else {
-            $query = "SELECT IDpost ORDER BY RAND()";
+            $query = "SELECT IDpost FROM POST ORDER BY RAND()";
         }
         if($n > 0){
-            $query .= " LIMIT ?";
+            $query .= " LIMIT ?, ?";
         }
         $stmt = $this->prepare($query);
-        if($idUser!=-1) {
-            $stmt->bind_param('i',$idUser);
-        }
-        if($n > 0){
-            $stmt->bind_param('i',$n);
+        if($idUser!=-1 && $n > 0) {
+            $stmt->bind_param('iii',$idUser,$offset,$n);
+        } else if ($n > 0) {
+            $stmt->bind_param('ii',$offset,$n);
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -226,9 +225,10 @@ class DatabaseHelper{
             $query .= " LIMIT ?";
         }
         $stmt = $this->prepare($query);
-        $stmt->bind_param('i',$idUser);
         if($n > 0){
-            $stmt->bind_param('i',$n);
+            $stmt->bind_param('ii',$idUser,$n);
+        } else {
+            $stmt->bind_param('i',$idUser);
         }
         $stmt->execute();
         $result = $stmt->get_result();
@@ -246,7 +246,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //Query ottenimento di un utente (dal suo ID)
-    public function getUserByID($idUser){
+    public function getUserById($idUser){
         $query = "SELECT * FROM USER WHERE IDuser=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$idUser);
