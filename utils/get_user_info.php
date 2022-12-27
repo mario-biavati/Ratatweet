@@ -1,6 +1,11 @@
 <?php
-if (isset($_GET["idUser"]))
+require_once '../bootstrap.php';
+
+if (isset($_SESSION["idUser"]))
 {
-    echo json_encode($dbh->getUserById($_GET["idUser"]));
+    $user = $dbh->getUserById($_SESSION["idUser"]);
+    echo json_encode($user[0]);
+} else {
+    echo '{}';
 }
 ?>

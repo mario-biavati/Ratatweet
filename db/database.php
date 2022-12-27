@@ -62,12 +62,39 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    // Query di rimozione di un follower
+    public function removeFollower($IDfollower, $IDfollowed){
+        $query = "DELETE FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDfollower, $IDfollowed);
+        return $stmt->execute();
+    }
+
+    //Query per comprendere se un user segue già o meno un altro user
+    public function getFollowerStatus($IDfollower, $IDfollowed){
+        $query = "SELECT FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDfollower, $IDfollowed);
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     // Query di attivazione/deattivazione notifiche
     public function enableNotifications($IDuser, $IDfollowed, $value){
         $query = "UPDATE FOLLOWER SET notification=? WHERE IDfollower=? AND IDfollowed=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('iii', $value, $IDuser, $IDfollowed);
         return $stmt->execute();
+    }
+
+    //Query per comprendere se le notifiche per un determinato user sono attive/disattive
+    public function getNotificationStatus($IDuser, $IDfollowed){
+        $query = "SELECT notification FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDuser, $IDfollowed);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     // Query di login
