@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET["idUser"])):
-    $id = $_GET["idUser"];
+if (isUserLoggedIn()):
+    $id = $_SESSION["idUser"];
     $userData = $dbh->getUserById($id);
     $userPosts = $dbh->getUserPosts($id, -1);
     $userStat = $dbh->getUserStats($id);

@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION["idUser"])):
+if (isUserLoggedIn()):
     $idUser = $_SESSION["idUser"];
     $notifications = $dbh->getNotifications($idUser);
     ?>
