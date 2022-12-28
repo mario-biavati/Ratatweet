@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="../css/rating.css" rel="stylesheet">
+</head>
+<body style="overflow: visible;">
+    <header class="d-flex fixed-top bg-white">
+    </header>
+    <nav id="navBar">
+        <!--Mobile-->
+        <div class="d-md-none container">
+            <div class="d-flex border-top border-dark fixed-bottom">
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <input type="image" src="../img/search-icon.png" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
+                </div>
+                <div class="col-9 bg-info collapse collapse-horizontal" id="collapseSearch">
+                    <div class="p-2">
+                        <input type="search" id="searchBar" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 30px; width: 73vw"/>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#"><img src="../img/home-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#" class="position-relative"><img src="../img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </a>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#"><img src="../img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                </div>
+                <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
+                    <a href="#"><img src="../img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                </div>
+            </div>
+        </div>
+        <!--Desktop-->
+        <div class="d-none d-md-block">
+            <div class="fixed-top col-1 col-lg-3 border-dark border-end d-flex flex-column bg-info text-dark p-3">
+                <a href="#" class="d-flex mt-2 mb-3 p-1 d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Search</h5></a>
+                <div class="collapse justify-content-center" id="collapseSearchMD">
+                    <input type="search" id="searchBarMD" class="form-control d-lg-none" placeholder="..." aria-label="Search" style="max-height: 40px"/>
+                    <input type="search" id="searchBarLG" class="form-control d-none d-lg-block" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
+                </div>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Home</h5></a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark">
+                    <div class="position-relative">
+                        <img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                            <span class="visually-hidden">unread messages
+                            </span>
+                        </span>
+                    </div>
+                    <h5 class="d-none d-lg-block ms-5">Notifications</h5>
+                </a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Recipes</h5></a>
+                <a href="#" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Profile</h5></a>
+                <div class="d-flex" style="min-height: 100vh">
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <article class="container mt-5 mb-5 offset-md-1 offset-lg-3 col-12 col-md-10 col-lg-8">
+            <div class="row">
+                <div class="d-flex flex-column col-10">
+                    <h1>Cibo buono</h1>
+                    <div class="d-flex">
+                        <h5>username</h5>
+                    </div>
+                </div>
+                <div class="float-right d-flex col-2 justify-content-end">
+                    <a href="#"><img src="../img/recipe-icon.png" style="max-width: 12vw; max-height: 60px;"/></a>
+                </div>
+            </div>
+            <div class="row">
+                <img src="food-placeholder.png" style="max-width: 100%; height: auto;"/>
+            </div>
+            <div class="row mt-1">
+                <div class="d-flex">
+                    <div class="rating">
+                        <input type="radio" name="rating" value="5" id="star5"><label for="star5">☆</label> <input type="radio" name="rating" value="4" id="star4"><label for="star4">☆</label> <input type="radio" name="rating" value="3" id="star3"><label for="star3">☆</label> <input type="radio" name="rating" value="2" id="star2"><label for="star2">☆</label> <input type="radio" name="rating" value="1" id="star1"><label for="star1">☆</label>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <h5 class="fs-2 pt-2 ps-1">15</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2" id="description">
+                <h2 class="fw-bold">Description:</h2>
+                <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer metus turpis, rhoncus ut blandit at, vulputate pulvinar velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aenean vulputate eget libero vel blandit. Morbi vel finibus nunc. Cras a dapibus elit. Cras vel aliquam mi, vel tempus dolor. Donec sit amet mauris et quam condimentum convallis. Curabitur laoreet, nulla in varius vulputate, magna ligula ullamcorper dui, eu suscipit odio libero ac ante. Integer bibendum sapien magna, eu rutrum nunc aliquet consectetur. Ut dapibus, sapien sit amet aliquet eleifend, odio libero eleifend enim, sit amet porta ipsum augue vestibulum lectus. Nullam ac enim in ante euismod posuere. Mauris et accumsan metus. Fusce rutrum, lorem ullamcorper luctus tincidunt, magna enim tempor sapien, commodo sodales nibh risus vitae augue. Nam suscipit ex eu urna condimentum, laoreet tristique diam molestie. Nunc varius semper tempus. </span>
+            </div>
+            <div class="row mt-5" id="recipe">
+                <h2 class="fw-bold">Recipe:</h2>
+                <span>boh. </span>
+            </div>
+        </article>
+        <section id="comments" class="container mt-5 mb-5 offset-md-1 offset-lg-3">
+            <span class="h3" id="commentsAmount">NUMERO_COMMENTI Comments</span>
+            <!--commento 1-->
+            <div id="ID_COMMENTO" class="row mt-2">
+                <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                    <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                </div>
+                <div class="d-flex flex-column col-10 col-lg-8">
+                    <span class="fw-bold">
+                        NOME_PERSONA
+                    </span>
+                    <span>
+                        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A
+                    </span>
+                    <div class="d-flex">
+                        <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/>23</button>
+                        <a class="btn btn-primary" style="max-height: 40px;" data-bs-toggle="collapse" href="#comment1Replies" role="button" aria-expanded="false" aria-controls="comment1Replies">
+                            Replies ▼
+                        </a>
+                    </div>
+                </div>
+                <!--risposte commento 1-->
+                <div class="offset-1 collapse col-11 col-md-10 col-lg-8" id="comment1Replies">
+                    <!--risposta 1-->
+                    <div id="ID_COMMENTO" class="row mt-2">
+                        <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                            <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                        </div>
+                        <div class="d-flex flex-column col-10 col-lg-9">
+                            <span class="fw-bold">
+                                NOME_PERSONA
+                            </span>
+                            <span>
+                                A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A
+                            </span>
+                            <div class="d-flex">
+                                <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/>15</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--risposta 2-->
+                    <div id="ID_COMMENTO" class="row mt-2">
+                        <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                            <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                        </div>
+                        <div class="d-flex flex-column col-10 col-lg-9">
+                            <span class="fw-bold">
+                                NOME_PERSONA
+                            </span>
+                            <span>
+                                A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A
+                            </span>
+                            <div class="d-flex">
+                                <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--commento 2-->
+            <div id="ID_COMMENTO" class="row mt-2">
+                <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                    <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                </div>
+                <div class="d-flex flex-column col-10 col-lg-9">
+                    <span class="fw-bold">
+                        NOME_PERSONA
+                    </span>
+                    <span>
+                        COMMENTO COMMENTO COMMENTO COMMENTO COMMENTO COMMENTO COMMENTO COMMENTO
+                    </span>
+                    <div class="d-flex">
+                        <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/>1</button>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--ecc...-->
+            <div class="d-flex">asdasd</div>
+        </section>
+    </main>
+</body>
+</html>
