@@ -1,6 +1,6 @@
 <?php
-if (isset($_GET["idPost"])) :
-    $id = $_GET["idPost"];
+if (isset($_GET["id"])) :
+    $id = $_GET["id"];
     $postData = $dbh->getPostById($id);
     $recipeData = $dbh->getRecipe($id);
     $commentData = $dbh->getCommentsByPostID($id);
