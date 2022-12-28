@@ -18,17 +18,19 @@ if (isUserLoggedIn()):
                  <!--Pic-->
                 <img src=<?php echo "{$userData["pic"]}"; ?> alt=<?php echo "{$userData["username"]}"; ?>>
                  <!--Pulsanti-->
-                <?php if(isset($_SESSION["idUser"])):
+                <?php if(isUserLoggedIn()):
                     $idLogged=$_SESSION["idUser"];
                     if(!empty($dbh->getFollowerStatus($idLogged, $id))):?>
-                        <button type="button" alt="Unfollow user" id="Unfollow-button">Unfollow</button>
+                        <button type="button" alt="Unfollow user" id="Unfollow-button" onclick="unfollow(<?php echo $id; ?>)">Unfollow</button>
                     <?php else: ?>
-                        <button type="button" alt="Follow user" id="Follow-button">Follow</button>
+                        <button type="button" alt="Follow user" id="Follow-button" onclick="follow(<?php echo $id; ?>)">Follow</button>
                     <?php endif; ?>
-                    <?php if(getNotificationStatus($idLogged, $id)[0]["notification"]=="true"):?>
-                        <button type="button" alt="Disable notifications" id="DisableNotifications-button">Disable notifications</button>
+                    <?php 
+                        $notificationStatus = $dbh->getNotificationStatus($idLogged, $id);
+                        if(empty($notificationStatus) || $notificationStatus[0]["notification"]==0):?>
+                        <button type="button" alt="Enable notifications" id="EnableNotifications-button" onclick="enableNotifications(<?php echo $id; ?>)">Enable notifications</button>
                     <?php else: ?>
-                        <button type="button" alt="Enable notifications" id="EnableNotifications-button">Enable notifications</button>
+                        <button type="button" alt="Disable notifications" id="DisableNotifications-button" onclick="disableNotifications(<?php echo $id; ?>)">Disable notifications</button>
                     <?php endif; ?>
                 <?php endif; ?>
             </section>

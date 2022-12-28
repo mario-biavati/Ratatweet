@@ -5,7 +5,7 @@ function isUserLoggedIn(){
 }
 
 function registerLoggedUser($user){
-    $_SESSION["idUser"] = $user["idUser"];
+    $_SESSION["idUser"] = $user["IDuser"];
     $_SESSION["username"] = $user["username"];
 }
 

@@ -8,7 +8,7 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
         $templateParams["errorelogin"] = "Errore! Controllare username o password!";
     }
     else{
-        registerLoggedUser($login_result[0]["IDuser"], $login_result[0]["username"]);
+        registerLoggedUser($login_result[0]);
     }
 }
 

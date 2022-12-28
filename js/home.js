@@ -1,7 +1,4 @@
-var idUser = -1;
-var arrayPostFeed = [];
-var arrayPostSearch = [];
-var curArray = arrayPostFeed;
+var arrayPost = [];
 var cur_lastPost = 0;
 var canPrintPost = true;
 
@@ -9,8 +6,7 @@ var main = document.getElementsByTagName("main")[0];
 
 document.addEventListener("scroll", () => reloadFeed());
 
-var searchBar = document.getElementById("searchBarLG");
-searchBar.addEventListener("input", () => search(5));
+var searchBars = document.querySelectorAll("input[type=search]");
 
 function printPost(idPost) {
     axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
@@ -52,11 +48,20 @@ function printPost(idPost) {
     });
 }
 
-function loadPosts(n_post, array) {
+function loadPosts(n_post) {
     for (let i = 0; i < n_post; i++) {
-        printPost(array[i + cur_lastPost]);
+
+        if (i + cur_lastPost >= arrayPost.length) {
+            if (searchText == '') {
+                feed(n_post - i);
+            } else {
+                search(n_post - i);
+            }
+            return;
+        }
+        printPost(arrayPost[i + cur_lastPost]);
     }
-    cur_lastPost += n_post;
+    cur_lastPost = cur_lastPost + n_post;
     canPrintPost = true;
 }
 function isAtBottom() {
@@ -65,7 +70,7 @@ function isAtBottom() {
 function reloadFeed() {
     if (isAtBottom() && canPrintPost) {
         canPrintPost = false;
-        loadPosts(5, curArray);
+        loadPosts(5);
     }
 }
 
@@ -75,36 +80,42 @@ function resetFeed() {
 }
 
 function search(n_post) {
-    let text = String(searchBar.value);
-    axios.get('utils/api.php?q=search&text='+text.replace(/ /g,"+")).then(r2 => {
+    axios.get('utils/api.php?q=search&text='+searchText).then(r2 => {
 
-        arrayPostSearch = [];
+        arrayPost = [];
+        cur_lastPost = 0;
         r2.data.forEach(element => {
-            arrayPostSearch.push(element.IDpost);
+            arrayPost.push(element.IDpost);
         });
-        resetFeed();
-        curArray = arrayPostSearch;
-        loadPosts(n_post, arrayPostSearch);
+        loadPosts(n_post);
     });
 }
 function feed(n_post) {
-    axios.get('utils/api.php?q=getFeedPosts&offset='+cur_lastPost).then(r2 => {
+    axios.get('utils/api.php?q=getFeedPosts&offset=0').then(r2 => {
 
+        arrayPost = [];
+        cur_lastPost = 0;
         r2.data.forEach(element => {
-            arrayPostFeed.push(element.IDpost);
+            arrayPost.push(element.IDpost);
         });
-        loadPosts(n_post, arrayPostFeed);
+        loadPosts(n_post);
     });
 }
 
 function saveRecipe(IDrecipe) {
-    axios.post('utils/api.php?q=saveRecipe&id='+IDrecipe);
+    const formData = new FormData();
+    formData.append('q', "saveRecipe");
+    formData.append('id', IDrecipe);
+    axios.post('utils/api.php', formData);
 }
 
 // on page load
-axios.get('utils/api.php?q=getLoggedUser').then(r1 => {
 
-    idUser = r1.data.IDuser;
-
+if (searchText == '') {
     feed(5);
-});
+} else {
+    searchBars.forEach(bar => {
+        bar.setAttribute("value", searchText);
+    });
+    search(5);
+}

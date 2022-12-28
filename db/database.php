@@ -53,8 +53,8 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
-    // Query di aggiunta di un follower
-    public function addFollower($IDfollower, $IDfollowed){
+    // Query di aggiunta di un followed
+    public function addFollowed($IDfollower, $IDfollowed){
         $query = "INSERT INTO FOLLOWER(IDfollower, IDfollowed) VALUES (?,?)";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ii', $IDfollower, $IDfollowed);
@@ -71,8 +71,8 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
-    // Query di rimozione di un follower
-    public function removeFollower($IDfollower, $IDfollowed){
+    // Query di rimozione di un followed
+    public function removeFollowed($IDfollower, $IDfollowed){
         $query = "DELETE FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ii', $IDfollower, $IDfollowed);
@@ -81,9 +81,10 @@ class DatabaseHelper{
 
     //Query per comprendere se un user segue già o meno un altro user
     public function getFollowerStatus($IDfollower, $IDfollowed){
-        $query = "SELECT FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
+        $query = "SELECT * FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ii', $IDfollower, $IDfollowed);
+        $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
@@ -128,7 +129,7 @@ class DatabaseHelper{
 
     // Query di ottenimento statistiche di un utente (post, follower, followed, avg_rating)
     public function getUserStats($IDuser){
-        $query = "SELECT post, follower, followed, avg_rating FROM (SELECT COUNT(IDpost) AS post FROM POST WHERE IDuser=?), (SELECT COUNT(IDfollower) AS follower FROM FOLLOWER WHERE IDfollowed=?), (SELECT COUNT(IDfollowed) AS followed FROM FOLLOWER WHERE IDfollower=?), (SELECT AVG(rating) AS avg_rating FROM POST WHERE IDuser=?)";
+        $query = "SELECT post, follower, followed, avg_rating FROM (SELECT COUNT(IDpost) AS post FROM POST WHERE IDuser=?) AS A, (SELECT COUNT(IDfollower) AS follower FROM FOLLOWER WHERE IDfollowed=?) AS B, (SELECT COUNT(IDfollowed) AS followed FROM FOLLOWER WHERE IDfollower=?) AS C, (SELECT COALESCE(AVG(avgRating),0) AS avg_rating FROM INFOPOST, POST WHERE POST.IDuser=? AND INFOPOST.IDpost=POST.IDPost) AS D";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ssss',$IDuser,$IDuser,$IDuser,$IDuser);
         $stmt->execute();
@@ -177,9 +178,17 @@ class DatabaseHelper{
 
         return $stmt->insert_id;
     }
+    //Query dichiarazione notifica visualizzata
+    public function seenNotification($idNotification){
+        $query = "UPDATE NOTIFICATION SET seen=true WHERE IDnotification=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i', $idNotification);
+
+        return $stmt->execute();
+    }
     //Query ottenimento post di un utente (limit n, se n=-1: no limit)
     public function getUserPosts($idUser, $n=-1){
-        $query = "SELECT IDpost, pic, title, description, date, IDuser, IDrecipe FROM POST ORDER BY date DESC";
+        $query = "SELECT POST.IDpost, pic, title, description, date, IDuser, IDrecipe, avgRating FROM POST, INFOPOST WHERE POST.IDpost=INFOPOST.IDpost ORDER BY date DESC";
         if($n > 0){
             $query .= " LIMIT ?";
         }
