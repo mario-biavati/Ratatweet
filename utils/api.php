@@ -10,12 +10,15 @@ if ($_GET["q"] == "getLoggedUser") {                //ritorna l'ID dello user lo
 else if ($_GET["q"] == "getFeedPosts") {
     echo json_encode($dbh->getFollowedRandomPosts($loggedUser));
 }
+else if ($_GET["q"] == "getPost" && isset($_GET["id"])) {
+    echo json_encode($dbh->getPostByID($_GET["id"])[0]);
+}
 else if ($_GET["q"] == "getUserInfo") {
     $user = $dbh->getUserById($_SESSION["idUser"]);
     echo json_encode($user[0]);
 }
 else {
-    echo '{"val":"NOTHING"}';
+    echo '{}';
 }
 
 ?>

@@ -62,6 +62,15 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    // Query di aggiunta di una ricetta
+    public function saveRecipe($IDuser, $IDrecipe){
+        $query = "INSERT INTO SAVED_RECIPE(IDuser, IDrecipe) VALUES (?,?)";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDuser, $IDrecipe);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
     // Query di rimozione di un follower
     public function removeFollower($IDfollower, $IDfollowed){
         $query = "DELETE FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
