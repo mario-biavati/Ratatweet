@@ -1,7 +1,16 @@
 var idUser = -1;
-var arrayPost = [];
+var arrayPostFeed = [];
+var arrayPostSearch = [];
+var curArray = arrayPostFeed;
 var cur_lastPost = 0;
+var canPrintPost = true;
+
 var main = document.getElementsByTagName("main")[0];
+
+document.addEventListener("scroll", () => reloadFeed());
+
+var searchBar = document.getElementById("searchBarLG");
+searchBar.addEventListener("input", () => search(5));
 
 function printPost(idPost) {
     axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
@@ -22,7 +31,7 @@ function printPost(idPost) {
                     <img src="${post.pic}" alt="${post.title}" />
                 </div>
             </section>
-            <footer>
+            <section>
                 <div alt="Average rating">
                     <img src="./img/stella_vuota.png" id="${post.IDpost}-Star1" alt="vota 1 stella" />
                     <img src="./img/stella_vuota.png" id="${post.IDpost}-Star2" alt="vota 2 stelle" />
@@ -37,37 +46,65 @@ function printPost(idPost) {
                         <img src="img/comment-icon.png" alt="Guarda commenti" />
                     </a>
                 </div>
-            </footer>
+            </section>
         </article>`;
         main.innerHTML += htmlContent;
     });
 }
 
-function loadPosts(n_post) {
+function loadPosts(n_post, array) {
     for (let i = 0; i < n_post; i++) {
-        let idPost = i + cur_lastPost;
-        printPost(idPost);
+        printPost(array[i + cur_lastPost]);
     }
     cur_lastPost += n_post;
+    canPrintPost = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >=(document.documentElement.scrollHeight ||document.documentElement.clientHeight);
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
+}
+function reloadFeed() {
+    if (isAtBottom() && canPrintPost) {
+        canPrintPost = false;
+        loadPosts(5, curArray);
+    }
 }
 
-function saveRecipe() {
-
+function resetFeed() {
+    cur_lastPost = 0;
+    main.innerHTML = "";
 }
 
+function search(n_post) {
+    let text = String(searchBar.value);
+    axios.get('utils/api.php?q=search&text='+text.replace(/ /g,"+")).then(r2 => {
+
+        arrayPostSearch = [];
+        r2.data.forEach(element => {
+            arrayPostSearch.push(element.IDpost);
+        });
+        resetFeed();
+        curArray = arrayPostSearch;
+        loadPosts(n_post, arrayPostSearch);
+    });
+}
+function feed(n_post) {
+    axios.get('utils/api.php?q=getFeedPosts&offset='+cur_lastPost).then(r2 => {
+
+        r2.data.forEach(element => {
+            arrayPostFeed.push(element.IDpost);
+        });
+        loadPosts(n_post, arrayPostFeed);
+    });
+}
+
+function saveRecipe(IDrecipe) {
+    axios.post('utils/api.php?q=saveRecipe&id='+IDrecipe);
+}
+
+// on page load
 axios.get('utils/api.php?q=getLoggedUser').then(r1 => {
 
     idUser = r1.data.IDuser;
 
-    axios.get('utils/api.php?q=getFeedPosts').then(r2 => {
-
-        r2.data.forEach(element => {
-            arrayPost.push(element.IDpost);
-        });
-
-        loadPosts(5);
-    });
+    feed(5);
 });
