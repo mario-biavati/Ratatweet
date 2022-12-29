@@ -19,3 +19,17 @@ VALUES (1,"default_post.png","Crema Catalana","buonissima cremina dolce",1,1),
 INSERT INTO RECIPE(IDpost, ingredients, method)
 VALUES (1,'{"Sale":"NO","Zucchero":"150g"}', "Butta su tutto e cuoci. fine."),
 (2, '{"Pomodori":"TUTTI"}', "Spappola i pomodori e poi divorali.");
+
+INSERT INTO COMMENT(text, IDpost, IDuser)
+VALUES ("Molto buono!", 1, 1),
+("Fantastico", 2, 1),
+("Molto buono!", 3, 4),
+("Molto buono!", 1, 4),
+("Un pò troppo salato", 1, 3);
+
+INSERT INTO RATING(IDuser, IDpost, rating)
+VALUES (1, 1, 5),
+(2, 1, 4),
+(2, 2, 3),
+(4, 1, 2),
+(4, 2, 2);

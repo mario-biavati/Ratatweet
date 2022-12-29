@@ -48,6 +48,7 @@ if (isUserLoggedIn()):
             <!--Lista dei post di un utente-->
             <section>
                 <h2>Posts</h2>
+                <?php var_dump($userPosts); ?>
                 <?php foreach($userPosts as $postData): ?>
                     <div id=<?php echo "user{$userData["IDuser"]}post{$postData["IDpost"]}"; ?>>
                         <!--Immagine post-->
