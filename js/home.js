@@ -1,6 +1,7 @@
 var arrayPost = [];
 var cur_lastPost = 0;
 var canPrintPost = true;
+var isFeedPage = true;
 
 var main = document.getElementsByTagName("main")[0];
 
@@ -52,7 +53,7 @@ function loadPosts(n_post) {
     for (let i = 0; i < n_post; i++) {
 
         if (i + cur_lastPost >= arrayPost.length) {
-            if (searchText == '') {
+            if (isFeedPage) {
                 feed(n_post - i);
             } else {
                 search(n_post - i);
@@ -111,7 +112,7 @@ function saveRecipe(IDrecipe) {
 
 // on page load
 
-if (searchText == '') {
+if (typeof searchText === 'undefined' || searchText == '') {
     feed(5);
 } else {
     searchBars.forEach(bar => {
