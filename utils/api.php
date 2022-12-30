@@ -46,6 +46,9 @@ else if ($_POST["q"] == "disableNotifications" && isset($_SESSION["idUser"]) && 
 else if ($_POST["q"] == "seenNotification" && isset($_SESSION["idUser"]) && isset($_POST["idNotification"])) {
     $dbh->seenNotification($_POST["idNotification"]);
 }
+else if ($_POST["q"] == "deleteRecipe" && isset($_SESSION["idUser"]) && isset($_POST["idPost"])) {
+    $dbh->removeRecipe($_SESSION["idUser"], $_POST["idPost"]);
+}
 else {
     echo '{}';
 }

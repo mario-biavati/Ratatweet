@@ -60,8 +60,8 @@ if (isUserLoggedIn()):
                         </div>
                     </div>
                     <!-- Pulsanti "Usa" ed "Elimina" -->
-                    <button type="button" alt="Use recipe" id="Use-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
-                    <button type="button" alt="Delete recipe" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
+                    <button type="button" alt="Use recipe" id="UseRecipe-button" onclick="useRecipe(<?php echo $recipe['IDpost']; ?>)">Use</button>
+                    <button type="button" alt="Delete recipe" id="DeleteRecipe-button" onclick="deleteRecipe(<?php echo $recipe['IDpost']; ?>)">Delete</button>
                 </div>
 
             </div>

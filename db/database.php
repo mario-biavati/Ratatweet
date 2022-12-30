@@ -71,6 +71,14 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    // Query di rimozione di una ricetta
+    public function removeRecipe($IDuser, $IDrecipe){
+        $query = "DELETE FROM SAVED_RECIPE WHERE IDUser=? AND IDrecipe=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDuser, $IDrecipe);
+        return $stmt->execute();
+    }
+
     // Query di rimozione di un followed
     public function removeFollowed($IDfollower, $IDfollowed){
         $query = "DELETE FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
@@ -229,10 +237,10 @@ class DatabaseHelper{
     }
     //Query che ritorna il commento in base all'ID
     function getCommentByID($IDComment) {
-        $query = "SELECT IDcomment, text, date, USER.IDuser, username FROM COMMENT, USER
+        $query = "SELECT IDcomment, text, date, USER.IDuser, username, pic, likes FROM COMMENT, USER, (SELECT COUNT(IDuser) AS likes FROM LIKE WHERE IDcomment=?) AS A
         WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDcomment=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('i',$IDPost);
+        $stmt->bind_param('ii',$IDComment, $IDComment);
         $stmt->execute();
         $result = $stmt->get_result();
 
