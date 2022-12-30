@@ -2,46 +2,75 @@ var comments = document.getElementById("comments");
 var cur_lastComment = 0;
 var canPrintComment = true;
 var arrayComment = [];
+var arrayReply = [];
 
 document.addEventListener("scroll", () => reloadComments());
 
 function printComment(idComment) {
+    //load comment
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let post = r.data;
         let htmlContent = 
-        `<article id="${post.IDpost}">
-            <header>
-                <a href="post.php?id=${post.IDpost}">
-                    <h1> ${post.title} </h1>
-                </a>
-                <a href="user_page.php?id=${post.IDuser}">
-                    <h2> ${post.username} </h2>
-                </a>
-                <input type="image" src="img/recipe-icon.png" alt="Save recipe" onclick="saveRecipe(${post.IDrecipe})">
-            </header>
-            <section>
-                <div>
-                    <img src="${post.pic}" alt="${post.title}" />
+            `<div id="ID_COMMENTO" class="row mt-2">
+                <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                    <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
                 </div>
-            </section>
-            <section>
-                <div alt="Average rating">
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star1" alt="vota 1 stella" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star2" alt="vota 2 stelle" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star3" alt="vota 3 stelle" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star4" alt="vota 4 stelle" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star5" alt="vota 5 stelle" />
-                    <h2>"Average rating: ${post.avgRating}"</h2>
+                <div class="d-flex flex-column col-10 col-lg-11">
+                    <span class="fw-bold">
+                        NOME_PERSONA
+                    </span>
+                    <span>
+                        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A
+                    </span>
+                    <div class="d-flex">
+                        <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/>23</button>
+                        <a class="btn btn-primary" style="max-height: 40px;" data-bs-toggle="collapse" href="#comment1Replies" role="button" aria-expanded="false" aria-controls="comment1Replies">
+                            Replies ▼
+                        </a>
+                    </div>
                 </div>
-                <div alt="Comments number">
-                    <h2>${post.numComments}</h2>
-                    <a href="post.php?id=${post.IDpost}">
-                        <img src="img/comment-icon.png" alt="Guarda commenti" />
-                    </a>
-                </div>
-            </section>
-        </article>`;
+                <!--risposte commento 1-->
+                <div class="offset-1 collapse" id="comment1Replies">
+                    <!--risposta 1-->
+                    <div id="ID_COMMENTO" class="row mt-2">
+                        <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                            <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                        </div>
+                        <div class="d-flex flex-column col-10">
+                            <span class="fw-bold">
+                                NOME_PERSONA
+                            </span>
+                            <span>
+                                A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A
+                            </span>
+                            <div class="d-flex">
+                                <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/>15</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--risposta 2-->
+                    <div id="ID_COMMENTO" class="row mt-2">
+                        <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
+                            <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                        </div>
+                        <div class="d-flex flex-column col-10">
+                            <span class="fw-bold">
+                                NOME_PERSONA
+                            </span>
+                            <span>
+                                A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A
+                            </span>
+                            <div class="d-flex">
+                                <button style="border: none; background: none; margin-right: 5px;"><img src="../img/like-icon.png" style="max-width: 20px; margin-right: 5px;"/></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
         main.innerHTML += htmlContent;
+    });
+    //get replies
+    axios.get('utils/api.php?q=getReplies&id=' + idComment).then(r => {
+
     });
 }
 

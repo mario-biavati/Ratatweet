@@ -22,6 +22,9 @@ else if ($_GET["q"] == "getUserInfo") {
 else if ($_GET["q"] == "getComments" && isset($_GET["id"])) {
     echo json_encode($dbh->getCommentsByPostID($_GET["id"]));
 }
+else if ($_GET["q"] == "getReplies" && isset($_GET["id"])) {
+    echo json_encode($dbh->getRepliesByCommentID($_GET["id"]));
+}
 else if ($_GET["q"] == "getComment" && isset($_GET["id"])) {
     echo json_encode($dbh->getCommentByID($_GET["id"])[0]);
 }

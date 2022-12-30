@@ -240,8 +240,7 @@ class DatabaseHelper{
     }
     //Query che ritorna le risposte di un commento
     function getRepliesByCommentID($IDcomment) {
-        $query = "SELECT IDcomment, text, date, USER.IDuser, username FROM COMMENT, USER
-        WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDparent=?";
+        $query = "SELECT IDcomment FROM COMMENT WHERE COMMENT.IDparent=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDcomment);
         $stmt->execute();
