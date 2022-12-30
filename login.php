@@ -14,7 +14,9 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 
 if(isUserLoggedIn()){
     $templateParams["title"] = "Ratatweet - User"; 
-    $templateParams["main"] = "user.php";
+    header 
+    if(isset($_GET["caller"])) $templateParams["main"] = $_GET["caller"];
+    else $templateParams["main"] = "user.php";
 }
 else{
     $templateParams["title"] = "Ratatweet - Login";
