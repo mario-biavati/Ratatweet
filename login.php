@@ -13,13 +13,14 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 }
 
 if(isUserLoggedIn()){
-    $templateParams["title"] = "Ratatweet - User"; 
-    header 
+    $templateParams["title"] = "Ratatweet - User";   
+    //$templateParams["header"] = "header_long.html";
     if(isset($_GET["caller"])) $templateParams["main"] = $_GET["caller"];
     else $templateParams["main"] = "user.php";
 }
 else{
     $templateParams["title"] = "Ratatweet - Login";
+    //$templateParams["header"] = "header_short.html";
     $templateParams["main"] = "login_form.php";
 }
 
