@@ -1,16 +1,12 @@
-var arrayPost = [];
-var cur_lastPost = 0;
-var canPrintPost = true;
-var isFeedPage = true;
+var comments = document.getElementById("comments");
+var cur_lastComment = 0;
+var canPrintComment = true;
+var arrayComment = [];
 
-var main = document.getElementsByTagName("main")[0];
+document.addEventListener("scroll", () => reloadComments());
 
-document.addEventListener("scroll", () => reloadFeed());
-
-var searchBars = document.querySelectorAll("input[type=search]");
-
-function printPost(idPost) {
-    axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
+function printComment(idComment) {
+    axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let post = r.data;
         let htmlContent = 
         `<article id="${post.IDpost}">
@@ -49,75 +45,30 @@ function printPost(idPost) {
     });
 }
 
-function loadPosts(n_post) {
-    for (let i = 0; i < n_post; i++) {
+function loadComments(n_comments) {
+    for (let i = 0; i < n_comments; i++) {
 
-        if (i + cur_lastPost >= arrayPost.length) {
-            if (isFeedPage) {
-                feed(n_post - i);
-            } else {
-                psearch(n_post - i);
-            }
+        if (i + cur_lastComment >= arrayComment.length) {
             return;
         }
-        printPost(arrayPost[i + cur_lastPost]);
+        printComment(arrayComment[i + cur_lastComment]);
     }
-    cur_lastPost = cur_lastPost + n_post;
-    canPrintPost = true;
+    cur_lastComment = cur_lastComment + n_comments;
+    canPrintComment = true;
 }
 function isAtBottom() {
     return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
 }
-function reloadFeed() {
-    if (isAtBottom() && canPrintPost) {
-        canPrintPost = false;
-        loadPosts(5);
+function reloadComments() {
+    if (isAtBottom() && canPrintComment) {
+        canPrintComment = false;
+        loadComments(5);
     }
 }
 
-function resetFeed() {
-    cur_lastPost = 0;
-    main.innerHTML = "";
-}
-
-function psearch(n_post) {
-    axios.get('utils/api.php?q=search&text='+search).then(r2 => {
-
-        arrayPost = [];
-        cur_lastPost = 0;
-        r2.data.forEach(element => {
-            arrayPost.push(element.IDpost);
-        });
-        loadPosts(n_post);
-    });
-}
-function feed(n_post) {
-    axios.get('utils/api.php?q=getFeedPosts&offset=0').then(r2 => {
-
-        arrayPost = [];
-        cur_lastPost = 0;
-        r2.data.forEach(element => {
-            arrayPost.push(element.IDpost);
-        });
-        loadPosts(n_post);
-    });
-}
-
-function saveRecipe(IDrecipe) {
-    const formData = new FormData();
-    formData.append('q', "saveRecipe");
-    formData.append('id', IDrecipe);
-    axios.post('utils/api.php', formData);
-}
-
 // on page load
-
-if (typeof search === 'undefined' || search == '') {
-    feed(5);
-} else {
-    searchBars.forEach(bar => {
-        bar.setAttribute("value", search);
+axios.get("utils/api.php?getComments&id=" + id).then(r => {
+    r.data.forEach(element => {
+        arrayComment.push(element.IDcomment);
     });
-    isFeedPage = false;
-    psearch(5);
-}
+});

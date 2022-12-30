@@ -20,7 +20,7 @@
         if(isUserLoggedIn()) {
             $href_notification = "notifications_page.php";
             $href_user = "user_page.php";
-            $href_recipe = "recipe_page.php";
+            $href_recipe = "recipes_page.php";
         }
         else {
             $href_notification = "login.php";
@@ -43,17 +43,17 @@
                     <a href="index.php"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/></a>
                 </div>
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
-                    <a href=<?php echo "{$href_notification}"; ?> class="position-relative"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
+                    <a href="<?php echo "{$href_notification}"; ?>?caller=notifications.php" class="position-relative"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
                         <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </a>
                 </div>
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
-                    <a href=<?php echo "{$href_recipe}"; ?>><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                    <a href="<?php echo "{$href_recipe}"; ?>?caller=recipes.php"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/></a>
                 </div>
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
-                    <a href=<?php echo "{$href_user}"; ?>><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/></a>
+                    <a href="<?php echo "{$href_user}"; ?>?caller=user.php"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/></a>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     <input type="search" name="search" id="searchBarLG" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
                 </form>
                 <a href="index.php" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/home-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Home</h5></a>
-                <a href=<?php echo "{$href_notification}"; ?> class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark">
+                <a href="<?php echo "{$href_notification}"; ?>?caller=notifications.php" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark">
                     <div class="position-relative">
                         <img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
                         <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
@@ -75,8 +75,8 @@
                     </div>
                     <h5 class="d-none d-lg-block ms-5">Notifications</h5>
                 </a>
-                <a href=<?php echo "{$href_recipe}"; ?> class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Recipes</h5></a>
-                <a href=<?php echo "{$href_user}"; ?> class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Profile</h5></a>
+                <a href="<?php echo "{$href_recipe}"; ?>?caller=recipes.php" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/recipe-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-2">Recipes</h5></a>
+                <a href="<?php echo "{$href_user}"; ?>?caller=user.php" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/default-profile-icon.png" class="img-fluid" style="max-height: 30px"/><h5 class="d-none d-lg-block ms-5 me-5">Profile</h5></a>
                 <div class="d-flex" style="min-height: 100vh">
 
                 </div>
@@ -91,11 +91,11 @@
         ?>
     </main>
     <!--Inclusione script Javascript-->
-    <?php if (isset($_GET["search"])): ?>
-        <script type="text/javascript">
-            var searchText = "<?php echo $_GET["search"]; ?>";
-        </script>
-    <?php endif; ?>
+    <script type="text/javascript">
+    <?php foreach($_GET as $key => $val) {
+        echo `var {$key} = {$val};`;
+    }?>
+    </script>
     <?php
     if(isset($templateParams["js"])):
         foreach($templateParams["js"] as $script):

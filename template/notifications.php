@@ -8,7 +8,6 @@ if (isUserLoggedIn()):
     <?php endif;?>
     <ul id=<?php echo "notifications{$idUser}"; ?>>
         <?php foreach($notifications as $notification): 
-            var_dump($notification["notifier"]);
             $userData= $dbh->getUserById($notification["notifier"])[0];
             $notificationType="";
             if($notification["type"]=="Follow") {

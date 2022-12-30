@@ -1,8 +1,8 @@
 <?php
 if (isset($_GET["id"])) :
     $id = $_GET["id"];
-    $postData = $dbh->getPostById($id);
-    $recipeData = $dbh->getRecipe($id);
+    $postData = $dbh->getPostById($id)[0];
+    $recipeData = $dbh->getRecipe($id)[0];
     $commentData = $dbh->getCommentsByPostID($id);
     if (count($postData) == 1 && count($recipeData) == 1) :
         $postData = $postData[0];

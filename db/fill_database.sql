@@ -20,6 +20,10 @@ INSERT INTO RECIPE(IDpost, ingredients, method)
 VALUES (1,'{"Sale":"NO","Zucchero":"150g"}', "Butta su tutto e cuoci. fine."),
 (2, '{"Pomodori":"TUTTI"}', "Spappola i pomodori e poi divorali.");
 
+INSERT INTO SAVED_RECIPE(IDuser, IDrecipe)
+VALUES (4, 1),
+(4, 2);
+
 INSERT INTO COMMENT(text, IDpost, IDuser)
 VALUES ("Molto buono!", 1, 1),
 ("Fantastico", 2, 1),
