@@ -162,14 +162,14 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
-    //Query inserimento rating ad un post
-    public function insertRating($idUser, $idPost, $rating){
-        $stmt = $this->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?)");
-        $stmt->bind_param('iii',$idUser, $idPost, $rating);
-        $stmt->execute();
+    // //Query inserimento rating ad un post
+    // public function insertRating($idUser, $idPost, $rating){
+    //     $stmt = $this->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?)");
+    //     $stmt->bind_param('iii',$idUser, $idPost, $rating);
+    //     $stmt->execute();
 
-        return $stmt->insert_id;
-    }
+    //     return $stmt->insert_id;
+    // }
     //Query inserimento notifica
     public function insertNotification($type, $idUser, $notifier, $idPost){
         $stmt = $this->prepare("INSERT INTO RATING (type, IDuser, notifier, IDpost) VALUES (?, ?, ?, ?)");
@@ -180,7 +180,7 @@ class DatabaseHelper{
     }
     //Query dichiarazione notifica visualizzata
     public function seenNotification($idNotification){
-        $query = "UPDATE NOTIFICATION SET seen=true WHERE IDnotification=?";
+        $query = "DELETE FROM NOTIFICATION WHERE IDnotification=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i', $idNotification);
 
@@ -219,10 +219,31 @@ class DatabaseHelper{
 
     //Query che ritorna i commenti associati ad un post
     function getCommentsByPostID($IDPost) {
-        $query = "SELECT IDcomment, text, date, IDpost, USER.IDuser, username, IDparent FROM COMMENT, USER
-        WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDpost=?";
+        $query = "SELECT IDcomment FROM COMMENT WHERE COMMENT.IDpost=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDPost);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //Query che ritorna il commento in base all'ID
+    function getCommentByID($IDComment) {
+        $query = "SELECT IDcomment, text, date, USER.IDuser, username FROM COMMENT, USER
+        WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDcomment=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i',$IDPost);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //Query che ritorna le risposte di un commento
+    function getRepliesByCommentID($IDcomment) {
+        $query = "SELECT IDcomment, text, date, USER.IDuser, username FROM COMMENT, USER
+        WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDparent=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i',$IDcomment);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -257,27 +278,10 @@ class DatabaseHelper{
     }
     //Query ottenimento delle notifiche non visualizzate di un utente
     public function getNotifications($idUser){
-        $query = "SELECT * FROM NOTIFICATION WHERE IDuser=? AND seen=false ORDER BY date DESC";
+        $query = "SELECT * FROM NOTIFICATION WHERE IDuser=? ORDER BY date DESC";
 
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$idUser);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-    //Query ottenimento di tutte le notifiche di un utente
-    public function getAllNotifications($idUser, $n=20){
-        $query = "SELECT * FROM NOTIFICATION WHERE IDuser=? ORDER BY date DESC";
-        if($n > 0){
-            $query .= " LIMIT ?";
-        }
-        $stmt = $this->prepare($query);
-        if($n > 0){
-            $stmt->bind_param('ii',$idUser,$n);
-        } else {
-            $stmt->bind_param('i',$idUser);
-        }
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -288,6 +292,18 @@ class DatabaseHelper{
         $query = "SELECT * FROM RECIPE WHERE IDpost=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$idPost);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //Query ottenimento ricette salvate da un utente
+    public function getSavedRecipes($idUser){
+        $query = "SELECT RECIPE.ingredients, RECIPE.method, USER.username, POST.IDpost, POST.title FROM SAVED_RECIPE, RECIPE, POST, USER 
+                  WHERE SAVED_RECIPE.IDuser=? AND SAVED_RECIPE.IDrecipe=RECIPE.IDpost 
+                  AND RECIPE.IDpost=POST.IDPost AND POST.IDuser=USER.IDuser";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i',$idUser);
         $stmt->execute();
         $result = $stmt->get_result();
 

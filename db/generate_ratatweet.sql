@@ -86,7 +86,6 @@ create table NOTIFICATION (
      notifier bigint not null,  
      IDpost bigint,  
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
-     seen BOOLEAN DEFAULT false,
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (notifier) references USER(IDuser),
      FOREIGN KEY (IDpost) references POST(IDpost),
@@ -111,6 +110,13 @@ create table SAVED_RECIPE (
      FOREIGN KEY (IDuser) references USER(IDuser),
      FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
      PRIMARY KEY (IDuser, IDrecipe));
+
+create table LIKE (
+     IDcomment bigint not null,
+     IDuser bigint not null,
+     FOREIGN KEY (IDuser) references USER(IDuser),
+     FOREIGN KEY (IDcomment) references COMMENT(IDcomment),
+     PRIMARY KEY(IDcomment,IDuser));
 
 CREATE VIEW INFOPOST AS 
      SELECT POST.IDpost, COALESCE(AVG(rating), 0) as avgRating, COUNT(IDcomment) as numComments 

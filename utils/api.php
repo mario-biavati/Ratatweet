@@ -14,11 +14,16 @@ else if ($_GET["q"] == "getPost" && isset($_GET["id"])) {
     echo json_encode($dbh->getPostByID($_GET["id"])[0]);
 }
 else if ($_GET["q"] == "search" && isset($_GET["text"])) {
-    $searchtxt = str_replace("+", " ", $_GET["text"]);
-    echo json_encode($dbh->search($searchtxt));
+    echo json_encode($dbh->search($_GET["text"]));
 }
 else if ($_GET["q"] == "getUserInfo") {
     echo json_encode($dbh->getUserById($loggedUser)[0]);
+}
+else if ($_GET["q"] == "getComments" && isset($_GET["id"])) {
+    echo json_encode($dbh->getCommentsByPostID($_GET["id"]));
+}
+else if ($_GET["q"] == "getComment" && isset($_GET["id"])) {
+    echo json_encode($dbh->getCommentByID($_GET["id"])[0]);
 }
 else if ($_POST["q"] == "saveRecipe" && isset($_SESSION["idUser"]) && isset($_POST["id"])) {
     $dbh->saveRecipe($loggedUser, $_POST["id"]);
