@@ -1,7 +1,7 @@
 <?php
 require_once("bootstrap.php");
 
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/user.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/recipes.js");
 $templateParams["title"] = "Ratatweet - Recipes"; 
 //$templateParams["header"] = "header_long.html";
 if(!isUserLoggedIn()) {

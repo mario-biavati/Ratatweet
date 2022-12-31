@@ -20,18 +20,14 @@ if (isUserLoggedIn()):
                  <!--Pulsanti-->
                 <?php if(isUserLoggedIn()):
                     $idLogged=$_SESSION["idUser"];
-                    if(!empty($dbh->getFollowerStatus($idLogged, $id))):?>
-                        <button type="button" alt="Unfollow user" id="Unfollow-button" onclick="unfollow(<?php echo $id; ?>)">Unfollow</button>
-                    <?php else: ?>
-                        <button type="button" alt="Follow user" id="Follow-button" onclick="follow(<?php echo $id; ?>)">Follow</button>
-                    <?php endif; ?>
+                    $FollowStatus = "Follow";
+                    if(!empty($dbh->getFollowerStatus($idLogged, $id))) $FollowStatus = "Unfollow"; ?>
+                    <button type="button" class=<?php echo $FollowStatus; ?> alt="<?php echo $FollowStatus; ?> user" id="FollowUnfollow-Button" onclick="followunfollow(<?php echo $id; ?>)"><?php echo $FollowStatus; ?></button>
                     <?php 
-                        $notificationStatus = $dbh->getNotificationStatus($idLogged, $id);
-                        if(empty($notificationStatus) || $notificationStatus[0]["notification"]==0):?>
-                        <button type="button" alt="Enable notifications" id="EnableNotifications-button" onclick="enableNotifications(<?php echo $id; ?>)">Enable notifications</button>
-                    <?php else: ?>
-                        <button type="button" alt="Disable notifications" id="DisableNotifications-button" onclick="disableNotifications(<?php echo $id; ?>)">Disable notifications</button>
-                    <?php endif; ?>
+                    $notificationStatus = $dbh->getNotificationStatus($idLogged, $id);
+                    $notif="Disable";
+                    if(empty($notificationStatus) || $notificationStatus[0]["notification"]==0) $notif="Enable"; ?>
+                    <button type="button" class=<?php echo $notif; ?> alt="<?php echo $notif; ?> notifications" id="Notifications-Button" onclick="modifyNotifications(<?php echo $id; ?>)"><?php echo $notif; ?> notifications</button>
                 <?php endif; ?>
             </section>
             <!--Statistiche sull'utente-->
@@ -39,9 +35,9 @@ if (isUserLoggedIn()):
                 <h2>Posts</h2>
                 <p><?php echo $userStat["post"]; ?></p>
                 <h2>Followers</h2>
-                <p><?php echo $userStat["follower"]; ?></p>
+                <p id="NumFollowers"><?php echo $userStat["follower"]; ?></p>
                 <h2>Followed</h2>
-                <p><?php echo $userStat["followed"]; ?></p>
+                <p id="NumFollowed"><?php echo $userStat["followed"]; ?></p>
                 <h2>Rating</h2>
                 <p><?php echo $userStat["avg_rating"]; ?></p>
             </section>

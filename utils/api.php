@@ -59,6 +59,19 @@ else if (isset($_POST["q"]) && $_POST["q"] == "login" && isset($_POST["username"
     header('Content-Type: application/json');
     echo json_encode($result);
 }
+else if (isset($_POST["q"]) && $_POST["q"] == "register" && isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["bio"]) && isset($_POST["pic"])) {
+    $result["esito"] = false;
+    $register_result = $dbh->insertUser($_POST["username"], $_POST["password"], $_POST["bio"], $_POST["pic"]);
+    if($register_result==0 || $register_result=="false") $result["errore"] = "Errore! Username già utilizzato!";
+    else {
+        $login_result = $dbh->login($_POST["username"], $_POST["password"]);
+        if(count($login_result)!=0) registerLoggedUser($login_result[0]);
+    }
+    if(isUserLoggedIn()) $result["esito"] = true;
+    
+    header('Content-Type: application/json');
+    echo json_encode($result);
+}
 else {
     echo '{}';
 }

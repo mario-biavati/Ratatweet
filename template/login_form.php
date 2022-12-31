@@ -14,3 +14,7 @@
         </li>
             </ul>
 </form>
+<section>
+    <h2>OR</h2>
+    <a href="registration_page.php">Register</a>
+</section>
