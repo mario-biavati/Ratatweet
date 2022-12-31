@@ -6,7 +6,7 @@ var arrayReply = [];
 
 document.addEventListener("scroll", () => reloadComments());
 
-function printComment(idComment) {
+function printComment(idComment, where) {
     //load comment
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let comment = r.data;
@@ -39,7 +39,7 @@ function printComment(idComment) {
     
         </div>
     </div>`;
-        main.innerHTML += htmlContent;
+        where.innerHTML += htmlContent;
     }).then(r1 => {
         //get replies
         axios.get('utils/api.php?q=getReplies&id=' + idComment).then(r => {
@@ -49,13 +49,18 @@ function printComment(idComment) {
             });
             if (arrayReply[idComment].length == 0) {
                 document.getElementById("replyButton"+idComment).style.display = "none";
+            } else {
+                document.getElementById("replyButton"+idComment).addEventListener("click", () => loadReplies(idComment));
             }
         });
     });
 }
 
-function loadReplies(n_replies) {
-
+function loadReplies(idComment) {
+    let replies = document.getElementById("comment" + idComment + "Replies");
+    arrayReply[idComment].forEach(idReply => {
+        printComment(idReply, replies);
+    });
 }
 
 function loadComments(n_comments) {
@@ -64,7 +69,7 @@ function loadComments(n_comments) {
         if (i + cur_lastComment >= arrayComment.length) {
             return;
         }
-        printComment(arrayComment[i + cur_lastComment]);
+        printComment(arrayComment[i + cur_lastComment], comments);
     }
     cur_lastComment = cur_lastComment + n_comments;
     canPrintComment = true;
