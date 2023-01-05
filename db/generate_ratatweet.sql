@@ -24,7 +24,7 @@ create table `USER` (
      username varchar(50) not null,
      password varchar(50) not null, 
      bio varchar(50),
-     pic varchar(50) default "default_user.png",
+     pic mediumblob,
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      constraint IDUSERS_1 unique (username),
      constraint IDUSERS primary key (IDuser));
@@ -111,7 +111,7 @@ create table SAVED_RECIPE (
      FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
      PRIMARY KEY (IDuser, IDrecipe));
 
-create table LIKE (
+create table `LIKE` (
      IDcomment bigint not null,
      IDuser bigint not null,
      FOREIGN KEY (IDuser) references USER(IDuser),

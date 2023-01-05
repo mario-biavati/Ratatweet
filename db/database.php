@@ -23,6 +23,7 @@ class DatabaseHelper{
     public function insertUser($username, $password, $bio, $pic){
         $stmt = $this->prepare("INSERT INTO USER (username, password, bio, pic) VALUES (?, ?, ?, ?)");
         $stmt->bind_param('ssss',$username, $password, $bio, $pic);
+        //var_dump($pic);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -46,7 +47,7 @@ class DatabaseHelper{
 
     // Query creazione di una risposta a un commento
     public function addReplyOnComment($IDpost, $IDuser, $text, $IDcomment){
-        $query = "INSERT INTO COMMENT(text, IDpost, IDuser, IDcomment) VALUES (?,?,?,?)";
+        $query = "INSERT INTO COMMENT(text, IDpost, IDuser, IDparent) VALUES (?,?,?,?)";
         $stmt = $this->prepare($query);
         $stmt->bind_param('siii',$text, $IDpost, $IDuser, $IDcomment);
         $stmt->execute();
@@ -227,7 +228,7 @@ class DatabaseHelper{
 
     //Query che ritorna i commenti associati ad un post
     function getCommentsByPostID($IDPost) {
-        $query = "SELECT IDcomment FROM COMMENT WHERE COMMENT.IDpost=?";
+        $query = "SELECT IDcomment FROM COMMENT WHERE IDpost=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDPost);
         $stmt->execute();
@@ -237,8 +238,8 @@ class DatabaseHelper{
     }
     //Query che ritorna il commento in base all'ID
     function getCommentByID($IDComment) {
-        $query = "SELECT IDcomment, text, date, USER.IDuser, username, pic, likes FROM COMMENT, USER, (SELECT COUNT(IDuser) AS likes FROM LIKE WHERE IDcomment=?) AS A
-        WHERE COMMENT.IDuser=USER.IDuser AND COMMENT.IDcomment=?";
+        $query = "SELECT C.IDcomment, C.text, C.date, U.IDuser, U.username, U.pic, A.likes FROM COMMENT AS C, USER AS U, (SELECT COUNT(IDuser) AS likes FROM `LIKE` WHERE IDcomment=?) AS A
+        WHERE C.IDuser=U.IDuser AND C.IDcomment=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ii',$IDComment, $IDComment);
         $stmt->execute();

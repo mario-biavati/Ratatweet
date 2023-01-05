@@ -49,15 +49,15 @@ if (isset($_GET["id"])) :
         <p><?php echo $recipeData["method"];?></p>
     </section>
 </article>
-<section id="comments" class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
+<section class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
     <h2 class="fw-bold" id="commentsAmount">Comments: <button class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment">123 <img src="img/comment-icon.png" style="max-width: 35px"/></button></h2>
-    <form id="collapseAddComment" class="collapse" onsubmit="" target="#">
-        <input type="text" class="form-control" id="addComment" placeholder="Comment">
+    <form id="collapseAddComment" class="collapse" onsubmit="return postComment(this);">
+        <input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment">
         <button type="submit" class="btn btn-info mb-2">Post Comment</button>
         <button class="btn btn-secondary mb-2" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment">Cancel</button>
     </form>
     <!--commenti-->
-    
+    <div id="comments"></div>
 </section>
     <?php endif; ?>  
 <?php endif; ?>

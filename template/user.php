@@ -16,7 +16,11 @@ if (isUserLoggedIn()):
                  <!--Bio-->
                 <p><?php echo $userData["bio"]; ?></p>
                  <!--Pic-->
-                <img src=<?php echo "{$userData["pic"]}"; ?> alt=<?php echo "{$userData["username"]}"; ?>>
+                <p>
+                <?php echo
+                    '<img src = "data:image/png;base64,' . $userData["pic"] . '" width = "50px" height = "50px"/>'
+                ?>
+                </p>
                  <!--Pulsanti-->
                 <?php if(isUserLoggedIn()):
                     $idLogged=$_SESSION["idUser"];

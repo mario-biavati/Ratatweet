@@ -6,7 +6,7 @@ var arrayReply = [];
 
 document.addEventListener("scroll", () => reloadComments());
 
-function printComment(idComment, where) {
+function printComment(idComment, where, first = false) {
     //load comment
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let comment = r.data;
@@ -30,16 +30,16 @@ function printComment(idComment, where) {
                 <button class="ms-1 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}"><img src="img/comment-icon.png" style="max-width: 35px"/></button>
             </div>
         </div>
-        <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="" target="#">
-            <input type="text" class="mt-1 form-control" placeholder="Reply">
+        <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="return postReply(${comment.IDcomment},this);">
+            <input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
             <button type="submit" class="btn btn-info mb-2 mt-1">Post Reply</button>
-            <button class="btn btn-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
+            <button type="reset" class="btn btn-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
         </form>
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
     
         </div>
     </div>`;
-        where.innerHTML += htmlContent;
+        where.innerHTML = (first) ? htmlContent + where.innerHTML : where.innerHTML + htmlContent;
     }).then(r1 => {
         //get replies
         axios.get('utils/api.php?q=getReplies&id=' + idComment).then(r => {
@@ -67,6 +67,7 @@ function loadComments(n_comments) {
     for (let i = 0; i < n_comments; i++) {
 
         if (i + cur_lastComment >= arrayComment.length) {
+            cur_lastComment += i;
             return;
         }
         printComment(arrayComment[i + cur_lastComment], comments);
@@ -84,9 +85,33 @@ function reloadComments() {
     }
 }
 
+/* Post Comments Functions */
+function postComment(form) {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('q', "postComment");
+    formData.append('id', id);
+    formData.append('comment', form["comment"].value);
+    axios.post('utils/api.php', formData).then(r => {
+        if (r.data["esito"] == false) {
+            // utente non loggato, redirect al login
+            axios.get('template/login_form.php').then(file => {
+                document.querySelector("main").innerHTML = file.data;
+                var tag = document.createElement("script");
+                tag.src = "js/login.js";
+                document.querySelector("body").appendChild(tag);
+            })
+        } else {
+            printComment(r.data["id"], comments, true);
+        }
+    });
+    return false;
+}
+
 // on page load
-axios.get("utils/api.php?getComments&id=" + id).then(r => {
+axios.get("utils/api.php?q=getComments&id=" + id).then(r => {
     r.data.forEach(element => {
         arrayComment.push(element.IDcomment);
     });
+    loadComments(5);
 });
