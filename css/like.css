@@ -1,0 +1,8 @@
+.liked {
+    filter: invert(68%) sepia(66%) saturate(385%) hue-rotate(157deg) brightness(90%) contrast(93%);
+}
+
+.like {
+    max-width: 20px;
+    margin-right: 5px;
+}
