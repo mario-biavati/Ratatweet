@@ -28,6 +28,9 @@ else if (isset($_GET["q"]) && $_GET["q"] == "getReplies" && isset($_GET["id"])) 
 else if (isset($_GET["q"]) && $_GET["q"] == "getComment" && isset($_GET["id"])) {
     echo json_encode($dbh->getCommentByID($_GET["id"])[0]);
 }
+else if (isset($_GET["q"]) && $_GET["q"] == "getUserPosts" && isset($_GET["id"])) {
+    echo json_encode($dbh->getUserPosts($_GET["id"]));
+}
 else if (isset($_POST["q"]) && $_POST["q"] == "postComment" && isset($_POST["id"]) && isset($_POST["comment"])) {
     if (isset($_SESSION["idUser"])) {
         $val = $dbh->addCommentOnPost($_POST["id"], $loggedUser, $_POST["comment"]);

@@ -196,7 +196,7 @@ class DatabaseHelper{
     }
     //Query ottenimento post di un utente (limit n, se n=-1: no limit)
     public function getUserPosts($idUser, $n=-1){
-        $query = "SELECT POST.IDpost, pic, title, description, date, IDuser, IDrecipe, avgRating FROM POST, INFOPOST WHERE POST.IDPost=INFOPOST.IDpost AND POST.IDuser=? ORDER BY date DESC";
+        $query = "SELECT POST.IDpost FROM POST, INFOPOST WHERE POST.IDpost=INFOPOST.IDpost AND POST.IDuser=? ORDER BY date DESC";
         if($n > 0){
             $query .= " LIMIT ?";
         }
