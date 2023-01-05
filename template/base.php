@@ -88,7 +88,7 @@
     <!--Inclusione script Javascript-->
     <script type="text/javascript">
     <?php foreach($_GET as $key => $val) {
-        echo `var {$key} = {$val};`;
+        echo 'var '.$key.'='.$val.';';
     }?>
     </script>
     <?php

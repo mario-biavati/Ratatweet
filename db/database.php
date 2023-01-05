@@ -23,7 +23,6 @@ class DatabaseHelper{
     public function insertUser($username, $password, $bio, $pic){
         $stmt = $this->prepare("INSERT INTO USER (username, password, bio, pic) VALUES (?, ?, ?, ?)");
         $stmt->bind_param('ssss',$username, $password, $bio, $pic);
-        //var_dump($pic);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -228,7 +227,7 @@ class DatabaseHelper{
 
     //Query che ritorna i commenti associati ad un post
     function getCommentsByPostID($IDPost) {
-        $query = "SELECT IDcomment FROM COMMENT WHERE IDpost=?";
+        $query = "SELECT IDcomment FROM COMMENT WHERE IDpost=? AND IDparent IS NULL";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDPost);
         $stmt->execute();

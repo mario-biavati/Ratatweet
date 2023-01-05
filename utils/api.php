@@ -30,7 +30,19 @@ else if (isset($_GET["q"]) && $_GET["q"] == "getComment" && isset($_GET["id"])) 
 }
 else if (isset($_POST["q"]) && $_POST["q"] == "postComment" && isset($_POST["id"]) && isset($_POST["comment"])) {
     if (isset($_SESSION["idUser"])) {
-        $dbh->addCommentOnPost($_POST["id"], $loggedUser, $_POST["comment"]);
+        $val = $dbh->addCommentOnPost($_POST["id"], $loggedUser, $_POST["comment"]);
+        $result["esito"] = true;
+        $result["errore"] = "Nessuno";
+        $result["id"] = $val;
+    } else {
+        $result["esito"] = false;
+        $result["errore"] = "Not Logged";
+    }
+    echo json_encode($result);
+}
+else if (isset($_POST["q"]) && $_POST["q"] == "postReply" && isset($_POST["id"]) && isset($_POST["idComment"]) && isset($_POST["comment"])) {
+    if (isset($_SESSION["idUser"])) {
+        $val = $dbh->addReplyOnComment($_POST["id"], $loggedUser, $_POST["comment"], $_POST["idComment"]);
         $result["esito"] = true;
         $result["errore"] = "Nessuno";
         $result["id"] = $val;
@@ -102,6 +114,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "login" && isset($_POST["username"
 else if (isset($_POST["q"]) && $_POST["q"] == "register" && isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["bio"]) && isset($_POST["pic"])) {
     $result["esito"] = false;
     $result["errore"] = "Non so!";
+    var_dump($_POST["pic"]);
     $register_result = $dbh->insertUser($_POST["username"], $_POST["password"], $_POST["bio"], $_POST["pic"]);
     if($register_result==0 || $register_result=="false") $result["errore"] = "Errore! Username già utilizzato!";
     else {
