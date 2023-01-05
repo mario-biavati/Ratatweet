@@ -37,7 +37,7 @@ create table RECIPE (
 
 create table POST (
      IDPost bigint not null auto_increment,
-     pic varchar(50) not null,
+     pic mediumblob,
      title char(50) not null, 
      description TEXT, 
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -111,7 +111,7 @@ create table SAVED_RECIPE (
      FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
      PRIMARY KEY (IDuser, IDrecipe));
 
-create table `LIKE` (
+create table `LIKES` (
      IDcomment bigint not null,
      IDuser bigint not null,
      FOREIGN KEY (IDuser) references USER(IDuser),

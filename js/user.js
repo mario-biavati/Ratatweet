@@ -84,7 +84,7 @@ function printPost(idPost) {
             </header>
             <section>
                 <div>
-                    <img src="${post.pic}" alt="${post.title}" />
+                    <img src="data:image/png;base64,${post.pic}" alt="${post.title}"  width = "50px" height = "50px" />
                 </div>
             </section>
             <section>

@@ -16,9 +16,7 @@ if (count($userData) == 1) :
             <p><?php echo $userData["bio"]; ?></p>
                 <!--Pic-->
             <p>
-            <?php echo
-                '<img src = "data:image/png;base64,' . $userData["pic"] . '" width = "50px" height = "50px"/>'
-            ?>
+            <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" width = "50px" height = "50px" />
             </p>
                 <!--Pulsanti-->
             <div id="buttons">

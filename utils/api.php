@@ -117,7 +117,6 @@ else if (isset($_POST["q"]) && $_POST["q"] == "login" && isset($_POST["username"
 else if (isset($_POST["q"]) && $_POST["q"] == "register" && isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["bio"]) && isset($_POST["pic"])) {
     $result["esito"] = false;
     $result["errore"] = "Non so!";
-    var_dump($_POST["pic"]);
     $register_result = $dbh->insertUser($_POST["username"], $_POST["password"], $_POST["bio"], $_POST["pic"]);
     if($register_result==0 || $register_result=="false") $result["errore"] = "Errore! Username già utilizzato!";
     else {
@@ -125,6 +124,21 @@ else if (isset($_POST["q"]) && $_POST["q"] == "register" && isset($_POST["userna
         if(count($login_result)!=0) registerLoggedUser($login_result[0]);
     }
     if(isUserLoggedIn()) $result["esito"] = true;
+    
+    header('Content-Type: application/json');
+    echo json_encode($result);
+}
+else if (isset($_POST["q"]) && $_POST["q"] == "new_post" && isset($_POST["titolo"]) && isset($_POST["descrizione"]) && isset($_POST["pic"]) && isset($_POST["IDricetta"])) {
+    $result["esito"] = false;
+    $result["errore"] = "Non so!";
+    $result["IDpost"] = -1;
+    $create_post_result = $dbh->createPost($_POST["titolo"], $_POST["pic"], $_POST["descrizione"], $loggedUser, $_POST["IDricetta"]);
+    if($create_post_result==0 || $create_post_result=="false") $result["errore"] = "Errore! Impossibile creare post!";
+    else {
+        $result["esito"] = true;
+        $result["errore"] = "Nessun errore";
+        $result["IDpost"] = $create_post_result;
+    }
     
     header('Content-Type: application/json');
     echo json_encode($result);

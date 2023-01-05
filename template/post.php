@@ -21,7 +21,7 @@ if (isset($_GET["id"])) :
         </div>
     </div>
     <div class="row">
-        <img src="<?php echo $postData["pic"];?>" style="max-width: 100%; height: auto;"/>
+        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" style="max-width: 100%; height: auto;"/>
     </div>
     <div class="row mt-1">
         <div class="d-flex">

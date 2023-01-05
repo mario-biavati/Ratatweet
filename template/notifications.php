@@ -27,7 +27,7 @@ if (isUserLoggedIn()):
             }
         ?>
             <li>
-                <img src=<?php echo "{$userData["pic"]}"; ?> alt=<?php echo "{$userData["username"]}"; ?>/>
+                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt=<?php echo "{$userData["username"]}"; ?> width = "50px" height = "50px" />
                 <p><?php echo "{$userData["username"]}"; ?></p>
                 <p><?php echo "{$notificationType}"; ?></p>
                 <button type="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
