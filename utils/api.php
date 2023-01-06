@@ -26,7 +26,7 @@ else if (isset($_GET["q"]) && $_GET["q"] == "getReplies" && isset($_GET["id"])) 
     echo json_encode($dbh->getRepliesByCommentID($_GET["id"]));
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getComment" && isset($_GET["id"])) {
-    echo json_encode($dbh->getCommentByID($_GET["id"])[0]);
+    echo json_encode($dbh->getCommentByID($_GET["id"], $loggedUser)[0]);
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getUserPosts" && isset($_GET["id"])) {
     echo json_encode($dbh->getUserPosts($_GET["id"]));
@@ -46,6 +46,30 @@ else if (isset($_POST["q"]) && $_POST["q"] == "postComment" && isset($_POST["id"
 else if (isset($_POST["q"]) && $_POST["q"] == "postReply" && isset($_POST["id"]) && isset($_POST["idComment"]) && isset($_POST["comment"])) {
     if (isset($_SESSION["idUser"])) {
         $val = $dbh->addReplyOnComment($_POST["id"], $loggedUser, $_POST["comment"], $_POST["idComment"]);
+        $result["esito"] = true;
+        $result["errore"] = "Nessuno";
+        $result["id"] = $val;
+    } else {
+        $result["esito"] = false;
+        $result["errore"] = "Not Logged";
+    }
+    echo json_encode($result);
+}
+else if (isset($_POST["q"]) && $_POST["q"] == "insertLike" && isset($_POST["id"])) {
+    if (isset($_SESSION["idUser"])) {
+        $val = $dbh->insertLike($_POST["id"], $loggedUser);
+        $result["esito"] = true;
+        $result["errore"] = "Nessuno";
+        $result["id"] = $val;
+    } else {
+        $result["esito"] = false;
+        $result["errore"] = "Not Logged";
+    }
+    echo json_encode($result);
+}
+else if (isset($_POST["q"]) && $_POST["q"] == "deleteLike" && isset($_POST["id"])) {
+    if (isset($_SESSION["idUser"])) {
+        $val = $dbh->deleteLike($_POST["id"], $loggedUser);
         $result["esito"] = true;
         $result["errore"] = "Nessuno";
         $result["id"] = $val;
