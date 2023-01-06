@@ -170,6 +170,23 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    //inserimento di like su un commento
+    public function insertLike($IDcomment, $IDuser){
+        $stmt = $this->prepare("INSERT INTO `LIKE` (IDcomment, IDuser) VALUES (?, ?)");
+        $stmt->bind_param('ii',$IDcomment, $IDuser);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+    // rimozione di like da un commento
+    public function deleteLike($IDcomment, $IDuser){
+        $query = "DELETE FROM `LIKE` WHERE IDcomment=? AND IDuser=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDcomment, $IDuser);
+
+        return $stmt->execute();
+    }
+
     // //Query inserimento rating ad un post
     // public function insertRating($idUser, $idPost, $rating){
     //     $stmt = $this->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?)");
