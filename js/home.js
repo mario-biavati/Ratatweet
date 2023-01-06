@@ -108,6 +108,7 @@ function saveRecipe(IDrecipe) {
     formData.append('q', "saveRecipe");
     formData.append('id', IDrecipe);
     axios.post('utils/api.php', formData);
+    console.log('recipe '+IDrecipe+' saved!');
 }
 
 // on page load

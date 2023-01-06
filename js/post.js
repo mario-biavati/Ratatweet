@@ -23,21 +23,21 @@ function printComment(idComment, where, first = false) {
                 ${comment.text}
             </p>
             <div class="d-flex mt-1">
-                <button style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like liked"/>${comment.likes}</button>
+                <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like`;
+        if (comment.liked == 1) htmlContent += ' liked';
+        htmlContent += `"/><span>${comment.likes}</span></button>
                 <button id="replyButton${comment.IDcomment}" class="ms-1 btn btn-info" style="max-height: 40px;" data-bs-toggle="collapse" role="button" aria-expanded="false" data-bs-target="#comment${comment.IDcomment}Replies" aria-controls="comment${comment.IDcomment}Replies">
                     Replies ▼
                 </button>
                 <button class="ms-1 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}"><img src="img/comment-icon.png" style="max-width: 35px"/></button>
             </div>
         </div>
-        <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="return postReply(${comment.IDcomment},this);">
+        <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="postReply(${comment.IDcomment},this); return false;">
             <input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
             <button type="submit" class="btn btn-info mb-2 mt-1">Post Reply</button>
             <button type="reset" class="btn btn-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
         </form>
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
-            <div id="repliesContainer"></div>
-            <button type="button">Load More</button>
         </div>
     </div>`;
         where.innerHTML = (first) ? (htmlContent + where.innerHTML) : (where.innerHTML + htmlContent);
@@ -74,7 +74,9 @@ function printReply(idComment, where, first = false) {
                 ${comment.text}
             </p>
             <div class="d-flex mt-1">
-                <button style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like liked"/>${comment.likes}</button>
+            <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like`;
+            if (comment.liked == 1) htmlContent += ' liked';
+            htmlContent += `"/><span>${comment.likes}</span></button>
             </div>
         </div>
     </div>`;
@@ -88,7 +90,7 @@ function showReplies(idComment) {
 }
 
 function loadReplies(idComment) {
-    let replies = document.querySelector("#comment" + idComment + "Replies>div");
+    let replies = document.getElementById("comment" + idComment + "Replies");
     arrayReply[idComment].forEach(idReply => {
         printReply(idReply, replies);
     });
@@ -118,6 +120,7 @@ function reloadComments() {
 
 /* Post Comments Functions */
 function postComment(form) {
+    if (form["comment"].value.length == 0) return;
     const formData = new FormData();
     formData.append('q', "postComment");
     formData.append('id', id);
@@ -133,19 +136,21 @@ function postComment(form) {
             });
         } else {
             printComment(r.data["id"], comments, true);
+            document.getElementById("addCommentButton").firstChild.innerText = +document.getElementById("addCommentButton").firstChild.innerText + 1;
         }
     });
+    //close form
     form.reset();
-    return false;
+    document.getElementById("addCommentButton").click();
 }
 function postReply(idComment, form) {
+    if (form["comment"].value.length == 0) return;
     const formData = new FormData();
     formData.append('q', "postReply");
     formData.append('id', id);
     formData.append('idComment', idComment);
     formData.append('comment', form["comment"].value);
     axios.post('utils/api.php', formData).then(r => {
-        console.log(r.data);
         if (r.data["esito"] == false) {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
@@ -155,11 +160,44 @@ function postReply(idComment, form) {
                 document.querySelector("body").appendChild(tag);
             });
         } else {
-            let replies = document.querySelector("#comment" + idComment + "Replies>div");
-            printComment(r.data["id"], replies, true);
+            let replies = document.getElementById("comment" + idComment + "Replies");
+            printReply(r.data["id"], replies, true);
+            if (!replies.classList.contains("show")) btn.click(); //show replies
         }
     });
-    return false;
+    form.reset();
+    let btn = document.getElementById("replyButton"+idComment);
+    btn.style.display = null;
+    btn.nextElementSibling.click();
+}
+function like(idComment, liked, button) {
+    const formData = new FormData();
+    formData.append('id', idComment);
+    if (liked == 0) {
+        formData.append('q', "insertLike");
+        axios.post('utils/api.php', formData).then(r => {
+            if (r.data["esito"] == false) {
+                // utente non loggato, redirect al login
+                axios.get('template/login_form.php').then(file => {
+                    document.querySelector("main").innerHTML = file.data;
+                    var tag = document.createElement("script");
+                    tag.src = "js/login.js";
+                    document.querySelector("body").appendChild(tag);
+                });
+            } else {
+                button.childNodes[0].classList.add("liked");
+                button.setAttribute("onclick", "like("+idComment+",1,this)");
+                button.childNodes[1].textContent = +button.childNodes[1].textContent + 1;
+            }
+        });
+    } else {
+        formData.append('q', "deleteLike");
+        axios.post('utils/api.php', formData).then(r => {
+            button.childNodes[0].classList.remove("liked");
+            button.setAttribute("onclick", "like("+idComment+",0,this)");
+            button.childNodes[1].innerText = +button.childNodes[1].textContent - 1;
+        });
+    }
 }
 
 // on page load
@@ -172,5 +210,7 @@ axios.get("utils/api.php?q=getComments&id=" + id).then(r => {
     r.data.forEach(element => {
         arrayComment.push(element.IDcomment);
     });
+
+    document.getElementById("addCommentButton").firstChild.innerText = arrayComment.length;
     loadComments(5);
 });

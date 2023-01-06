@@ -170,6 +170,23 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
+    //inserimento di like su un commento
+    public function insertLike($IDcomment, $IDuser){
+        $stmt = $this->prepare("INSERT INTO `LIKE` (IDcomment, IDuser) VALUES (?, ?)");
+        $stmt->bind_param('ii',$IDcomment, $IDuser);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+    // rimozione di like da un commento
+    public function deleteLike($IDcomment, $IDuser){
+        $query = "DELETE FROM `LIKE` WHERE IDcomment=? AND IDuser=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDcomment, $IDuser);
+
+        return $stmt->execute();
+    }
+
     // //Query inserimento rating ad un post
     // public function insertRating($idUser, $idPost, $rating){
     //     $stmt = $this->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?)");
@@ -227,7 +244,7 @@ class DatabaseHelper{
 
     //Query che ritorna i commenti associati ad un post
     function getCommentsByPostID($IDPost) {
-        $query = "SELECT IDcomment FROM COMMENT WHERE IDpost=? AND IDparent IS NULL";
+        $query = "SELECT COMMENT.IDcomment FROM COMMENT LEFT JOIN INFOCOMMENT ON COMMENT.IDcomment=INFOCOMMENT.IDcomment WHERE IDpost=? AND IDparent IS NULL ORDER BY numLikes DESC";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDPost);
         $stmt->execute();
@@ -236,11 +253,11 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //Query che ritorna il commento in base all'ID
-    function getCommentByID($IDComment) {
-        $query = "SELECT C.IDcomment, C.text, C.date, U.IDuser, U.username, U.pic, A.likes FROM COMMENT AS C, USER AS U, (SELECT COUNT(IDuser) AS likes FROM `LIKE` WHERE IDcomment=?) AS A
+    function getCommentByID($IDComment, $IDuser = -1) {
+        $query = "SELECT C.IDcomment, C.text, C.date, U.IDuser, U.username, U.pic, A.likes, B.liked FROM COMMENT AS C, USER AS U, (SELECT COUNT(IDuser) AS likes FROM `LIKE` WHERE IDcomment=?) AS A, (SELECT COUNT(*) AS liked FROM `LIKE` WHERE IDcomment=? AND IDuser=?) AS B
         WHERE C.IDuser=U.IDuser AND C.IDcomment=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('ii',$IDComment, $IDComment);
+        $stmt->bind_param('iiii',$IDComment, $IDComment, $IDuser, $IDComment);
         $stmt->execute();
         $result = $stmt->get_result();
 

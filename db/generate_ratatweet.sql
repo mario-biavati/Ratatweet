@@ -133,3 +133,8 @@ CREATE VIEW INFOPOST AS
            FROM POST LEFT JOIN COMMENT ON POST.IDpost = COMMENT.IDpost
            GROUP BY POST.IDpost) AS B
      WHERE A.IDpost = B.IDpost;
+
+CREATE VIEW INFOCOMMENT AS
+     SELECT IDcomment, COUNT(IDuser) AS numLikes
+     FROM `LIKE`
+     GROUP BY IDcomment;
