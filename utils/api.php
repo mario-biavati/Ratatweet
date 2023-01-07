@@ -167,6 +167,9 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_post" && isset($_POST["titolo
     header('Content-Type: application/json');
     echo json_encode($result);
 }
+else if (isset($_POST["q"]) && $_POST["q"] == "logout") {
+    logout();
+}
 else {
     $result["esito"] = false;
     $result["errore"] = "Funzione non riconsciuta";

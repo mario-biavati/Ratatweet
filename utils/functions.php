@@ -8,6 +8,9 @@ function registerLoggedUser($user){
     $_SESSION["idUser"] = $user["IDuser"];
     $_SESSION["username"] = $user["username"];
 }
+function logout(){
+    session_unset();
+}
 
 function uploadImage($path, $image){
     $imageName = basename($image["name"]);

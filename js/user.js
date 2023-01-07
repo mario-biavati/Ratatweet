@@ -143,3 +143,9 @@ axios.get('utils/api.php?q=getLoggedUser').then(r => {
         loadPosts(5);
     });
 });
+
+function logout() {
+    const formData = new FormData();
+    formData.append('q', "logout");
+    axios.post('utils/api.php', formData);
+}
