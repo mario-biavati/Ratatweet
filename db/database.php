@@ -280,7 +280,7 @@ class DatabaseHelper{
     public function getFollowedRandomPosts($idUser=-1, $n=50, $offset=0){
         if($idUser!=-1) {
             $query = "WITH A AS (SELECT IDpost FROM POST, FOLLOWER
-            WHERE FOLLOWER.IDfollower=2 AND POST.IDuser=FOLLOWER.IDfollowed
+            WHERE FOLLOWER.IDfollower=? AND POST.IDuser=FOLLOWER.IDfollowed
             ORDER BY date DESC)
             SELECT IDpost FROM A
             UNION 
