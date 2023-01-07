@@ -279,9 +279,12 @@ class DatabaseHelper{
     //-idUser "User", se id=-1: no user -> random
     public function getFollowedRandomPosts($idUser=-1, $n=50, $offset=0){
         if($idUser!=-1) {
-            $query = "SELECT IDpost FROM POST, FOLLOWER
-            WHERE FOLLOWER.IDfollower=? AND POST.IDuser=FOLLOWER.IDfollowed
-            ORDER BY date DESC";
+            $query = "WITH A AS (SELECT IDpost FROM POST, FOLLOWER
+            WHERE FOLLOWER.IDfollower=2 AND POST.IDuser=FOLLOWER.IDfollowed
+            ORDER BY date DESC)
+            SELECT IDpost FROM A
+            UNION 
+            SELECT IDpost FROM POST WHERE IDpost NOT IN (SELECT IDpost FROM A) ORDER BY RAND()";
         }
         else {
             $query = "SELECT IDpost FROM POST ORDER BY RAND()";
