@@ -30,10 +30,10 @@ create table `USER` (
      constraint IDUSERS primary key (IDuser));
 
 create table RECIPE (
-     IDpost bigint not null,
+     IDrecipe bigint not null auto_increment,
      ingredients varchar(150) not null,
      method TEXT not null,
-     PRIMARY KEY (IDPost));
+     PRIMARY KEY (IDrecipe));
 
 create table POST (
      IDPost bigint not null auto_increment,
@@ -45,12 +45,8 @@ create table POST (
      IDrecipe bigint not null,
      FULLTEXT KEY title (title, description), 
      FOREIGN KEY (IDuser) references USER(IDuser),
-     FOREIGN KEY (IDrecipe) references USER(IDuser),
+     FOREIGN KEY (IDrecipe) references RECIPE(IDrecipe),
      PRIMARY KEY (IDPost));
-
-alter table RECIPE add constraint FKIDpost
-     foreign key (IDpost)
-     references POST (IDpost);
 
 create table COMMENT (
      IDcomment bigint not null auto_increment,
@@ -101,15 +97,15 @@ create table CATEGORY_RECIPE (
     IDcategory bigint not null,
     IDrecipe bigint not null,
     FOREIGN KEY (IDcategory) references CATEGORY(IDcategory),
-    FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
+    FOREIGN KEY (IDrecipe) references RECIPE(IDrecipe),
     PRIMARY KEY (IDcategory, IDrecipe));
 
 create table SAVED_RECIPE (
      IDuser bigint not null,
-     IDrecipe bigint not null,
+     IDpost bigint not null,
      FOREIGN KEY (IDuser) references USER(IDuser),
-     FOREIGN KEY (IDrecipe) references RECIPE(IDpost),
-     PRIMARY KEY (IDuser, IDrecipe));
+     FOREIGN KEY (IDpost) references POST(IDpost),
+     PRIMARY KEY (IDuser, IDpost));
 
 create table `LIKES` (
      IDcomment bigint not null,
@@ -136,5 +132,5 @@ CREATE VIEW INFOPOST AS
 
 CREATE VIEW INFOCOMMENT AS
      SELECT IDcomment, COUNT(IDuser) AS numLikes
-     FROM `LIKE`
+     FROM `LIKES`
      GROUP BY IDcomment;

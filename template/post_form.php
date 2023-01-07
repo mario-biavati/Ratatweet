@@ -22,17 +22,13 @@ else {
         <li>
             <label for="pic">Pic:</label><input type="file" name="pic" id="pic" />
         </li>
-        <li>
-            <input type="submit" name="submit" value="Invia"/>
-            <a href="index.php">Annulla</a>
-        </li>
     </ul>
     <!-- Pulsante per l'utilizzo di una ricetta salvata -->
     <button type="button" id="usa_ricetta">Usa ricetta salvata</button>
     <ul id="ricette_salvate" hidden="hidden">
         <?php foreach($savedRecipes as $recipe) : ?>
             <li>
-                <input type="radio" id=<?php echo "{$recipe["IDpost"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDpost"]}"; ?>"><label for="<?php echo "{$recipe["IDpost"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+                <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -48,9 +44,7 @@ else {
         <li>
             <label for="procedimento">Procedimento:</label><input type="text" name="procedimento" id="procedimento" />
         </li>
-        <li>
-            <input type="submit" name="submit" value="Conferma"/>
-            <a href="index.php">Annulla</a>
-        </li>
     </ul>
+    <input type="submit" name="submit" value="Invia"/>
+    <a href="index.php">Annulla</a>
 </form>

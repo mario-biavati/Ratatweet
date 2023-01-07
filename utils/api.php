@@ -3,9 +3,12 @@ require_once '../bootstrap.php';
 header("Content-Type: application/json");
 
 $loggedUser = (isset($_SESSION["idUser"])) ? $_SESSION["idUser"] : -1;
-
 if (isset($_GET["q"]) && $_GET["q"] == "getLoggedUser") {                //ritorna l'ID dello user loggato
     echo json_encode(array("idUser" => $loggedUser));
+}
+else if (isset($_GET["q"]) && $_GET["q"] == "getSelectedRecipe") {                //ritorna la ricetta eventualmente selezionata 
+    if(isset($_GET["IDrecipe"])) echo json_encode(array("IDrecipe" => $_GET["IDrecipe"]));
+    else echo json_encode(array("IDrecipe" => -1));
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getFeedPosts" && isset($_GET["offset"])) {
     echo json_encode($dbh->getFollowedRandomPosts($loggedUser,50,$_GET["offset"]));
@@ -125,6 +128,8 @@ else if (isset($_POST["q"]) && $_POST["q"] == "deleteRecipe" && isset($_SESSION[
     $dbh->removeRecipe($_SESSION["idUser"], $_POST["idPost"]);
     $result["esito"] = true;
     $result["errore"] = "Nessuno";
+    $result["IDpost"] = $_POST["idPost"];
+    $result["IDuser"] = $_SESSION["idUser"];
     header('Content-Type: application/json');
     echo json_encode($result);
 }
@@ -162,6 +167,21 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_post" && isset($_POST["titolo
         $result["esito"] = true;
         $result["errore"] = "Nessun errore";
         $result["IDpost"] = $create_post_result;
+    }
+    
+    header('Content-Type: application/json');
+    echo json_encode($result);
+}
+else if (isset($_POST["q"]) && $_POST["q"] == "new_recipe" && isset($_POST["ingredients"]) && isset($_POST["method"])) {
+    $result["esito"] = false;
+    $result["errore"] = "Non so!";
+    $result["IDrecipe"] = -1;
+    $create_recipe_result = $dbh->insertRecipe($_POST["ingredients"], $_POST["method"]);
+    if($create_recipe_result==0 || $create_recipe_result=="false") $result["errore"] = "Errore! Impossibile creare post!";
+    else {
+        $result["esito"] = true;
+        $result["errore"] = "Nessun errore";
+        $result["IDrecipe"] = $create_recipe_result;
     }
     
     header('Content-Type: application/json');

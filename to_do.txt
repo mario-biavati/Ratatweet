@@ -1,2 +1,1 @@
-1. pagina create_post.php: creazione di una nuova ricetta;
-2. pagine recipe.php: creazione di un post con una ricetta salvata;
+- Formattazione testo ingredienti pagina "crea_post.php" che crea una ricetta

@@ -3,10 +3,12 @@ function deleteRecipe(idPost) {
     formData.append('q', "deleteRecipe");
     formData.append('idPost', idPost);
     axios.post('utils/api.php', formData).then(response => {
-        document.querySelector("#DeleteRecipe-button").innerText = "Deleted!";
+        //console.log(response.data);
+        const idButton = "#DeleteRecipe-button" + idPost;
+        document.querySelector(idButton).innerText = "Deleted!";
     });
 }
 
-function useRecipe(idPost) {
-    location.href = "create_post.php?idPost=" + idPost;
+function useRecipe(idRecipe) {
+    location.href = "create_post.php?IDrecipe=" + idRecipe;
 }
