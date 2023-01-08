@@ -172,7 +172,7 @@ class DatabaseHelper{
 
     //inserimento di like su un commento
     public function insertLike($IDcomment, $IDuser){
-        $stmt = $this->prepare("INSERT INTO `LIKE` (IDcomment, IDuser) VALUES (?, ?)");
+        $stmt = $this->prepare("INSERT INTO `LIKES` (IDcomment, IDuser) VALUES (?, ?)");
         $stmt->bind_param('ii',$IDcomment, $IDuser);
         $stmt->execute();
 
@@ -180,7 +180,7 @@ class DatabaseHelper{
     }
     // rimozione di like da un commento
     public function deleteLike($IDcomment, $IDuser){
-        $query = "DELETE FROM `LIKE` WHERE IDcomment=? AND IDuser=?";
+        $query = "DELETE FROM `LIKES` WHERE IDcomment=? AND IDuser=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ii', $IDcomment, $IDuser);
 
@@ -254,10 +254,10 @@ class DatabaseHelper{
     }
     //Query che ritorna il commento in base all'ID
     function getCommentByID($IDComment, $IDuser = -1) {
-        $query = "SELECT C.IDcomment, C.text, C.date, U.IDuser, U.username, U.pic, A.likes, B.liked FROM COMMENT AS C, USER AS U, (SELECT COUNT(IDuser) AS likes FROM `LIKE` WHERE IDcomment=?) AS A, (SELECT COUNT(*) AS liked FROM `LIKE` WHERE IDcomment=? AND IDuser=?) AS B
-        WHERE C.IDuser=U.IDuser AND C.IDcomment=?";
+        $query = "SELECT COMMENT.IDcomment, COMMENT.text, COMMENT.date, U.IDuser, U.username, U.pic, COALESCE(numLikes, 0) AS likes, B.liked FROM COMMENT NATURAL LEFT JOIN INFOCOMMENT, USER AS U, (SELECT COUNT(*) AS liked FROM `LIKES` WHERE IDcomment=? AND IDuser=?) AS B
+        WHERE COMMENT.IDuser=U.IDuser AND COMMENT.IDcomment=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('iiii',$IDComment, $IDComment, $IDuser, $IDComment);
+        $stmt->bind_param('iii', $IDComment, $IDuser, $IDComment);
         $stmt->execute();
         $result = $stmt->get_result();
 

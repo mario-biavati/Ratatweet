@@ -10,6 +10,7 @@ function printComment(idComment, where, first = false) {
     //load comment
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let comment = r.data;
+        console.log(comment);
         let htmlContent = 
         `<div id="${comment.IDcomment}" class="row mt-2">
         <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
@@ -210,7 +211,7 @@ axios.get("utils/api.php?q=getComments&id=" + id).then(r => {
     r.data.forEach(element => {
         arrayComment.push(element.IDcomment);
     });
-
+    console.log(arrayComment);
     document.getElementById("addCommentButton").firstChild.innerText = arrayComment.length;
     loadComments(5);
 });
