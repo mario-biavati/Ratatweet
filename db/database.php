@@ -72,10 +72,10 @@ class DatabaseHelper{
     }
 
     // Query di rimozione di una ricetta
-    public function removeRecipe($IDuser, $IDrecipe){
-        $query = "DELETE FROM SAVED_RECIPE WHERE IDUser=? AND IDrecipe=?";
+    public function removeRecipe($IDuser, $IDpost){
+        $query = "DELETE FROM SAVED_RECIPE WHERE IDuser=? AND IDpost=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('ii', $IDuser, $IDrecipe);
+        $stmt->bind_param('ii', $IDuser, $IDpost);
         return $stmt->execute();
     }
 
@@ -146,9 +146,9 @@ class DatabaseHelper{
     }
 
     //Query inserimento nuova ricetta
-    public function insertRecipe($idPost, $ingredients, $method){
-        $stmt = $this->prepare("INSERT INTO RECIPE (IDpost, ingredients, method) VALUES (?, ?, ?)");
-        $stmt->bind_param('iss',$idPost, $ingredients, $method);
+    public function insertRecipe($ingredients, $method){
+        $stmt = $this->prepare("INSERT INTO RECIPE (ingredients, method) VALUES (?, ?)");
+        $stmt->bind_param('ss', $ingredients, $method);
         $stmt->execute();
 
         return $stmt->insert_id;
@@ -315,10 +315,10 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //Query ottenimento di una ricetta
-    public function getRecipe($idPost){
-        $query = "SELECT * FROM RECIPE WHERE IDpost=?";
+    public function getRecipe($IDrecipe){
+        $query = "SELECT * FROM RECIPE WHERE IDrecipe=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('i',$idPost);
+        $stmt->bind_param('i',$IDrecipe);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -326,9 +326,9 @@ class DatabaseHelper{
     }
     //Query ottenimento ricette salvate da un utente
     public function getSavedRecipes($idUser){
-        $query = "SELECT RECIPE.ingredients, RECIPE.method, USER.username, POST.IDpost, POST.title FROM SAVED_RECIPE, RECIPE, POST, USER 
-                  WHERE SAVED_RECIPE.IDuser=? AND SAVED_RECIPE.IDrecipe=RECIPE.IDpost 
-                  AND RECIPE.IDpost=POST.IDPost AND POST.IDuser=USER.IDuser";
+        $query = "SELECT RECIPE.IDrecipe, RECIPE.ingredients, RECIPE.method, USER.username, POST.IDpost, POST.title FROM SAVED_RECIPE, RECIPE, POST, USER 
+                  WHERE SAVED_RECIPE.IDuser=? AND SAVED_RECIPE.IDpost=POST.IDpost
+                  AND RECIPE.IDrecipe=POST.IDrecipe AND POST.IDuser=USER.IDuser";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$idUser);
         $stmt->execute();
@@ -374,7 +374,7 @@ class DatabaseHelper{
         $query .= " WHERE MATCH(title,description) AGAINST(?) > 0";
 
         if (count($categories) > 0) {
-            $query .= " AND CATEGORY_RECIPE.IDrecipe=RECIPE.IDpost AND CATEGORY.IDcategory=CATEGORY_RECIPE.IDcategory AND POST.IDrecipe=RECIPE.IDpost 
+            $query .= " AND CATEGORY_RECIPE.IDrecipe=RECIPE.IDrecipe AND CATEGORY.IDcategory=CATEGORY_RECIPE.IDcategory AND POST.IDrecipe=RECIPE.IDrecipe 
              AND CATEGORY.name IN (".implode(",",$categories).")";
         }
 
