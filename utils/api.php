@@ -82,11 +82,16 @@ else if (isset($_POST["q"]) && $_POST["q"] == "deleteLike" && isset($_POST["id"]
     }
     echo json_encode($result);
 }
-else if (isset($_POST["q"]) && $_POST["q"] == "saveRecipe" && isset($_SESSION["idUser"]) && isset($_POST["id"])) {
-    $dbh->saveRecipe($loggedUser, $_POST["id"]);
-    $result["esito"] = true;
-    $result["errore"] = "Nessuno";
-    header('Content-Type: application/json');
+else if (isset($_POST["q"]) && $_POST["q"] == "saveRecipe" && isset($_POST["id"])) {
+    if (isset($_SESSION["idUser"])) {
+        $dbh->saveRecipe($loggedUser, $_POST["id"]);
+        $result["esito"] = true;
+        $result["errore"] = "Nessuno";
+        header('Content-Type: application/json');
+    } else {
+        $result["esito"] = false;
+        $result["errore"] = "Not Logged";
+    }
     echo json_encode($result);
 }
 else if (isset($_POST["q"]) && $_POST["q"] == "addFollowed" && isset($_SESSION['idUser']) && isset($_POST["idFollowed"])) {

@@ -34,17 +34,19 @@ else {
     </ul>
     <!-- Pulsante per la creazione di una nuova ricetta -->
     <button type="button" id="crea_ricetta">Crea nuova ricetta</button>
-    <ul id="form_crea_ricetta" hidden="hidden">
-        <li>
-            <label for="ingrediente">Ingrediente:</label><input type="text" id="ingrediente" name="ingrediente"/>
-        </li>
-        <li>
-            <label for="descrizione">Quantità:</label><input type="text" name="quantita" id="quantita" />
-        </li>
-        <li>
-            <label for="procedimento">Procedimento:</label><input type="text" name="procedimento" id="procedimento" />
-        </li>
-    </ul>
+    <div id="form_crea_ricetta" hidden="hidden">
+        <label>Ingredients:</label>
+        <ul id="ingredients_list">
+            <li>
+                <input type="text" name="ingrediente" placeholder="Ingredient"/>
+                <input type="text" name="quantita" placeholder="Quantity"/>
+            </li>
+            <li>
+                <button type="button" id="new_ingredient" onclick="addIngredient()">Add Ingredient</button>
+            </li>
+        </ul>
+        <label for="procedimento">Method:</label><input type="text" name="procedimento" id="procedimento" />
+        </div>
     <input type="submit" name="submit" value="Invia"/>
     <a href="index.php">Annulla</a>
 </form>

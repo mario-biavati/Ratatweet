@@ -1,4 +1,5 @@
 let currentSelection = "None";
+let imgSelected = false;
 
 //Controllo al caricamento pagina che non ci sia un ricetta già selezionata
 document.onload = checkAlreadySelectedRecipe();
@@ -20,18 +21,40 @@ function checkAlreadySelectedRecipe(){
         element.checked = true;
     }
 }
+// check if fields are complete
+function checkInputs() {
+    return document.querySelector("#titolo").value != '' && document.querySelector("#descrizione").value != '' && document.querySelector("input[name='pic']").value != '';
+}
 
 //Invio form
 document.querySelector("main form").addEventListener("submit", function (event) {
     event.preventDefault();
+    if (!checkInputs()) {
+        document.querySelector("form > p").innerText = "Complete all fields!";
+        return;
+    }
     const titolo = document.querySelector("#titolo").value;
     const descrizione = document.querySelector("#descrizione").value;
     const pic = document.querySelector("input[name='pic']").files[0];
     if(currentSelection=="Crea ricetta") {
         //Formattare ingrediente e quantita
-        const ingredienti = document.querySelector("#ingrediente").value;
         const procedimento = document.querySelector("#procedimento").value;
-        new_recipe_new_post(titolo, descrizione, pic, ingredienti, procedimento);
+        
+        const ingredients = document.querySelectorAll("#ingredients_list>li>input[name=ingrediente]");
+        const quantities = document.querySelectorAll("#ingredients_list>li>input[name=quantita]");
+
+        let ingr = {};
+        for (let i = 0; i<ingredients.length; i++) {
+            if (ingredients[i].value == '' || quantities[i].value == '') {
+                console.log("Formato ingredienti non valido");
+                document.querySelector("form > p").innerText = "Cannot create recipe with empty fields!";
+                return;
+            }
+            //add ingredients
+            ingr[ingredients[i].value] = quantities[i].value;
+        }
+        console.log("INGREDIENTS = " +JSON.stringify(ingr));
+        new_recipe_new_post(titolo, descrizione, pic, JSON.stringify(ingr), procedimento);
     }
     else if(currentSelection=="Usa ricetta") {
         const idRicetta = document.querySelector('input[name="recipe"]:checked').value;   //Uso la ricetta selezionata tra quelle salvate
@@ -85,6 +108,11 @@ function new_recipe_new_post(titolo, descrizione, pic, ingredienti, procedimento
         if (response.data["esito"]==true) { //Abbiamo creato la ricetta, possiamo creare il post ad essa associato
             id_recipe = response.data["IDrecipe"];
             new_post(titolo, descrizione, pic, id_recipe);
+            //save recipe
+            const formData2 = new FormData();
+            formData.append('q', "saveRecipe");
+            formData.append('id', id_recipe);
+            axios.post('utils/api.php', formData2);
         } else {
             console.log(response.data["esito"]);
             console.log("NACK");
@@ -134,4 +162,11 @@ function new_post(titolo, descrizione, pic, idRicetta) {
             });
     }
     reader.readAsBinaryString(pic);
+}
+
+function addIngredient() {
+    const list = document.getElementById("ingredients_list");
+    const li = list.firstElementChild.cloneNode(true);
+    li.childNodes.forEach(inp => inp.value = null);
+    list.insertBefore(li, list.lastElementChild);
 }
