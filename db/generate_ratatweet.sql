@@ -33,6 +33,8 @@ create table RECIPE (
      IDrecipe bigint not null auto_increment,
      ingredients varchar(150) not null,
      method TEXT not null,
+     IDuser bigint not null,
+     FOREIGN KEY (IDuser) references USER(IDuser),
      PRIMARY KEY (IDrecipe));
 
 create table POST (

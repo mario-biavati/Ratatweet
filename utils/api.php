@@ -103,7 +103,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "addFollowed" && isset($_SESSION['
     $result["errore"] = "Nessuno";
 
     //notify follow
-    $dbh->insertNotification("Follow", $_POST["idFollowed"], $loggedUser);
+    $dbh->notifyFollow($loggedUser, $_POST["idFollowed"]);
 
     header('Content-Type: application/json');
     echo json_encode($result);
@@ -182,9 +182,9 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_post" && isset($_POST["titolo
 
         //notify post
         $dbh->notifyPost($loggedUser, $result["IDpost"]);
-        if (isset($_POST["IDrecipe"])) {
+        if (isset($_POST["recipe"])) {
             //notify recipe
-            //$dbh->insertNotification("Recipe", $_POST["idFollowed"], $loggedUser);
+            $dbh->notifyRecipe($loggedUser, $result["IDpost"]);
         }
     }
     

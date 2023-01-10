@@ -117,6 +117,24 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
     }
+    public function notifyRecipe($IDnotifier, $IDpost) {
+        $query = "INSERT INTO NOTIFICATION(notifier, IDuser, type, IDpost)
+        SELECT ? AS notifier, RECIPE.IDuser AS IDuser, 'Recipe' AS type, POST.IDpost AS IDpost
+        FROM RECIPE, POST
+        WHERE RECIPE.IDrecipe=POST.IDrecipe AND POST.IDpost=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $IDnotifier, $IDpost);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+    public function notifyFollow($IDnotifier, $IDfollowed) {
+        $stmt = $this->prepare("INSERT INTO NOTIFICATION (type, IDuser, notifier, IDpost) VALUES ('Follow', ?, ?, NULL)");
+        $stmt->bind_param('ii', $IDfollowed, $IDnotifier);
+        $stmt->execute();
+
+        return $stmt->insert_id;
+    }
+
 
     // Query di login
     public function login($username, $password){
@@ -200,7 +218,7 @@ class DatabaseHelper{
     // }
     //Query inserimento notifica
     public function insertNotification($type, $idUser, $notifier, $idPost=NULL){
-        $stmt = $this->prepare("INSERT INTO RATING (type, IDuser, notifier, IDpost) VALUES (?, ?, ?, ?)");
+        $stmt = $this->prepare("INSERT INTO NOTIFICATION (type, IDuser, notifier, IDpost) VALUES (?, ?, ?, ?)");
         $stmt->bind_param('siii',$type, $idUser, $notifier, $idPost);
         $stmt->execute();
 
