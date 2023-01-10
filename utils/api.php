@@ -40,6 +40,9 @@ else if (isset($_POST["q"]) && $_POST["q"] == "postComment" && isset($_POST["id"
         $result["esito"] = true;
         $result["errore"] = "Nessuno";
         $result["id"] = $val;
+
+        //notify comment
+        $dbh->notifyComment($loggedUser, $_POST["id"]);
     } else {
         $result["esito"] = false;
         $result["errore"] = "Not Logged";
@@ -98,6 +101,10 @@ else if (isset($_POST["q"]) && $_POST["q"] == "addFollowed" && isset($_SESSION['
     $dbh->addFollowed($loggedUser, $_POST["idFollowed"]);
     $result["esito"] = true;
     $result["errore"] = "Nessuno";
+
+    //notify follow
+    $dbh->insertNotification("Follow", $_POST["idFollowed"], $loggedUser);
+
     header('Content-Type: application/json');
     echo json_encode($result);
 }
@@ -172,6 +179,13 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_post" && isset($_POST["titolo
         $result["esito"] = true;
         $result["errore"] = "Nessun errore";
         $result["IDpost"] = $create_post_result;
+
+        //notify post
+        $dbh->notifyPost($loggedUser, $result["IDpost"]);
+        if (isset($_POST["IDrecipe"])) {
+            //notify recipe
+            //$dbh->insertNotification("Recipe", $_POST["idFollowed"], $loggedUser);
+        }
     }
     
     header('Content-Type: application/json');

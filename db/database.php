@@ -97,22 +97,25 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    // Query di attivazione/deattivazione notifiche
-    public function enableNotifications($IDuser, $IDfollowed, $value){
-        $query = "UPDATE FOLLOWER SET notification=? WHERE IDfollower=? AND IDfollowed=?";
+    public function notifyPost($IDnotifier, $IDpost) {
+        $query = "INSERT INTO NOTIFICATION(notifier, IDuser, type, IDpost)
+        SELECT ? AS notifier, FOLLOWER.IDfollower AS IDuser, 'Post' AS type, ? AS IDpost
+        FROM FOLLOWER
+        WHERE FOLLOWER.IDfollowed=? AND FOLLOWER.notification = TRUE";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('iii', $value, $IDuser, $IDfollowed);
-        return $stmt->execute();
-    }
-
-    //Query per comprendere se le notifiche per un determinato user sono attive/disattive
-    public function getNotificationStatus($IDuser, $IDfollowed){
-        $query = "SELECT notification FROM FOLLOWER WHERE IDfollower=? AND IDfollowed=?";
-        $stmt = $this->prepare($query);
-        $stmt->bind_param('ii', $IDuser, $IDfollowed);
+        $stmt->bind_param('iii', $IDnotifier, $IDpost, $IDnotifier);
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->insert_id;
+    }
+    public function notifyComment($IDnotifier, $IDpost) {
+        $query = "INSERT INTO NOTIFICATION(notifier, IDuser, type, IDpost)
+        SELECT ? AS notifier, POST.IDuser AS IDuser, 'Comment' AS type, ? AS IDpost
+        FROM POST
+        WHERE POST.IDPost=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('iii', $IDnotifier, $IDpost, $IDpost);
+        $stmt->execute();
+        return $stmt->insert_id;
     }
 
     // Query di login
@@ -196,7 +199,7 @@ class DatabaseHelper{
     //     return $stmt->insert_id;
     // }
     //Query inserimento notifica
-    public function insertNotification($type, $idUser, $notifier, $idPost){
+    public function insertNotification($type, $idUser, $notifier, $idPost=NULL){
         $stmt = $this->prepare("INSERT INTO RATING (type, IDuser, notifier, IDpost) VALUES (?, ?, ?, ?)");
         $stmt->bind_param('siii',$type, $idUser, $notifier, $idPost);
         $stmt->execute();
