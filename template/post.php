@@ -40,7 +40,7 @@ if (isset($_GET["id"])) :
     <section class="row mt-5" id="recipe">
         <h2 class="fw-bold">Recipe:</h2>
         <h3>Ingredients:</h3>
-        <ul>
+        <ul style="margin-left: 20px;">
             <?php foreach(json_decode($recipeData["ingredients"], true) as $ing => $q) {
                 echo "<li>".$ing.": ".$q."</li>";
             }?>

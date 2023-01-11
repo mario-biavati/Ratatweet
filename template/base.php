@@ -39,7 +39,7 @@
                 </div>
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
                     <a href="<?php echo "{$href_notification}"; ?>" class="position-relative"><img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
-                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px" hidden>99+
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </a>
@@ -63,9 +63,8 @@
                 <a href="<?php echo "{$href_notification}"; ?>" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark">
                     <div class="position-relative">
                         <img src="img/notification-icon.png" class="img-fluid" style="max-height: 30px"/>
-                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px">99+
-                            <span class="visually-hidden">unread messages
-                            </span>
+                        <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px" hidden>99+
+                            <span class="visually-hidden">unread messages</span>
                         </span>
                     </div>
                     <h5 class="d-none d-lg-block ms-5">Notifications</h5>
@@ -100,5 +99,6 @@
         endforeach;
     endif;
     ?>
+    <script src="js/check_notifications.js"></script>
 </body>
 </html>

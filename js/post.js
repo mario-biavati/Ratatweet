@@ -12,7 +12,7 @@ function printComment(idComment, where, first = false) {
         let comment = r.data;
         console.log(comment);
         let htmlContent = 
-        `<div id="${comment.IDcomment}" class="row mt-2">
+        `<div id="${comment.IDcomment}" class="row mt-2 pb-2 border-bottom">
         <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
             <img src="${comment.pic}" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
         </div>
@@ -23,7 +23,7 @@ function printComment(idComment, where, first = false) {
             <p>
                 ${comment.text}
             </p>
-            <div class="d-flex mt-1">
+            <div class="d-flex">
                 <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like`;
         if (comment.liked == 1) htmlContent += ' liked';
         htmlContent += `"/><span>${comment.likes}</span></button>
@@ -35,8 +35,8 @@ function printComment(idComment, where, first = false) {
         </div>
         <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="postReply(${comment.IDcomment},this); return false;">
             <input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
-            <button type="submit" class="btn btn-info mb-2 mt-1">Post Reply</button>
-            <button type="reset" class="btn btn-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
+            <button type="submit" class="btn btn-info mt-1">Post Reply</button>
+            <button type="reset" class="btn btn-secondary mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
         </form>
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
         </div>
@@ -63,7 +63,7 @@ function printReply(idComment, where, first = false) {
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let comment = r.data;
         let htmlContent = 
-        `<div id="${comment.IDcomment}" class="row mt-2">
+        `<div id="${comment.IDcomment}" class="row mt-2 pb-2 border-bottom">
         <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
             <img src="${comment.pic}" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
         </div>
@@ -74,7 +74,7 @@ function printReply(idComment, where, first = false) {
             <p>
                 ${comment.text}
             </p>
-            <div class="d-flex mt-1">
+            <div class="d-flex">
             <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like`;
             if (comment.liked == 1) htmlContent += ' liked';
             htmlContent += `"/><span>${comment.likes}</span></button>

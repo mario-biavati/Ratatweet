@@ -111,9 +111,9 @@ class DatabaseHelper{
         $query = "INSERT INTO NOTIFICATION(notifier, IDuser, type, IDpost)
         SELECT ? AS notifier, POST.IDuser AS IDuser, 'Comment' AS type, ? AS IDpost
         FROM POST
-        WHERE POST.IDPost=?";
+        WHERE POST.IDPost=? AND POST.IDuser<>?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('iii', $IDnotifier, $IDpost, $IDpost);
+        $stmt->bind_param('iiii', $IDnotifier, $IDpost, $IDpost, $IDnotifier);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -121,9 +121,9 @@ class DatabaseHelper{
         $query = "INSERT INTO NOTIFICATION(notifier, IDuser, type, IDpost)
         SELECT ? AS notifier, RECIPE.IDuser AS IDuser, 'Recipe' AS type, POST.IDpost AS IDpost
         FROM RECIPE, POST
-        WHERE RECIPE.IDrecipe=POST.IDrecipe AND POST.IDpost=?";
+        WHERE RECIPE.IDrecipe=POST.IDrecipe AND POST.IDpost=? AND RECIPE.IDuser<>?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('ii', $IDnotifier, $IDpost);
+        $stmt->bind_param('iii', $IDnotifier, $IDpost, $IDnotifier);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -134,7 +134,14 @@ class DatabaseHelper{
 
         return $stmt->insert_id;
     }
-
+    public function getNotificationNumber($IDuser) {
+        $query = "SELECT COUNT(*) AS count FROM NOTIFICATION WHERE IDuser=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i',$IDuser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     // Query di login
     public function login($username, $password){
@@ -208,22 +215,6 @@ class DatabaseHelper{
         return $stmt->execute();
     }
 
-    // //Query inserimento rating ad un post
-    // public function insertRating($idUser, $idPost, $rating){
-    //     $stmt = $this->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?)");
-    //     $stmt->bind_param('iii',$idUser, $idPost, $rating);
-    //     $stmt->execute();
-
-    //     return $stmt->insert_id;
-    // }
-    //Query inserimento notifica
-    public function insertNotification($type, $idUser, $notifier, $idPost=NULL){
-        $stmt = $this->prepare("INSERT INTO NOTIFICATION (type, IDuser, notifier, IDpost) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param('siii',$type, $idUser, $notifier, $idPost);
-        $stmt->execute();
-
-        return $stmt->insert_id;
-    }
     //Query dichiarazione notifica visualizzata
     public function seenNotification($idNotification){
         $query = "DELETE FROM NOTIFICATION WHERE IDnotification=?";
