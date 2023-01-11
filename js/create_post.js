@@ -5,14 +5,7 @@ let imgSelected = false;
 document.onload = checkAlreadySelectedRecipe();
 
 function checkAlreadySelectedRecipe(){
-    var parts = window.location.search.substr(1).split("&");
-    var $_GET = {};
-    for (var i = 0; i < parts.length; i++) {
-        var temp = parts[i].split("=");
-        $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
-    }
-    if($_GET['IDrecipe']) {
-        let IDrecipe = $_GET['IDrecipe']; 
+    if(typeof IDrecipe !== 'undefined') {
         currentSelection="Usa ricetta";
         let element = document.querySelector("#ricette_salvate");
         let hidden = element.getAttribute("hidden");

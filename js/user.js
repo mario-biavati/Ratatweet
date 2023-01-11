@@ -69,53 +69,60 @@ function disableNotifications() {
 }
 
 function printPost(idPost) {
-    axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
-        let post = r.data;
-        let htmlContent = 
-        `<article id="${post.IDpost}">
-            <header>
-                <a href="post.php?id=${post.IDpost}">
-                    <h1> ${post.title} </h1>
-                </a>
-                <a href="user_page.php?id=${post.IDuser}">
-                    <h2> ${post.username} </h2>
-                </a>
-                <input type="image" src="img/recipe-icon.png" alt="Save recipe" onclick="saveRecipe(${post.IDrecipe})">
-            </header>
-            <section>
-                <div>
-                    <img src="data:image/png;base64,${post.pic}" alt="${post.title}"  width = "50px" height = "50px" />
-                </div>
-            </section>
-            <section>
-                <div alt="Average rating">
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star1" alt="vota 1 stella" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star2" alt="vota 2 stelle" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star3" alt="vota 3 stelle" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star4" alt="vota 4 stelle" />
-                    <img src="./img/stella_vuota.png" id="${post.IDpost}-Star5" alt="vota 5 stelle" />
-                    <h2>"Average rating: ${post.avgRating}"</h2>
-                </div>
-                <div alt="Comments number">
-                    <h2>${post.numComments}</h2>
+    return new Promise((resolve) => {
+        axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
+            let post = r.data;
+            let htmlContent = 
+            `<article id="${post.IDpost}">
+                <header>
                     <a href="post.php?id=${post.IDpost}">
-                        <img src="img/comment-icon.png" alt="Guarda commenti" />
+                        <h1> ${post.title} </h1>
                     </a>
-                </div>
-            </section>
-        </article>`;
-        posts.innerHTML += htmlContent;
+                    <a href="user_page.php?id=${post.IDuser}">
+                        <h2> ${post.username} </h2>
+                    </a>
+                    <input type="image" src="img/recipe-icon.png" alt="Save recipe" onclick="saveRecipe(${post.IDrecipe})">
+                </header>
+                <section>
+                    <div>
+                        <img src="${post.pic}" alt="${post.title}" />
+                    </div>
+                </section>
+                <section>
+                    <div alt="Average rating">
+                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star1" alt="vota 1 stella" />
+                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star2" alt="vota 2 stelle" />
+                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star3" alt="vota 3 stelle" />
+                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star4" alt="vota 4 stelle" />
+                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star5" alt="vota 5 stelle" />
+                        <h2>"Average rating: ${post.avgRating}"</h2>
+                    </div>
+                    <div alt="Comments number">
+                        <h2>${post.numComments}</h2>
+                        <a href="post.php?id=${post.IDpost}">
+                            <img src="img/comment-icon.png" alt="Guarda commenti" />
+                        </a>
+                    </div>
+                </section>
+            </article>`;
+            //main.innerHTML += htmlContent;
+            resolve(htmlContent);
+        });
     });
 }
-function loadPosts(n_post) {
+async function loadPosts(n_post) {
+    canPrintPost = false;
+    let HTMLcontent = '';
     for (let i = 0; i < n_post; i++) {
 
         if (i + cur_lastPost >= arrayPost.length) {
             cur_lastPost += i;
+            posts.innerHTML += HTMLcontent;
             return;
         }
-        printPost(arrayPost[i + cur_lastPost]);
+        HTMLcontent += await printPost(arrayPost[i + cur_lastPost]);
     }
+    posts.innerHTML += HTMLcontent;
     cur_lastPost = cur_lastPost + n_post;
     canPrintPost = true;
 }
@@ -124,7 +131,6 @@ function isAtBottom() {
 }
 function reloadPosts() {
     if (isAtBottom() && canPrintPost) {
-        canPrintPost = false;
         loadPosts(5);
     }
 }
@@ -139,7 +145,7 @@ axios.get('utils/api.php?q=getLoggedUser').then(r => {
         r2.data.forEach(element => {
             arrayPost.push(element.IDpost);
         });
-        canPrintPost = false;
+
         loadPosts(5);
     });
 });
