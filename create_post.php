@@ -3,7 +3,7 @@ require_once("bootstrap.php");
 
 $templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/create_post.js");
 $templateParams["title"] = "Ratatweet - New Post"; 
-//$templateParams["header"] = "header_long.html";
+$templateParams["header"] = "header_short.html";
 if(!isUserLoggedIn()) {
     $templateParams["main"] = "login_form.php";
     array_push($templateParams["js"], "js/login.js");
