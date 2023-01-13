@@ -9,7 +9,7 @@
     <link href="css/like.css" rel="stylesheet">
 </head>
 <body>
-    <header class="fixed-top bg-white bg-gradient row justify-content-end" style="height: 7%; max-height: 85px; min-height: 70px;">
+    <header class="fixed-top bg-white bg-gradient row justify-content-end" style="height: 7%;">
         <?php
         if(isset($templateParams["header"])){
             require($templateParams["header"]);
@@ -25,7 +25,7 @@
         ?>
         <!--Mobile-->
         <div class="d-md-none container">
-            <div class="d-flex border-top border-dark fixed-bottom">
+            <div class="d-flex border-top border-dark fixed-bottom"  style="height: 7%;">
                 <div class="d-flex justify-content-center p-2 bg-info" style="min-width: 20%">
                     <input type="image" src="img/search-icon.png" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
                 </div>
