@@ -1,20 +1,22 @@
+<div class="d-flex-column p-5 text-center">
+    <form action="#" method="POST">
+        <h1>Login</h1>
+        <p></p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0">
+                <input type="text" id="username" name="username" placeholder="Username" class="form-control w-25 mx-auto"/>
+            </li>
+            <li class="list-group-item border-0">
+                <input type="password" id="password" name="password" placeholder="Password" class="form-control w-25 mx-auto"/>
+            </li>
+            <li class="list-group-item border-0">
+                <input type="submit" name="submit" value="Login" class="btn btn-info text-white" class="form-control"/>
+            </li>
+                </ul>
+    </form>
+    <section class="mt-5">
+        <span>Don't have an account yet? </span>
+        <a href="registration_page.php" class="link-primary">Register</a>
+    </section> 
+</div>
 
-<form action="#" method="POST">
-    <h1>Login</h1>
-    <p></p>
-    <ul>
-        <li>
-            <label for="username">Username:</label><input type="text" id="username" name="username" />
-        </li>
-        <li>
-            <label for="password">Password:</label><input type="password" id="password" name="password" />
-        </li>
-        <li>
-            <input type="submit" name="submit" value="Invia" />
-        </li>
-            </ul>
-</form>
-<section>
-    <h2>OR</h2>
-    <a href="registration_page.php">Register</a>
-</section>

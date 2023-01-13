@@ -9,7 +9,7 @@
     <link href="css/like.css" rel="stylesheet">
 </head>
 <body>
-    <header class="fixed-top bg-white bg-gradient row justify-content-end" style="height: 7%;">
+    <header class="fixed-top bg-white bg-gradient row justify-content-end" style="height: 7vh;">
         <?php
         if(isset($templateParams["header"])){
             require($templateParams["header"]);
@@ -77,7 +77,7 @@
             </div>
         </div>
     </nav>
-    <main class="mb-5 offset-md-1 offset-lg-3" style="margin-top: 8%;">
+    <main class="mb-5 offset-md-1 offset-lg-3" style="margin-top: 8vh;">
         <?php
         if(isset($templateParams["main"])){
             require($templateParams["main"]);
