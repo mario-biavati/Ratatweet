@@ -1,13 +1,13 @@
-<div class="d-flex-column p-5 text-center">
+<div class="d-block p-5 text-center">
     <form action="#" method="POST">
         <h1>Login</h1>
         <p></p>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item border-0">
-                <input type="text" id="username" name="username" placeholder="Username" class="form-control w-25 mx-auto"/>
+            <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
+                <input type="text" id="username" name="username" placeholder="Username" class="form-control w-100"/>
             </li>
-            <li class="list-group-item border-0">
-                <input type="password" id="password" name="password" placeholder="Password" class="form-control w-25 mx-auto"/>
+            <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
+                <input type="password" id="password" name="password" placeholder="Password" class="form-control w-100"/>
             </li>
             <li class="list-group-item border-0">
                 <input type="submit" name="submit" value="Login" class="btn btn-info text-white" class="form-control"/>
