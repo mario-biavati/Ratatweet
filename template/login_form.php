@@ -1,7 +1,7 @@
 <div class="d-block p-5 text-center">
     <form action="#" method="POST">
         <h1>Login</h1>
-        <p></p>
+        <p class="text-danger"></p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
                 <input type="text" id="username" name="username" placeholder="Username" class="form-control w-100"/>
