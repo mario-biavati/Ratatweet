@@ -9,7 +9,7 @@
     <link href="css/like.css" rel="stylesheet">
 </head>
 <body>
-    <header class="fixed-top bg-white bg-gradient row justify-content-end" style="height: 7vh;">
+    <header class="fixed-top bg-white row justify-content-end" style="height: 7vh;">
         <?php
         if(isset($templateParams["header"])){
             require($templateParams["header"]);
@@ -26,29 +26,29 @@
         ?>
         <!--Mobile-->
         <div class="d-md-none container">
-            <ul class="border-top border-dark fixed-bottom navbar-nav d-flex flex-row" style="height: 7vh;">
-                <li class="d-flex justify-content-center p-2 bg-info navbar-item" style="min-width: 20%">
+            <ul class="border-top border-dark fixed-bottom navbar-nav d-flex flex-row bg-info" style="height: 7vh;">
+                <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <input type="image" src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
                 </li>
-                <div class="col-9 bg-info collapse collapse-horizontal" id="collapseSearch">
+                <div class="col-9 me-2 collapse collapse-horizontal" id="collapseSearch">
                     <form class="py-2" action="index.php">
                         <input type="search" name="search" id="searchBar" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 30px; width: 72vw"/>
                     </form>
                 </div>
-                <li class="d-flex justify-content-center p-2 bg-info navbar-item" style="min-width: 20%">
+                <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <a href="index.php"><img src="img/home-icon.png" alt="Home" class="img-fluid" style="max-height: 30px"/></a>
                 </li>
-                <li class="d-flex justify-content-center p-2 bg-info navbar-item" style="min-width: 20%">
+                <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <a href="<?php echo "{$href_notification}"; ?>" class="position-relative"><img src="img/notification-icon.png" alt="Notifications" class="img-fluid" style="max-height: 30px"/>
                         <span class="position-absolute top-0 notification start-100 translate-middle badge rounded-pill bg-danger" style="max-height: 20px" hidden>99+
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </a>
                 </li>
-                <li class="d-flex justify-content-center p-2 bg-info navbar-item" style="min-width: 20%">
+                <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <a href="<?php echo "{$href_recipe}"; ?>"><img src="img/recipe-icon.png" alt="My Recipies" class="img-fluid" style="max-height: 30px"/></a>
                 </li>
-                <li class="d-flex justify-content-center p-2 bg-info navbar-item" style="min-width: 20%">
+                <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <a href="<?php echo "{$href_user}"; ?>"><img src="img/default-profile-icon.png" alt="Profile" class="img-fluid" style="max-height: 30px"/></a>
                 </li>
             </ul>
