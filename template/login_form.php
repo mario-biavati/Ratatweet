@@ -9,8 +9,8 @@
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
                 <input type="password" id="password" name="password" placeholder="Password" class="form-control w-100"/>
             </li>
-            <li class="list-group-item border-0">
-                <input type="submit" name="submit" value="Login" class="btn btn-info text-white" class="form-control"/>
+            <li class="list-group-item border-0 mt-3">
+                <input type="submit" name="submit" value="Login" class="btn btn-info text-white"/>
             </li>
                 </ul>
     </form>
