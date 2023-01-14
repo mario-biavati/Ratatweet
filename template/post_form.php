@@ -7,46 +7,72 @@ else {
     header("Location: registration_page.php");
 }
 ?>
-
-<form action="#" method="POST">
-    <!-- Parametri del post -->
-    <h1>POST</h1>
-    <p></p>
-    <ul>
-        <li>
-            <label for="titolo">Titolo:</label><input type="text" id="titolo" name="titolo"/>
-        </li>
-        <li>
-            <label for="descrizione">Descrizione:</label><input type="text" name="descrizione" id="descrizione" />
-        </li>
-        <li>
-            <label for="pic">Pic:</label><input type="file" name="pic" id="pic" />
-        </li>
-    </ul>
-    <!-- Pulsante per l'utilizzo di una ricetta salvata -->
-    <button type="button" id="usa_ricetta">Usa ricetta salvata</button>
-    <ul id="ricette_salvate" hidden="hidden">
-        <?php foreach($savedRecipes as $recipe) : ?>
-            <li>
-                <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+<div class="d-block py-5 px-3 text-center">
+    <form action="#" method="POST">
+        <!-- Parametri del post -->
+        <h1>Crea Post</h1>
+        <p class="text-danger"></p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0 col-10 col-md-5 col-lg-4 mx-auto">
+                <label for="titolo" class="fw-semibold">Title:</label>
+                <input type="text" id="titolo" name="titolo" class="form-control"/>
             </li>
-        <?php endforeach; ?>
-    </ul>
-    <!-- Pulsante per la creazione di una nuova ricetta -->
-    <button type="button" id="crea_ricetta">Crea nuova ricetta</button>
-    <div id="form_crea_ricetta" hidden="hidden">
-        <label>Ingredients:</label>
-        <ul id="ingredients_list">
-            <li>
-                <input type="text" name="ingrediente" placeholder="Ingredient"/>
-                <input type="text" name="quantita" placeholder="Quantity"/>
+            <li class="list-group-item border-0 col-10 col-md-5 col-lg-4 mx-auto">
+                <label for="pic" class="fw-semibold d-block">Upload Picture:</label>
+                <input type="file" name="pic" id="pic" class="form-control-file d-block mx-auto w-100"/>
             </li>
-            <li>
-                <button type="button" id="new_ingredient" onclick="addIngredient()">Add Ingredient</button>
+            <li class="list-group-item border-0 col-10 col-md-5 col-lg-4 mx-auto">
+                <label for="descrizione" class="fw-semibold">Description:</label>
+                <textarea name="descrizione" id="descrizione" class="form-control" rows="2"></textarea>
             </li>
         </ul>
-        <label for="procedimento">Method:</label><input type="text" name="procedimento" id="procedimento" />
+        
+        <div class="d-block w-50 mx-auto mt-3">
+            <img src="img/recipe-icon-save.png" alt="Recipe" class="w-25"/>
         </div>
-    <input type="submit" name="submit" value="Invia"/>
-    <a href="index.php">Annulla</a>
-</form>
+        <div class="d-flex justify-content-around my-3" id="recipe-btn">
+            <button type="button" id="usa_ricetta" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#ricette_salvate:not(.show),#form_crea_ricetta.show" aria-expanded="false" aria-controls="ricette_salvate">Usa ricetta salvata</button>
+            <button type="button" id="crea_ricetta" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#form_crea_ricetta:not(.show),#ricette_salvate.show" aria-expanded="false" aria-controls="form_crea_ricetta">Crea nuova ricetta</button>
+        </div>
+
+        <div id="collapse-container" class="d-block justify-content-center col-11 mx-3">
+            <!-- Pulsante per l'utilizzo di una ricetta salvata -->
+            <ul id="ricette_salvate" class="collapse w-100 border rounded list-group list-group-flush" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
+                <?php 
+                if (count($savedRecipes) == 0) : ?>
+                    <li class="list-group-item border-0 d-block text-center">
+                        <p class="text-muted fs-5 my-2">No saved recipes</p>
+                    </li>
+                <?php endif;
+                foreach($savedRecipes as $recipe) : ?>
+                    <li class="list-group-item border-0 d-flex row">
+                        <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            
+            <!-- Pulsante per la creazione di una nuova ricetta -->
+            <div class="collapse w-100 border rounded" id="form_crea_ricetta" aria-labelledby="crea_ricetta" data-parent="#collapse-container">
+                <div class="m-2">
+                    <label class="fs-5 fw-semibold">Ingredients:</label>
+                    <ul id="ingredients_list" class="list-group list-group-flush">
+                        <li class="list-group-item border-0 d-flex row mx-0 px-0">
+                            <input type="text" name="ingrediente" class="form-control w-50" placeholder="Ingredient"/>
+                            <input type="text" name="quantita" class="form-control w-50" placeholder="Quantity"/>
+                        </li>
+                        <li class="list-group-item border-0 mx-auto">
+                            <button type="button" class="btn btn-info text-white" id="new_ingredient" onclick="addIngredient()">Add Ingredient</button>
+                        </li>
+                    </ul>  
+                </div>
+                <div class="m-2">
+                    <label for="procedimento" class="fs-5 fw-semibold">Method:</label>
+                    <textarea name="procedimento" id="procedimento" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info text-white"/>
+        <!-- <a href="index.php">Annulla</a> -->
+    </form>
+</div>

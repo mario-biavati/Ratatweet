@@ -1,5 +1,7 @@
 let currentSelection = "None";
 let imgSelected = false;
+let btns = document.querySelectorAll("#recipe-btn>button");
+/* 0: usa_ricetta, 1: crea_ricetta */
 
 //Controllo al caricamento pagina che non ci sia un ricetta già selezionata
 document.onload = checkAlreadySelectedRecipe();
@@ -54,41 +56,28 @@ document.querySelector("main form").addEventListener("submit", function (event) 
         new_post(titolo, descrizione, pic, idRicetta);
     }
 });
+function select(i) {
+    let other = (i+1)%2;
+    btns[i].classList.remove("btn-outline-secondary");
+    btns[i].classList.add("btn-info");
+    btns[i].classList.add("text-white");
+    btns[other].classList.add("btn-outline-secondary");
+    btns[other].classList.remove("btn-info");
+    btns[other].classList.remove("text-white");
+}
 //Switch tra "usa ricetta" e "crea ricetta"
-document.querySelector("#crea_ricetta").addEventListener("click", function (event) {
+btns[1].addEventListener("click", function (event) {
     console.log("Premuto crea ricetta");
     currentSelection = "Crea ricetta";
-    let element = document.querySelector("#form_crea_ricetta");
-    let hidden = element.getAttribute("hidden");
-    if (hidden) {
-       element.removeAttribute("hidden");
-    } else {
-       element.setAttribute("hidden", "hidden");
-    }
-    //Mutuamente esclusivi
-    let element2 = document.querySelector("#ricette_salvate");
-    let hidden2 = element2.getAttribute("hidden");
-    if (!hidden2) {
-       element2.setAttribute("hidden", "hidden");
-    }
+
+    select(1);
 });
 //switch tra "crea ricetta" e "usa ricetta"
-document.querySelector("#usa_ricetta").addEventListener("click", function (event) {
+btns[0].addEventListener("click", function (event) {
     console.log("Premuto usa ricetta");
     currentSelection = "Usa ricetta";
-    let element = document.querySelector("#ricette_salvate");
-    let hidden = element.getAttribute("hidden");
-    if (hidden) {
-       element.removeAttribute("hidden");
-    } else {
-       element.setAttribute("hidden", "hidden");
-    }
-    //Mutuamente esclusivi
-    let element2 = document.querySelector("#form_crea_ricetta");
-    let hidden2 = element2.getAttribute("hidden");
-    if (!hidden2) {
-       element2.setAttribute("hidden", "hidden");
-    }
+
+    select(0);
 });
 //Funzione di creazione di una nuova ricetta
 function new_recipe_new_post(titolo, descrizione, pic, ingredienti, procedimento) {

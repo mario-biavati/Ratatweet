@@ -63,10 +63,10 @@ class DatabaseHelper{
     }
 
     // Query di aggiunta di una ricetta
-    public function saveRecipe($IDuser, $IDrecipe){
-        $query = "INSERT INTO SAVED_RECIPE(IDuser, IDrecipe) VALUES (?,?)";
+    public function saveRecipe($IDuser, $IDpost){
+        $query = "INSERT INTO SAVED_RECIPE(IDuser, IDpost) VALUES (?,?)";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('ii', $IDuser, $IDrecipe);
+        $stmt->bind_param('ii', $IDuser, $IDpost);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -174,9 +174,9 @@ class DatabaseHelper{
     }
 
     //Query inserimento nuova ricetta
-    public function insertRecipe($ingredients, $method){
-        $stmt = $this->prepare("INSERT INTO RECIPE (ingredients, method) VALUES (?, ?)");
-        $stmt->bind_param('ss', $ingredients, $method);
+    public function insertRecipe($ingredients, $method, $IDuser){
+        $stmt = $this->prepare("INSERT INTO RECIPE (ingredients, method, IDuser) VALUES (?, ?, ?)");
+        $stmt->bind_param('ssi', $ingredients, $method, $IDuser);
         $stmt->execute();
 
         return $stmt->insert_id;
@@ -223,6 +223,14 @@ class DatabaseHelper{
 
         return $stmt->execute();
     }
+    public function setNotifications($IDfollower, $IDfollowed, $value){
+        $query = "UPDATE FOLLOWER SET notification=? WHERE IDfollower=? AND IDfollowed=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('iii', $value, $IDfollower, $IDfollowed);
+
+        return $stmt->execute();
+    }
+
     //Query ottenimento post di un utente (limit n, se n=-1: no limit)
     public function getUserPosts($idUser, $n=-1){
         $query = "SELECT POST.IDpost FROM POST, INFOPOST WHERE POST.IDpost=INFOPOST.IDpost AND POST.IDuser=? ORDER BY date DESC";
@@ -348,6 +356,19 @@ class DatabaseHelper{
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    // Prendi i post dell'utente che usa le ricette da lui create
+    public function getUserRecipes($idUser){
+        $query = "SELECT RECIPE.IDrecipe, RECIPE.ingredients, RECIPE.method, USER.username, USER.IDuser, POST.IDpost, POST.title FROM RECIPE, POST, USER 
+                  WHERE USER.IDuser=? AND RECIPE.IDuser=USER.IDuser
+                  AND RECIPE.IDrecipe=POST.IDrecipe AND POST.IDuser=USER.IDuser";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i',$idUser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     //Query ottenimento di un utente (dal suo ID)
     public function getUserById($idUser){
         $query = "SELECT * FROM USER WHERE IDuser=?";

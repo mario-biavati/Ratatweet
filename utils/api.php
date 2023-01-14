@@ -119,14 +119,14 @@ else if (isset($_POST["q"]) && $_POST["q"] == "removeFollowed" && isset($_SESSIO
     echo json_encode($result);
 }
 else if (isset($_POST["q"]) && $_POST["q"] == "enableNotifications" && isset($_SESSION["idUser"]) && isset($_POST["idFollowed"])) {
-    $dbh->enableNotifications($loggedUser, $_POST["idFollowed"], 1);
+    $dbh->setNotifications($loggedUser, $_POST["idFollowed"], 1);
     $result["esito"] = true;
     $result["errore"] = "Nessuno";
     header('Content-Type: application/json');
     echo json_encode($result);
 }
 else if (isset($_POST["q"]) && $_POST["q"] == "disableNotifications" && isset($_SESSION["idUser"]) && isset($_POST["idFollowed"])) {
-    $dbh->enableNotifications($loggedUser, $_POST["idFollowed"], 0);
+    $dbh->setNotifications($loggedUser, $_POST["idFollowed"], 0);
     $result["esito"] = true;
     $result["errore"] = "Nessuno";
     header('Content-Type: application/json');
@@ -198,7 +198,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_recipe" && isset($_POST["ingr
     $result["esito"] = false;
     $result["errore"] = "Non so!";
     $result["IDrecipe"] = -1;
-    $create_recipe_result = $dbh->insertRecipe($_POST["ingredients"], $_POST["method"]);
+    $create_recipe_result = $dbh->insertRecipe($_POST["ingredients"], $_POST["method"], $loggedUser);
     if($create_recipe_result==0 || $create_recipe_result=="false") $result["errore"] = "Errore! Impossibile creare post!";
     else {
         $result["esito"] = true;

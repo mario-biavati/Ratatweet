@@ -28,7 +28,7 @@ if (count($userData) == 1) :
                 if(isUserLoggedIn() && !empty($dbh->getFollowerStatus($idLogged, $id))) $FollowStatus = "Unfollow"; ?>
                 <button type="button" class=<?php echo $FollowStatus; ?> alt="<?php echo $FollowStatus; ?> user" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>"><?php echo $FollowStatus; ?></button>
                 <?php 
-                $notificationStatus = $dbh->getNotificationStatus($idLogged, $id);
+                $notificationStatus = $dbh->getFollowerStatus($idLogged, $id);
                 $notif="Disable";
                 if(!empty($notificationStatus) && $notificationStatus[0]["notification"]==0) $notif="Enable"; ?>
                 <button type="button" class=<?php echo $notif; ?> alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?>><?php echo $notif; ?> Notifications</button>
