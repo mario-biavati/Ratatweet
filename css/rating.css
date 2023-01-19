@@ -1,7 +1,7 @@
 .rating {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center
+    justify-content: left;
 }
 
 .rating>input {
@@ -17,6 +17,26 @@
     cursor: pointer
 }
 
+.rating>span {
+    position: relative;
+    width: 1em;
+    font-size: 30px;
+    font-weight: 300;
+    color: #FFD600;
+}
+
+.rating>.ratingScore {
+    color:black;
+    font-size: 22px;
+    margin-top: 6px;
+}
+
+.ratingDisplay::before,
+.ratingDisplay ~ span:before {
+    content: "\2605";
+    position: absolute;
+}
+
 .rating>label::before {
     content: "\2605";
     position: absolute;
@@ -24,29 +44,19 @@
 }
 
 .rating>label:hover:before,
-.rating>label:hover~label:before {
+.rating>label:hover ~ label:before {
     opacity: 1 !important
 }
 
-.rating>input:checked~label:before {
+.rating>input:checked ~ label:before {
     opacity: 1
 }
 
-.rating:hover>input:checked~label:before {
+.rating:hover>input:checked ~ label:before {
     opacity: 0.4
 }
 
 .buttons{
     top: 36px;
     position: relative;
-}
-
-.rating-submit{
-    border-radius: 15px;
-    color: #fff;
-    height: 49px;
-}
-
-.rating-submit:hover{
-    color: #fff;
 }
