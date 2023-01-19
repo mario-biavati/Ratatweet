@@ -26,7 +26,7 @@ if (isset($_GET["id"])) :
     <div class="row mt-1">
         <div class="d-flex">
             <div class="rating">
-                <input type="radio" name="rating" value="5" id="star5"><label for="star5">☆</label> <input type="radio" name="rating" value="4" id="star4"><label for="star4">☆</label> <input type="radio" name="rating" value="3" id="star3"><label for="star3">☆</label> <input type="radio" name="rating" value="2" id="star2"><label for="star2">☆</label> <input type="radio" name="rating" value="1" id="star1"><label for="star1">☆</label>
+                <input type="radio" name="rating" value="5" id="star5" onclick="insertRating(5)"><label for="star5">☆</label> <input type="radio" name="rating" value="4" id="star4" onclick="insertRating(4)"><label for="star4">☆</label> <input type="radio" name="rating" value="3" id="star3" onclick="insertRating(3)"><label for="star3">☆</label> <input type="radio" name="rating" value="2" id="star2" onclick="insertRating(2)"><label for="star2">☆</label> <input type="radio" name="rating" value="1" id="star1" onclick="insertRating(1)"><label for="star1">☆</label>
             </div>
             <div class="d-flex align-items-center">
                 <h5 class="fs-2 pt-2 ps-1">15</h5>

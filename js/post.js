@@ -215,3 +215,37 @@ axios.get("utils/api.php?q=getComments&id=" + id).then(r => {
     document.getElementById("addCommentButton").firstChild.innerText = arrayComment.length;
     loadComments(5);
 });
+
+/* Insert rating functions */
+document.addEventListener("load", updateAvgRating());
+function insertRating(rating) {
+    const formData = new FormData();
+    formData.append('q', "insertRating");
+    formData.append('idPost', id);
+    formData.append('rating', rating);
+    axios.post('utils/api.php', formData).then(r => {
+        console.log(r.data);
+        if (r.data["esito"] == true) {
+            //aggiorno rating medio
+            updateAvgRating();
+        }
+    });
+}
+function updateAvgRating() {
+    axios.get("utils/api.php?q=getPost&id=" + id).then(r => {
+        const rating = r.data.avgRating;
+        let element;
+        let i;
+        console.log(rating);
+        for(i=1; i<=rating; i++) {
+            element = document.getElementById("star"+i);
+            element.checked = true;
+        }
+        /*
+        for(i=rating+1; i<=5; i++) {
+            element = document.getElementById("star"+i);
+            element.checked = false;
+        }
+        */
+    });
+}

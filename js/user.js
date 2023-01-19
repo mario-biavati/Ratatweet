@@ -72,44 +72,27 @@ function printPost(idPost) {
     return new Promise((resolve) => {
         axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
             let post = r.data;
-            let htmlContent = 
-            `<article id="${post.IDpost}">
-                <header>
-                    <a href="post.php?id=${post.IDpost}">
-                        <h1> ${post.title} </h1>
-                    </a>
-                    <a href="user_page.php?id=${post.IDuser}">
-                        <h2> ${post.username} </h2>
-                    </a>
-                    <input type="image" src="img/recipe-icon.png" alt="Save recipe" onclick="saveRecipe(${post.IDrecipe})">
-                </header>
-                <section>
-                    <div>
-                        <img src="${post.pic}" alt="${post.title}" />
+            let htmlContent = `
+            <article id="${post.IDpost}">
+            <a href="post.php?id=${post.IDpost}" class="d-flex" style="margin-bottom: 10px; text-decoration: none; color: black;">
+                <picture>
+                    <img src="data:image/png;base64,${post.pic}" style="max-width: 100px;max-height: 100px;" />
+                </picture>
+                <div style="padding-left:7px;">
+                    <h3 style="padding-top: 0px;padding-left: 0px;">${post.title}</h3>
+                    <div class="rating">
+                        <span>☆</span><span>☆</span><span class="ratingDisplay">☆</span><span>☆</span><span>☆</span>
                     </div>
-                </section>
-                <section>
-                    <div alt="Average rating">
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star1" alt="vota 1 stella" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star2" alt="vota 2 stelle" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star3" alt="vota 3 stelle" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star4" alt="vota 4 stelle" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star5" alt="vota 5 stelle" />
-                        <h2>"Average rating: ${post.avgRating}"</h2>
-                    </div>
-                    <div alt="Comments number">
-                        <h2>${post.numComments}</h2>
-                        <a href="post.php?id=${post.IDpost}">
-                            <img src="img/comment-icon.png" alt="Guarda commenti" />
-                        </a>
-                    </div>
-                </section>
-            </article>`;
+                </div>
+            </a>
+            </article>
+            `;
             //main.innerHTML += htmlContent;
             resolve(htmlContent);
         });
     });
 }
+
 async function loadPosts(n_post) {
     canPrintPost = false;
     let HTMLcontent = '';
