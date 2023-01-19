@@ -197,7 +197,14 @@ class DatabaseHelper{
 
         return $stmt->insert_id;
     }
+    //Query inserimento nuovo rating o aggiornamento rating esistente
+    public function insertRating($IDuser, $IDpost, $rating) {
+        $stmt = $this->prepare("INSERT INTO RATING (IDuser, IDpost, rating) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE rating=?");
+        $stmt->bind_param('iiii',$IDuser, $IDpost, $rating, $rating);
+        $stmt->execute();
 
+        return $stmt->insert_id;
+    }
     //inserimento di like su un commento
     public function insertLike($IDcomment, $IDuser){
         $stmt = $this->prepare("INSERT INTO `LIKES` (IDcomment, IDuser) VALUES (?, ?)");

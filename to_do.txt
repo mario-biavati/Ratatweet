@@ -1,1 +1,3 @@
-- Formattazione testo ingredienti pagina "crea_post.php" che crea una ricetta
+- "Modify" user_page;
+- "Delete post" user_page;
+- "Rating medio" dei post nella user_page;

@@ -212,6 +212,14 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_recipe" && isset($_POST["ingr
 else if (isset($_POST["q"]) && $_POST["q"] == "logout") {
     logout();
 }
+else if (isset($_POST["q"]) && $_POST["q"] == "insertRating" && isset($_SESSION["idUser"]) && isset($_POST["idPost"]) && isset($_POST["rating"])) {
+    $dbh->insertRating($_SESSION["idUser"], $_POST["idPost"], $_POST["rating"]);
+    $result["esito"] = true;
+    $result["errore"] = "Nessuno";
+    $result["idPost"] = $_POST["idPost"];
+    header('Content-Type: application/json');
+    echo json_encode($result);
+}
 else {
     $result["esito"] = false;
     $result["errore"] = "Funzione non riconsciuta";

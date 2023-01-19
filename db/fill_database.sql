@@ -37,3 +37,8 @@ VALUES (1, 1, 5),
 (2, 2, 3),
 (4, 1, 2),
 (4, 2, 2);
+
+INSERT INTO notification(type, IDuser, notifier, IDpost) 
+VALUES ("Comment",8,1,1), 
+("Comment",8,1,1), 
+("Comment",8,1,1);
