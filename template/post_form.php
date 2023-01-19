@@ -2,6 +2,7 @@
 if(isUserLoggedIn()) {
     $id = $templateParams["user"];
     $savedRecipes = $dbh->getSavedRecipes($id);
+    $userRecipes = $dbh->getSavedRecipes($id);
 }
 else {
     header("Location: registration_page.php");
@@ -27,29 +28,50 @@ else {
             </li>
         </ul>
         
-        <div class="d-block w-50 mx-auto mt-3">
-            <img src="img/recipe-icon-save.png" alt="Recipe" class="w-25"/>
+        <div class="d-block mx-auto mt-3" style="height: 5vh;">
+            <img src="img/recipe-icon-save.png" alt="Recipe" class="h-100"/>
         </div>
         <div class="d-flex justify-content-around my-3" id="recipe-btn">
-            <button type="button" id="usa_ricetta" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#ricette_salvate:not(.show),#form_crea_ricetta.show" aria-expanded="false" aria-controls="ricette_salvate">Usa ricetta salvata</button>
-            <button type="button" id="crea_ricetta" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#form_crea_ricetta:not(.show),#ricette_salvate.show" aria-expanded="false" aria-controls="form_crea_ricetta">Crea nuova ricetta</button>
+            <button type="button" id="usa_ricetta" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#ricette_salvate:not(.show),#form_crea_ricetta.show" aria-expanded="false" aria-controls="ricette_salvate">Use saved recipe</button>
+            <button type="button" id="crea_ricetta" class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#form_crea_ricetta:not(.show),#ricette_salvate.show" aria-expanded="false" aria-controls="form_crea_ricetta">Create new recipe</button>
         </div>
 
         <div id="collapse-container" class="d-block justify-content-center col-11 mx-3">
             <!-- Pulsante per l'utilizzo di una ricetta salvata -->
-            <ul id="ricette_salvate" class="collapse w-100 border rounded list-group list-group-flush" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
-                <?php 
-                if (count($savedRecipes) == 0) : ?>
-                    <li class="list-group-item border-0 d-block text-center">
-                        <p class="text-muted fs-5 my-2">No saved recipes</p>
-                    </li>
-                <?php endif;
-                foreach($savedRecipes as $recipe) : ?>
-                    <li class="list-group-item border-0 d-flex row">
-                        <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
+            <div id="ricette_salvate" class="collapse w-100 border rounded" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
+                <ul class="nav nav-tabs justify-content-around border-0">
+                    <li class="nav-item p-2 w-50 text-secondary" onclick="selectSavedRecipes(this)">Saved Recipes</li>
+                    <li class="nav-item p-2 w-50 text-secondary" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">My Recipes</li>
+                </ul>
+                <ul class="list-group list-group-flush">
+                    <div id="sr-container">
+                    <?php 
+                    if (count($savedRecipes) == 0) : ?>
+                        <li class="list-group-item border-0 d-block text-center">
+                            <p class="text-muted fs-5 my-2">No saved recipes</p>
+                        </li>
+                    <?php endif;
+                    foreach($savedRecipes as $recipe) : ?>
+                        <li class="list-group-item border-0 d-flex row">
+                            <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+                        </li>
+                    <?php endforeach; ?>
+                    </div>
+                    <div id="mr-container" class="d-none">
+                    <?php 
+                    if (count($userRecipes) == 0) : ?>
+                        <li class="list-group-item border-0 d-block text-center">
+                            <p class="text-muted fs-5 my-2">No recipes</p>
+                        </li>
+                    <?php endif;
+                    foreach($userRecipes as $recipe) : ?>
+                        <li class="list-group-item border-0 d-flex row">
+                            <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+                        </li>
+                    <?php endforeach; ?>
+                    </div>
+                </ul>
+            </div>
             
             <!-- Pulsante per la creazione di una nuova ricetta -->
             <div class="collapse w-100 border rounded" id="form_crea_ricetta" aria-labelledby="crea_ricetta" data-parent="#collapse-container">

@@ -1,8 +1,19 @@
 <?php
 if (isUserLoggedIn()):
     $idUser = $_SESSION["idUser"];
-    $recipes = $dbh->getSavedRecipes($idUser);
-    if(empty($recipes)):
+    $allRecipes[0] = $dbh->getSavedRecipes($idUser);
+    $allRecipes[1] = $dbh->getUserRecipes($idUser); ?>
+    
+    <!-- tabs -->
+    <ul>
+    <?php foreach($allRecipes as $recipes): ?>
+        <li></li>
+    <?php endforeach; ?>
+    </ul>
+    <!-- containers -->
+    <?php foreach($allRecipes as $recipes): ?>
+    <div>
+    <?php if(empty($recipes)):
         ?>
         <h2>No saved recipes</h2>
     <?php else: ?>
@@ -11,7 +22,7 @@ if (isUserLoggedIn()):
             <!--visualizzazione titolo ricetta-->
             <div id=<?php echo "Post{$recipe["IDpost"]}"; ?> class="row mt-2">
                 <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
-                    <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                    <img src="img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
                 </div>
                 <div class="d-flex flex-column col-10 col-lg-11">
                     <span class="fw-bold">
@@ -63,4 +74,6 @@ if (isUserLoggedIn()):
         <?php endforeach;?>
         </section>
     <?php endif;?>
+    </div>
+    <?php endforeach; ?>
 <?php endif;?>
