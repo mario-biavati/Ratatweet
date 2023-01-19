@@ -5,17 +5,16 @@ if (isUserLoggedIn()):
     $allRecipes[1] = $dbh->getUserRecipes($idUser); ?>
     
     <!-- tabs -->
-    <ul>
-    <?php foreach($allRecipes as $recipes): ?>
-        <li></li>
-    <?php endforeach; ?>
+    <ul class="nav justify-content-around">
+        <li class="nav-item p-2 w-50 text-secondary text-center fs-6 border border-bottom-0 rounded-top" role="button">Saved Recipes</li>
+        <li class="nav-item p-2 w-50 text-secondary text-center fs-6 border border-bottom-0 rounded-top" role="button">My Recipes</li>
     </ul>
     <!-- containers -->
-    <?php foreach($allRecipes as $recipes): ?>
-    <div>
+    <?php foreach($allRecipes as $n => $recipes): ?>
+    <div id="savedRecipes<?php echo $n; ?>" class="d-none">
     <?php if(empty($recipes)):
         ?>
-        <h2>No saved recipes</h2>
+        <p class="fs-2 text-center text-muted d-block mx-auto my-5">No <?php if($n == 0) echo "saved"; ?> recipes</p>
     <?php else: ?>
         <section id="comments" class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
         <?php foreach($recipes as $recipe): ?>

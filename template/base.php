@@ -9,7 +9,7 @@
     <link href="css/like.css" rel="stylesheet">
 </head>
 <body>
-    <header class="fixed-top bg-white row justify-content-end" style="height: 7vh;">
+    <header class="fixed-top bg-white row justify-content-end vw-100 overflow-hidden" style="height: 7vh;">
         <?php
         if(isset($templateParams["header"])){
             require($templateParams["header"]);
@@ -91,7 +91,7 @@
             </ul>
         </div>
     </nav>
-    <main class="mb-5 offset-md-1 offset-lg-3" style="margin-top: 8vh;">
+    <main class="offset-md-1 offset-lg-3" style="margin-top: 8vh; margin-bottom: 10vh;">
         <?php
         if(isset($templateParams["main"])){
             require($templateParams["main"]);

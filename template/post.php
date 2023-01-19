@@ -9,22 +9,20 @@ if (isset($_GET["id"])) :
         $recipeData = $dbh->getRecipe($postData["IDrecipe"])[0];
         ?>
 <article class="container col-12 col-md-10 col-lg-8">
-    <div class="row">
-        <div class="d-flex flex-column col-10">
-            <h1><?php echo $postData["title"];?></h1>
-            <div class="d-flex">
-                <h5><?php echo $postData["username"];?></h5>
+    <div>
+        <div class="d-block w-100">
+            <div class="d-flex justify-content-between">
+                <h1><?php echo $postData["title"];?></h1>
+                <span><img src="img/recipe-icon.png" style="height: calc(1.5rem + 1.5vw);"/></span>
             </div>
-        </div>
-        <div class="float-right d-flex col-2 justify-content-end">
-            <a href="#"><img src="img/recipe-icon.png" style="max-width: 12vw; max-height: 60px;"/></a>
+            <h2 class="fs-5"><?php echo $postData["username"];?></h2>
         </div>
     </div>
-    <div class="row">
+    <div>
         <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" style="max-width: 100%; height: auto;"/>
     </div>
-    <div class="row mt-1">
-        <div class="d-flex">
+    <div class="w-100 row mt-1">
+        <div>
             <div class="rating">
                 <input type="radio" name="rating" value="5" id="star5"><label for="star5">☆</label> <input type="radio" name="rating" value="4" id="star4"><label for="star4">☆</label> <input type="radio" name="rating" value="3" id="star3"><label for="star3">☆</label> <input type="radio" name="rating" value="2" id="star2"><label for="star2">☆</label> <input type="radio" name="rating" value="1" id="star1"><label for="star1">☆</label>
             </div>
@@ -33,11 +31,11 @@ if (isset($_GET["id"])) :
             </div>
         </div>
     </div>
-    <section class="row mt-2" id="description">
+    <section class="mt-2" id="description">
         <h2 class="fw-bold">Description:</h2>
         <p><?php echo $postData["description"];?></p>
     </section>
-    <section class="row mt-5" id="recipe">
+    <section class="mt-5" id="recipe">
         <h2 class="fw-bold">Recipe:</h2>
         <h3>Ingredients:</h3>
         <ul style="margin-left: 20px;">
