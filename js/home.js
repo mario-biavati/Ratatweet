@@ -14,6 +14,7 @@ function printPost(idPost) {
         axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
             let post = r.data;
             let ratingRounded = Math.round(post.avgRating);
+            post.avgRating = Math.round(post.avgRating * 100) / 100;
             let htmlContent = 
             `<article class="ms-2 me-2 me-md-0 d-flex flex-column flex-md-row">
                 <div class="d-flex d-md-none">
