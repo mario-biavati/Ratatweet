@@ -237,6 +237,21 @@ class DatabaseHelper{
 
         return $stmt->execute();
     }
+    //Query aggiornamento parametri dello user
+    public function updateUser($IDuser, $username, $password, $bio){
+        $query = "UPDATE USER SET username=? , password=? , bio=? WHERE IDuser=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('sssi', $username, $password, $bio, $IDuser);
+
+        return $stmt->execute();
+    }
+    public function updateUserWithPic($IDuser, $username, $password, $bio, $pic){
+        $query = "UPDATE USER SET username=? , password=? , bio=? , pic=? WHERE IDuser=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ssssi', $username, $password, $bio, $pic, $IDuser);
+
+        return $stmt->execute();
+    }
 
     //Query ottenimento post di un utente (limit n, se n=-1: no limit)
     public function getUserPosts($idUser, $n=-1){
