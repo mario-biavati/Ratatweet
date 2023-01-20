@@ -1,17 +1,27 @@
 <?php
 if (isUserLoggedIn()):
     $idUser = $_SESSION["idUser"];
-    $recipes = $dbh->getSavedRecipes($idUser);
-    if(empty($recipes)):
+    $allRecipes[0] = $dbh->getSavedRecipes($idUser);
+    $allRecipes[1] = $dbh->getUserRecipes($idUser); ?>
+    
+    <!-- tabs -->
+    <ul class="nav justify-content-around">
+        <li class="nav-item p-2 w-50 text-secondary text-center fs-6 border border-bottom-0 rounded-top" role="button">Saved Recipes</li>
+        <li class="nav-item p-2 w-50 text-secondary text-center fs-6 border border-bottom-0 rounded-top" role="button">My Recipes</li>
+    </ul>
+    <!-- containers -->
+    <?php foreach($allRecipes as $n => $recipes): ?>
+    <div id="savedRecipes<?php echo $n; ?>" class="d-none">
+    <?php if(empty($recipes)):
         ?>
-        <h2>No saved recipes</h2>
+        <p class="fs-2 text-center text-muted d-block mx-auto my-5">No <?php if($n == 0) echo "saved"; ?> recipes</p>
     <?php else: ?>
         <section id="comments" class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
         <?php foreach($recipes as $recipe): ?>
             <!--visualizzazione titolo ricetta-->
             <div id=<?php echo "Post{$recipe["IDpost"]}"; ?> class="row mt-2">
                 <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
-                    <img src="../img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                    <img src="img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
                 </div>
                 <div class="d-flex flex-column col-10 col-lg-11">
                     <span class="fw-bold">
@@ -63,4 +73,6 @@ if (isUserLoggedIn()):
         <?php endforeach;?>
         </section>
     <?php endif;?>
+    </div>
+    <?php endforeach; ?>
 <?php endif;?>

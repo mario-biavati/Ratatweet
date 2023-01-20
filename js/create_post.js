@@ -2,20 +2,9 @@ let currentSelection = "None";
 let imgSelected = false;
 let btns = document.querySelectorAll("#recipe-btn>button");
 /* 0: usa_ricetta, 1: crea_ricetta */
+let recps = document.querySelectorAll("#ricette_salvate ul.nav li");
+/* 0: saved_recipes, 1: my_recipes */
 
-//Controllo al caricamento pagina che non ci sia un ricetta già selezionata
-document.onload = checkAlreadySelectedRecipe();
-
-function checkAlreadySelectedRecipe(){
-    if(typeof IDrecipe !== 'undefined') {
-        currentSelection="Usa ricetta";
-        let element = document.querySelector("#ricette_salvate");
-        let hidden = element.getAttribute("hidden");
-        if (hidden) element.removeAttribute("hidden");
-        element = document.getElementById("Recipe"+IDrecipe);
-        element.checked = true;
-    }
-}
 // check if fields are complete
 function checkInputs() {
     return document.querySelector("#titolo").value != '' && document.querySelector("#descrizione").value != '' && document.querySelector("input[name='pic']").value != '';
@@ -151,4 +140,36 @@ function addIngredient() {
     const li = list.firstElementChild.cloneNode(true);
     li.childNodes.forEach(inp => inp.value = null);
     list.insertBefore(li, list.lastElementChild);
+}
+function selectSavedRecipes() {
+    let elem1 = document.getElementById("sr-container");
+    elem1.classList.remove("d-none");
+    elem1.classList.add("d-block");
+    let elem2 = document.getElementById("mr-container");
+    elem2.classList.remove("d-block");
+    elem2.classList.add("d-none");
+    recps[0].style.backgroundColor = null;
+    recps[1].style.backgroundColor = "#dee2e6";
+}
+function selectMyRecipes() {
+    let elem1 = document.getElementById("mr-container");
+    elem1.classList.remove("d-none");
+    elem1.classList.add("d-block");
+    let elem2 = document.getElementById("sr-container");
+    elem2.classList.remove("d-block");
+    elem2.classList.add("d-none");
+    recps[1].style.backgroundColor = null;
+    recps[0].style.backgroundColor = "#dee2e6";
+}
+
+//Controllo al caricamento pagina che non ci sia un ricetta già selezionata
+document.onload = checkAlreadySelectedRecipe();
+
+function checkAlreadySelectedRecipe(){
+    if(typeof IDrecipe !== 'undefined') {
+        currentSelection="Usa ricetta";
+        btns[0].click();
+        element = document.getElementById("Recipe"+IDrecipe);
+        element.checked = true;
+    }
 }

@@ -12,7 +12,7 @@ function printComment(idComment, where, first = false) {
         let comment = r.data;
         console.log(comment);
         let htmlContent = 
-        `<div id="${comment.IDcomment}" class="row mt-2 pb-2 border-bottom">
+        `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
             <img src="${comment.pic}" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
         </div>
@@ -63,7 +63,7 @@ function printReply(idComment, where, first = false) {
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let comment = r.data;
         let htmlContent = 
-        `<div id="${comment.IDcomment}" class="row mt-2 pb-2 border-bottom">
+        `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
             <img src="${comment.pic}" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
         </div>
