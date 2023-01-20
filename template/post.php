@@ -13,7 +13,7 @@ if (isset($_GET["id"])) :
         <div class="d-block w-100">
             <div class="d-flex justify-content-between">
                 <h1><?php echo $postData["title"];?></h1>
-                <span><img src="img/recipe-icon.png" style="height: calc(1.5rem + 1.5vw);"/></span>
+                <span id="recipe-button" role="button"><img src="img/recipe-icon.png" style="height: calc(1.5rem + 1.5vw);"/></span>
             </div>
             <h2 class="fs-5"><?php echo $postData["username"];?></h2>
             <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 

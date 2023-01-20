@@ -201,7 +201,7 @@ function like(idComment, liked, button) {
     }
 }
 
-// on page load
+//-- on page load
 document.getElementById("collapseAddComment").addEventListener("submit", function (event) {
     event.preventDefault();
     postComment(document.getElementById("collapseAddComment"));
@@ -215,6 +215,8 @@ axios.get("utils/api.php?q=getComments&id=" + id).then(r => {
     document.getElementById("addCommentButton").firstChild.innerText = arrayComment.length;
     loadComments(5);
 });
+
+//--
 
 /* Insert rating functions */
 document.addEventListener("load", updateAvgRating());
@@ -249,6 +251,60 @@ function updateAvgRating() {
         */
     });
 }
+
+//-- on page load: recipe button manager
+
+var recipeButton = document.getElementById("recipe-button");
+let saved = false;
+let img = recipeButton.firstElementChild;
+
+axios.get('utils/api.php?q=isRecipeSaved&id='+id).then(response => {
+    if (response.data.isMyPost != 0) return;
+    saved = response.data.isSaved != 0;
+    if (saved) {
+        img.classList.add("liked");
+        img.setAttribute("src", "img/recipe-icon-saved.png");
+    } else {
+        img.setAttribute("src", "img/recipe-icon-save.png");
+    }
+    recipeButton.addEventListener("click", event => {
+        event.preventDefault();
+        if (!saved)
+            saveRecipe();
+        else
+            removeRecipe();
+    });
+});
+
+function saveRecipe() {
+    const formData = new FormData();
+    formData.append('q', "saveRecipe");
+    formData.append('id', id);
+    axios.post('utils/api.php', formData).then(r => {
+        console.log(r.data);
+        if (r.data["esito"] == true) {
+            //aggiorna icona ricetta
+            img.classList.add("liked");
+            img.setAttribute("src", "img/recipe-icon-saved.png");
+            saved = true;
+        }
+    });
+}
+function removeRecipe() {
+    const formData = new FormData();
+    formData.append('q', "deleteRecipe");
+    formData.append('idPost', id);
+    axios.post('utils/api.php', formData).then(r => {
+        console.log(r.data);
+        if (r.data["esito"] == true) {
+            //aggiorna icona ricetta
+            img.classList.remove("liked");
+            img.setAttribute("src", "img/recipe-icon-save.png");
+            saved = false;
+        }
+    });
+}
+
 //Eliminazione di un post 
 function deletePost(idPost) {
     const formData = new FormData();

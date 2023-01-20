@@ -4,9 +4,9 @@ if (isUserLoggedIn()):
     $notifications = $dbh->getNotifications($idUser);
     if(empty($notifications)):
         ?>
-        <h2>No new notification</h2>
+        <p class="fs-2 text-center text-muted p-5">No new notification</p>
     <?php endif;?>
-    <ul id=<?php echo "notifications{$idUser}"; ?> style="list-style: none;">
+    <ul id=<?php echo "notifications{$idUser}"; ?> class="list-group">
         <?php foreach($notifications as $notification): 
             $userData= $dbh->getUserById($notification["notifier"])[0];
             $notificationType="";
@@ -29,15 +29,17 @@ if (isUserLoggedIn()):
             }
             $userHref="user_page.php?id={$userData["IDuser"]}";
         ?>
-            <li class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
+            <li class="list-group-item my-2 mx-auto col-10 col-md-9 col-lg-8">
                 <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt=<?php echo "{$userData["username"]}_Pic"; ?> width = "50px" height = "50px" />
                 <a href=<?php echo "{$userHref}"; ?>><?php echo "{$userData["username"]}"; ?></a>
-                <p> <?php echo " {$notificationType}"; ?>
+                <p class="d-flex"> <?php echo " {$notificationType}"; ?>
                 <?php if($notification["type"]=="Post" || $notification["type"]=="Comment"): ?>
                     <a href=<?php echo "{$postHref}"; ?>><?php echo "post"; ?></a>
                 <?php endif; ?>
                 </p>
-                <button type="button" class="btn btn-primary" data-bs-toggle="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
+                <div class="d-flex w-100 justify-content-end">
+                    <button type="button" class="btn btn-info text-white" data-bs-toggle="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
+                </div>    
             </li>
         <?php endforeach;?>
     </ul> 

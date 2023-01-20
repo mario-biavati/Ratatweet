@@ -70,9 +70,9 @@ class DatabaseHelper{
         return $stmt->insert_id;
     }
 
-    // Query di aggiunta di una ricetta
+    // Query di aggiunta di una ricetta tramite il post
     public function saveRecipe($IDuser, $IDpost){
-        $query = "INSERT INTO SAVED_RECIPE(IDuser, IDpost) VALUES (?,?)";
+        $query = "INSERT INTO SAVED_RECIPE(IDuser, IDpost) VALUES (?, ?)";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ii', $IDuser, $IDpost);
         $stmt->execute();
@@ -393,6 +393,16 @@ class DatabaseHelper{
                   AND RECIPE.IDrecipe=POST.IDrecipe AND POST.IDuser=USER.IDuser";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$idUser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    // Dice se la ricetta del ost è salvata e se il post è il tuo
+    public function isRecipeSaved($IDuser, $IDpost) {
+        $query = "SELECT isSaved, isMyPost FROM (SELECT COUNT(*) AS isSaved FROM SAVED_RECIPE WHERE IDuser=? AND IDpost=?) AS A, (SELECT COUNT(*) AS isMyPost FROM POST WHERE IDuser=? AND IDpost=?) AS B";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('iiii',$IDuser,$IDpost,$IDuser,$IDpost);
         $stmt->execute();
         $result = $stmt->get_result();
 

@@ -37,6 +37,9 @@ else if (isset($_GET["q"]) && $_GET["q"] == "getUserPosts" && isset($_GET["id"])
 else if (isset($_GET["q"]) && $_GET["q"] == "getNotificationNumber") {
     echo json_encode($dbh->getNotificationNumber($loggedUser)[0]);
 }
+else if (isset($_GET["q"]) && $_GET["q"] == "isRecipeSaved" && isset($_GET["id"])) { //!! questa funzione richiede l'id del POST
+    echo json_encode($dbh->isRecipeSaved($loggedUser, $_GET["id"])[0]);
+}
 else if (isset($_POST["q"]) && $_POST["q"] == "postComment" && isset($_POST["id"]) && isset($_POST["comment"])) {
     if (isset($_SESSION["idUser"])) {
         $val = $dbh->addCommentOnPost($_POST["id"], $loggedUser, $_POST["comment"]);
@@ -88,7 +91,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "deleteLike" && isset($_POST["id"]
     }
     echo json_encode($result);
 }
-else if (isset($_POST["q"]) && $_POST["q"] == "saveRecipe" && isset($_POST["id"])) {
+else if (isset($_POST["q"]) && $_POST["q"] == "saveRecipe" && isset($_POST["id"])) { //!! questa funzione richiede l'id del POST
     if (isset($_SESSION["idUser"])) {
         $dbh->saveRecipe($loggedUser, $_POST["id"]);
         $result["esito"] = true;
@@ -140,7 +143,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "seenNotification" && isset($_SESS
     echo json_encode($result);
 }
 else if (isset($_POST["q"]) && $_POST["q"] == "deleteRecipe" && isset($_SESSION["idUser"]) && isset($_POST["idPost"])) {
-    $dbh->removeRecipe($_SESSION["idUser"], $_POST["idPost"]);
+    $dbh->removeRecipe($loggedUser, $_POST["idPost"]);
     $result["esito"] = true;
     $result["errore"] = "Nessuno";
     $result["IDpost"] = $_POST["idPost"];
