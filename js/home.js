@@ -14,39 +14,44 @@ function printPost(idPost) {
         axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
             let post = r.data;
             let htmlContent = 
-            `<article id="${post.IDpost}">
-                <header>
-                    <a href="post.php?id=${post.IDpost}">
-                        <h1> ${post.title} </h1>
-                    </a>
-                    <a href="user_page.php?id=${post.IDuser}">
-                        <h2> ${post.username} </h2>
-                    </a>
-                    <input type="image" src="img/recipe-icon.png" alt="Save recipe" onclick="saveRecipe(${post.IDrecipe})">
-                </header>
-                <section>
+            `<article class="d-flex flex-column flex-md-row">
+                <div class="d-flex d-md-none">
                     <div>
-                        <img src="${post.pic}" alt="${post.title}" />
+                        <h1>NOME_POST</h1>
+                        <span>NOME_UTENTE</span>
                     </div>
-                </section>
-                <section>
-                    <div alt="Average rating">
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star1" alt="vota 1 stella" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star2" alt="vota 2 stelle" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star3" alt="vota 3 stelle" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star4" alt="vota 4 stelle" />
-                        <img src="./img/stella_vuota.png" id="${post.IDpost}-Star5" alt="vota 5 stelle" />
-                        <h2>"Average rating: ${post.avgRating}"</h2>
+                    <div class="d-flex flex-fill justify-content-end"><img src="img/recipe-icon-save.png" style="width: 40px; height: 40px;"/></div>
+                </div>
+                <a href="#" class="col-md-4 me-2">
+                    <img src="test/food-placeholder.png" class="img-fluid col-12 me-2" style="object-fit: cover;"/>
+                </a>
+                <div class="d-flex flex-column">
+                    <div class="d-flex d-none d-md-block flex-column">
+                        <div class="d-flex flex-row">
+                            <div class="d-flex flex-column">
+                                <h1>NOME_POST</h1>
+                                <span>NOME_UTENTE</span>
+                            </div>
+                            <div class="d-flex flex-fill justify-content-end"><img src="img/recipe-icon-save.png" style="width: 40px; height: 40px;"/></div>
+                        </div>
+                        <p class="mt-4" style="max-height: 150px; overflow:hidden;"> a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a</p>
                     </div>
-                    <div alt="Comments number">
-                        <h2>${post.numComments}</h2>
-                        <a href="post.php?id=${post.IDpost}">
-                            <img src="img/comment-icon.png" alt="Guarda commenti" />
-                        </a>
+                    <div class="d-flex flex-fill rating">
+                        <div class="d-flex flex-fill justify-content-end mt-1"><img src="img/comment-icon.png" style="width: 40px; height: 40px;"/></div>
+                        <span class="ratingScore">4.5</span>`
+            for (let i = 5; i > 0; i--) {
+                    htmlContent += `<span`;
+                    if (ratingRounded == i) {
+                        htmlContent += ` class="ratingDisplay"`;
+                    }
+                    htmlContent += `>☆</span>`;
+                }
+                
+            htmlContent += `
                     </div>
-                </section>
+                </div>
             </article>`;
-            //main.innerHTML += htmlContent;
+            main.innerHTML += htmlContent;
             resolve(htmlContent);
         });
     });

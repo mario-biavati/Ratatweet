@@ -41,7 +41,7 @@ create table POST (
      IDPost bigint not null auto_increment,
      pic mediumblob,
      title char(50) not null, 
-     description TEXT, 
+     description char(500), 
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDuser bigint not null,
      IDrecipe bigint not null,
@@ -52,7 +52,7 @@ create table POST (
 
 create table COMMENT (
      IDcomment bigint not null auto_increment,
-     text TEXT,
+     text TINYTEXT,
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDpost bigint not null,
      IDuser bigint not null,

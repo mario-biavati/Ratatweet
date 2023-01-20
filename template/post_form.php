@@ -1,8 +1,8 @@
 <?php
 if(isUserLoggedIn()) {
-    $id = $templateParams["user"];
+    $id = $_SESSION["idUser"];
     $savedRecipes = $dbh->getSavedRecipes($id);
-    $userRecipes = $dbh->getSavedRecipes($id);
+    $userRecipes = $dbh->getUserRecipes($id);
 }
 else {
     header("Location: registration_page.php");
