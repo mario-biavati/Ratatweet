@@ -13,6 +13,7 @@ function printPost(idPost) {
     return new Promise((resolve) => {
         axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
             let post = r.data;
+            let ratingRounded = Math.round(post.avgRating);
             let htmlContent = 
             `<article class="d-flex flex-column flex-md-row">
                 <div class="d-flex d-md-none">
