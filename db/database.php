@@ -34,6 +34,14 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
     }
+    // Query cancellazione di un post (viene attribuito allo user 0, anonimo)
+    public function deletePost($IDpost){
+        $query = "UPDATE POST SET IDuser=1 WHERE IDpost=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i', $IDpost);
+
+        return $stmt->execute();
+    }
 
     // Query creazione di un commento a un post
     public function addCommentOnPost($IDpost, $IDuser, $text){
