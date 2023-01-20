@@ -55,7 +55,7 @@ function enableNotifications() {
     formData.append('idFollowed', id);
     axios.post('utils/api.php', formData);
 
-    notificationButton.innerHTML="Disable Notifications"; // da cambiare
+    notificationButton.className = "btn btn-info";
     notificationButton.alt="Disable notifications";
     notificationButton.setAttribute('onclick', 'disableNotifications()');
 }
@@ -65,7 +65,7 @@ function disableNotifications() {
     formData.append('idFollowed', id);
     axios.post('utils/api.php', formData);
 
-    notificationButton.innerHTML="Enable Notifications"; // da cambiare
+    notificationButton.className = "btn btn-secondary";
     notificationButton.alt="Enable notifications";
     notificationButton.setAttribute('onclick', 'enableNotifications()');
 }
