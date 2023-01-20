@@ -72,6 +72,7 @@ function printPost(idPost) {
     return new Promise((resolve) => {
         axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
             let post = r.data;
+            const rating = r.data.avgRating;
             let htmlContent = `
             <article id="${post.IDpost}">
             <a href="post.php?id=${post.IDpost}" class="d-flex" style="margin-bottom: 10px; text-decoration: none; color: black;">
@@ -80,8 +81,12 @@ function printPost(idPost) {
                 </picture>
                 <div style="padding-left:7px;">
                     <h3 style="padding-top: 0px;padding-left: 0px;">${post.title}</h3>
-                    <div class="rating">
-                        <span>☆</span><span>☆</span><span class="ratingDisplay">☆</span><span>☆</span><span>☆</span>
+                    <div class="rating"> `;
+            let i;
+            for(i=5; i>rating; i--) htmlContent+="<span>☆</span>";
+            if(rating!=0) htmlContent+=`<span class="ratingDisplay">☆</span>`;
+            for(i=rating-1; i>0; i--) htmlContent+="<span>☆</span>";
+            htmlContent+=`
                     </div>
                 </div>
             </a>
@@ -137,4 +142,8 @@ function logout() {
     const formData = new FormData();
     formData.append('q', "logout");
     axios.post('utils/api.php', formData);
+}
+
+function modify(){
+    location.href="registration_page.php";
 }

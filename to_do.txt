@@ -1,3 +1,2 @@
 - "Modify" user_page;
-- "Delete post" user_page;
-- "Rating medio" dei post nella user_page;
+- Funzionalità "Delete" post ? -> Mette userID a 0 tipo, user di default anonimo.

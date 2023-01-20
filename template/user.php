@@ -26,7 +26,7 @@ if (count($userData) == 1) :
             <?php $idLogged = $_SESSION["idUser"];
                 if($id == $idLogged): ?>
                 <div style="margin-right: 1em">
-                    <button type="button" class="btn btn-primary" alt="Modify profile" id="Modify-Button" onclick="" style="height:30px; width: auto; padding: auto; line-height: 10px;">
+                    <button type="button" class="btn btn-primary" alt="Modify profile" id="Modify-Button" onclick="modify()" style="height:30px; width: auto; padding: auto; line-height: 10px;">
                         Modify
                     </button>
                 </div>
