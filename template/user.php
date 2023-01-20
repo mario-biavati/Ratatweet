@@ -22,7 +22,7 @@ if (count($userData) == 1) :
                 </div>
             </div>
             <!--Pulsanti-->
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center my-3">
             <?php $idLogged = $_SESSION["idUser"];
                 if($id == $idLogged): ?>
                 <div style="margin-right: 1em">
@@ -50,8 +50,8 @@ if (count($userData) == 1) :
                 <?php endif; ?>
             </div>
             <!--Statistiche utente-->
-            <ul class="list-group list-group-horizontal text-center justify-content-evenly">
-                <li class="list-group-item d-flex flex-column" style="display: block;border-style: none;">
+            <ul class="nav list-group-horizontal text-center justify-content-evenly my-3">
+                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#posts:not(.show),#followers.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="posts">
                     <span>
                         <strong>Posts</strong>
                     </span>
@@ -59,7 +59,7 @@ if (count($userData) == 1) :
                         <strong><?php echo $userStat["post"]; ?></strong>
                     </span>
                 </li>
-                <li class="list-group-item d-flex flex-column" style="display: block;border-style: none;">
+                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followers:not(.show),#posts.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followers">
                     <span>
                         <strong>Followers</strong>
                     </span>
@@ -67,7 +67,7 @@ if (count($userData) == 1) :
                         <strong><?php echo $userStat["follower"]; ?></strong>
                     </span>
                 </li>
-                <li class="list-group-item d-flex flex-column" style="display: block;border-style: none;">
+                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followed:not(.show),#posts.show,#followers.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followed">
                     <span>
                         <strong>Followed</strong>
                     </span>
@@ -75,7 +75,7 @@ if (count($userData) == 1) :
                         <strong><?php echo $userStat["followed"]; ?></strong>
                     </span>
                 </li>
-                <li class="list-group-item d-flex flex-column" style="display: block;border-style: none;">
+                <li class="nav-item d-flex flex-column" >
                     <span>
                         <strong>Rating</strong>
                     </span>
@@ -84,8 +84,19 @@ if (count($userData) == 1) :
                     </span>
                 </li>
             </ul>
-        <!--Lista dei post di un utente-->
-        <div class="container mb-md-1 mb-5" id="posts">
-        </div>
+            <div id="collapse-container" class="mt-5 mx-3">
+                <!--Lista dei post di un utente-->
+                <div class="container collapse" id="posts">
+                    <p class="fs-2 text-muted text-center p-5 m-0">No posts</p>
+                </div>
+                <!--Lista dei follower di un utente-->
+                <div class="container collapse" id="followers">
+                    <p class="fs-2 text-muted text-center p-5 m-0">No followers</p>
+                </div>
+                <!--Lista dei seguiti di un utente-->
+                <div class="container collapse" id="followed">
+                    <p class="fs-2 text-muted text-center p-5 m-0">No followed</p>
+                </div>
+            </div>
     </article>
 <?php endif; ?>  

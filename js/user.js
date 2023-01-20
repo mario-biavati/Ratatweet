@@ -149,3 +149,36 @@ function logout() {
 function modify(){
     location.href="registration_page.php";
 }
+
+
+let navButtons = document.querySelectorAll("main ul.nav>li"); /* 0: Posts, 1: Followers, 2: Followed, 3: AvgRating */
+
+navButtons[0].addEventListener("click", onPostsClick);
+function onPostsClick() {
+    navButtons[0].classList.add('border-bottom', 'border-info', 'border-4');
+    navButtons[1].classList.remove('border-bottom', 'border-info', 'border-4');
+    navButtons[2].classList.remove('border-bottom', 'border-info', 'border-4');
+
+    //carica i post [TODO]
+}
+
+navButtons[1].addEventListener("click", onFollowersClick);
+function onFollowersClick() {
+    navButtons[1].classList.add('border-bottom', 'border-info', 'border-4');
+    navButtons[0].classList.remove('border-bottom', 'border-info', 'border-4');
+    navButtons[2].classList.remove('border-bottom', 'border-info', 'border-4');
+
+    //carica i followers [TODO]
+}
+
+navButtons[2].addEventListener("click", onFollowedClick);
+function onFollowedClick() {
+    navButtons[2].classList.add('border-bottom', 'border-info', 'border-4');
+    navButtons[1].classList.remove('border-bottom', 'border-info', 'border-4');
+    navButtons[0].classList.remove('border-bottom', 'border-info', 'border-4');
+
+    //carica i seguiti [TODO]
+}
+
+//on page load
+navButtons[0].click();
