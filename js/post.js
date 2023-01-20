@@ -304,3 +304,19 @@ function removeRecipe() {
         }
     });
 }
+
+//Eliminazione di un post 
+function deletePost(idPost) {
+    const formData = new FormData();
+    formData.append('q', "deletePost");
+    formData.append('idPost', idPost);
+    axios.post('utils/api.php', formData).then(r => {
+        console.log(r.data);
+        let deleteButton = document.getElementById("deletePostButton");
+        if (r.data["esito"] == true) {
+            deleteButton.innerText="Deleted";
+            location.href="user_page.php";
+        }
+        else deleteButton.innerText="Error";
+    });
+}

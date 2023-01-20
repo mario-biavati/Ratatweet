@@ -232,6 +232,14 @@ else if (isset($_POST["q"]) && $_POST["q"] == "updateUser" && isset($_POST["user
     header('Content-Type: application/json');
     echo json_encode($result);
 }
+else if (isset($_POST["q"]) && $_POST["q"] == "deletePost" && isset($_POST["idPost"])) {
+    $result["esito"] = false;
+    $result["errore"] = "Non so!";
+    $result["esito"] = $dbh->deletePost($_POST["idPost"]);
+    
+    header('Content-Type: application/json');
+    echo json_encode($result);
+}
 else {
     $result["esito"] = false;
     $result["errore"] = "Funzione non riconsciuta";

@@ -16,6 +16,9 @@ if (isset($_GET["id"])) :
                 <span id="recipe-button" role="button"><img src="img/recipe-icon.png" style="height: calc(1.5rem + 1.5vw);"/></span>
             </div>
             <h2 class="fs-5"><?php echo $postData["username"];?></h2>
+            <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
+            <button id="deletePostButton" onclick="deletePost(<?php echo $id;?>)">Delete</button>
+            <?php endif; ?>
         </div>
     </div>
     <div>

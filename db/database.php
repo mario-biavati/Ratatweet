@@ -34,6 +34,14 @@ class DatabaseHelper{
         $stmt->execute();
         return $stmt->insert_id;
     }
+    // Query cancellazione di un post (viene attribuito allo user 0, anonimo)
+    public function deletePost($IDpost){
+        $query = "UPDATE POST SET IDuser=1 WHERE IDpost=?";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i', $IDpost);
+
+        return $stmt->execute();
+    }
 
     // Query creazione di un commento a un post
     public function addCommentOnPost($IDpost, $IDuser, $text){
@@ -165,7 +173,7 @@ class DatabaseHelper{
 
     // Query di ottenimento statistiche di un utente (post, follower, followed, avg_rating)
     public function getUserStats($IDuser){
-        $query = "SELECT post, follower, followed, avg_rating FROM (SELECT COUNT(IDpost) AS post FROM POST WHERE IDuser=?) AS A, (SELECT COUNT(IDfollower) AS follower FROM FOLLOWER WHERE IDfollowed=?) AS B, (SELECT COUNT(IDfollowed) AS followed FROM FOLLOWER WHERE IDfollower=?) AS C, (SELECT COALESCE(AVG(avgRating),0) AS avg_rating FROM INFOPOST, POST WHERE POST.IDuser=? AND INFOPOST.IDpost=POST.IDPost) AS D";
+        $query = "SELECT post, follower, followed, avg_rating FROM (SELECT COUNT(IDpost) AS post FROM POST WHERE IDuser=?) AS A, (SELECT COUNT(IDfollower) AS follower FROM FOLLOWER WHERE IDfollowed=?) AS B, (SELECT COUNT(IDfollowed) AS followed FROM FOLLOWER WHERE IDfollower=?) AS C, (SELECT COALESCE(ROUND(AVG(avgRating),1),0) AS avg_rating FROM INFOPOST, POST WHERE POST.IDuser=? AND INFOPOST.IDpost=POST.IDPost) AS D";
         $stmt = $this->prepare($query);
         $stmt->bind_param('ssss',$IDuser,$IDuser,$IDuser,$IDuser);
         $stmt->execute();

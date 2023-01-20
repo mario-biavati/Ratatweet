@@ -41,7 +41,7 @@ create table POST (
      IDPost bigint not null auto_increment,
      pic mediumblob,
      title char(50) not null, 
-     description char(500), 
+     description TEXT, 
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      IDuser bigint not null,
      IDrecipe bigint not null,
@@ -136,3 +136,5 @@ CREATE VIEW INFOCOMMENT AS
      SELECT IDcomment, COUNT(IDuser) AS numLikes
      FROM `LIKES`
      GROUP BY IDcomment;
+
+INSERT INTO USER (IDuser, username, password, bio) VALUES (1, "anonimo", "anonimo", "anonimo") 
