@@ -28,6 +28,7 @@ function follow() {
 
     followButton.innerHTML="Unfollow";
     followButton.alt="Unfollow user";
+    followButton.className = "btn btn-secondary";
     document.getElementById("NumFollowers").textContent = +document.getElementById("NumFollowers").textContent + 1;
     followButton.setAttribute('onclick', 'unfollow()');
     notificationButton.disabled = false;
@@ -41,6 +42,7 @@ function unfollow() {
 
     followButton.innerHTML="Follow";
     followButton.alt="Follow user";
+    followButton.className = "btn btn-info";
     document.getElementById("NumFollowers").textContent = +document.getElementById("NumFollowers").textContent - 1;
     followButton.setAttribute('onclick', 'follow()');
     notificationButton.disabled = true;
@@ -53,7 +55,7 @@ function enableNotifications() {
     formData.append('idFollowed', id);
     axios.post('utils/api.php', formData);
 
-    notificationButton.innerHTML="Disable Notifications"; // da cambiare
+    notificationButton.className = "btn btn-info";
     notificationButton.alt="Disable notifications";
     notificationButton.setAttribute('onclick', 'disableNotifications()');
 }
@@ -63,7 +65,7 @@ function disableNotifications() {
     formData.append('idFollowed', id);
     axios.post('utils/api.php', formData);
 
-    notificationButton.innerHTML="Enable Notifications"; // da cambiare
+    notificationButton.className = "btn btn-secondary";
     notificationButton.alt="Enable notifications";
     notificationButton.setAttribute('onclick', 'enableNotifications()');
 }

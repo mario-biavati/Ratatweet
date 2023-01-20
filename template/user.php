@@ -26,7 +26,7 @@ if (count($userData) == 1) :
             <?php $idLogged = $_SESSION["idUser"];
                 if($id == $idLogged): ?>
                 <div style="margin-right: 1em">
-                    <button type="button" class="btn btn-primary" alt="Modify profile" id="Modify-Button" onclick="modify()" style="height:30px; width: auto; padding: auto; line-height: 10px;">
+                    <button type="button" class="btn btn-info" alt="Modify profile" id="Modify-Button" onclick="modify()" style="height:30px; width: auto; padding: auto; line-height: 10px;">
                         Modify
                     </button>
                 </div>
@@ -34,7 +34,7 @@ if (count($userData) == 1) :
                 $FollowStatus = "Follow";
                 if(isUserLoggedIn() && !empty($dbh->getFollowerStatus($idLogged, $id))) $FollowStatus = "Unfollow"; ?>
                 <div style="margin-right: 1em">
-                    <button type="button" class="btn btn-primary" alt="<?php echo $FollowStatus; ?> user" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>" style="height:30px; width: auto; padding: auto; line-height: 10px;">
+                    <button type="button" class="btn btn-info" alt="<?php echo $FollowStatus; ?> user" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>" style="height:30px; width: auto; padding: auto; line-height: 10px;">
                         <?php echo $FollowStatus; ?>
                     </button>
                 </div>
@@ -43,8 +43,8 @@ if (count($userData) == 1) :
                 $notif="Disable";
                 if(!empty($notificationStatus) && $notificationStatus[0]["notification"]==0) $notif="Enable"; ?>
                 <div style="margin-left: 1em">
-                    <button type="button" class="btn btn-secondary" alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?> style="height:30px; width: auto; padding: auto; line-height: 10px;">
-                        <?php echo $notif; ?> Notifications
+                    <button type="button" class="btn <?php echo ($notif == "Enable") ? "btn-secondary" : "btn-info"; ?>" alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?> style="height:30px; width: auto; padding: auto; line-height: 10px;">
+                        <img src="img/notification-icon.png" style="height: 20px;">
                     </button>
                 </div>
                 <?php endif; ?>
