@@ -22,7 +22,7 @@ if (isset($_GET["id"])) :
         </div>
     </div>
     <div>
-        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" style="max-width: 100%; height: auto;"/>
+        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" class="mw-100 w-100 h-auto"/>
     </div>
     <div class="w-100 row mt-1">
         <div>
@@ -51,11 +51,11 @@ if (isset($_GET["id"])) :
     </section>
 </article>
 <section class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
-    <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" style="max-width: 35px"/></button></h2>
+    <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" class="icon-tiny"/></button></h2>
     <form id="collapseAddComment" method="post" class="collapse" onsubmit="return false;">
         <input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment"/>
-        <button type="submit" class="btn btn-info mb-2 mt-1">Post Comment</button>
-        <button type="reset" class="btn btn-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment">Cancel</button>
+        <button type="submit" class="btn btn-info text-white mb-2 mt-1">Post Comment</button>
+        <button type="reset" class="btn btn-outline-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment">Cancel</button>
     </form>
     <!--commenti-->
     <div id="comments"></div>

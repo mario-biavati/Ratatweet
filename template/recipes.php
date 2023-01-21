@@ -22,13 +22,13 @@ if (isUserLoggedIn()):
             <li id=<?php echo "Post{$recipe["IDpost"]}"; ?> class="list-group-item border rounded w-100 mx-auto mt-2">
                 <div class="d-block d-md-flex justify-content-between">
                     <div class="d-flex col-9">
-                        <img src="img/recipe-icon.png" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
+                        <img src="img/recipe-icon.png" class="icon-tiny">
                         <div class="d-block h-100 ms-3">
                             <h1 class="fw-bold fs-5 h-50 m-0">
-                                <?php echo "{$recipe["title"]}"; ?>
+                                <a href="post.php?id=<?php echo $recipe["IDpost"]?>" class="decoration-none"><?php echo "{$recipe["title"]}"; ?></a>
                             </h1>
                             <p class="h-auto my-2">
-                                <?php echo "by {$recipe["username"]}"; ?>
+                                by <a href="user_page.php?id=<?php echo $recipe["IDuser"]?>"><?php echo $recipe["username"]; ?></a>
                             </p>
                         </div>
                     </div>

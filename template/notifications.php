@@ -22,7 +22,8 @@ if (isUserLoggedIn()):
                 $postHref="post.php?id={$notification["IDpost"]}";
             }
             elseif($notification["type"]=="Recipe") {
-                $notificationType=" used your recipe";
+                $notificationType=" used your ";
+                $postHref="post.php?id={$notification["IDpost"]}";
             }
             else {
                 $notificationType="unknow notification type";
@@ -30,12 +31,14 @@ if (isUserLoggedIn()):
             $userHref="user_page.php?id={$userData["IDuser"]}";
         ?>
             <li class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8">
-                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt=<?php echo "{$userData["username"]}_Pic"; ?> width = "50px" height = "50px" />
+                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt=<?php echo "{$userData["username"]}_Pic"; ?> width = "50px" height = "50px" class="icon-small"/>
                 <a href=<?php echo "{$userHref}"; ?>><?php echo "{$userData["username"]}"; ?></a>
-                <p class="d-flex"> <?php echo " {$notificationType}"; ?>
-                <?php if($notification["type"]=="Post" || $notification["type"]=="Comment"): ?>
-                    <a href=<?php echo "{$postHref}"; ?>><?php echo "post"; ?></a>
-                <?php endif; ?>
+                <p>
+                    <?php echo $notificationType; if($notification["type"]=="Post" || $notification["type"]=="Comment"): ?>
+                        <a href=<?php echo "{$postHref}"; ?>>post</a>
+                    <?php elseif($notification["type"]=="Recipe"): ?>
+                        <a href=<?php echo "{$postHref}"; ?>>recipe</a>
+                    <?php endif; ?>
                 </p>
                 <div class="d-flex w-100 justify-content-end">
                     <button type="button" class="btn btn-info text-white" data-bs-toggle="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
