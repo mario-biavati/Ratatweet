@@ -21,8 +21,10 @@ class DatabaseHelper{
 
     //Query inserimento nuovo utente (con ID autoincrement)
     public function insertUser($username, $password, $bio, $pic){
-        $stmt = $this->prepare("INSERT INTO USER (username, password, bio, pic) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param('ssss',$username, $password, $bio, $pic);
+        $stmt = $this->prepare("INSERT INTO USER (username, password, salt, bio, pic) VALUES (?, ?, ?, ?, ?)");
+        $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+        $password = hash('sha512', $password.$random_salt);
+        $stmt->bind_param('sssss',$username, $password, $random_salt, $bio, $pic);
         $stmt->execute();
         return $stmt->insert_id;
     }
@@ -153,13 +155,67 @@ class DatabaseHelper{
 
     // Query di login
     public function login($username, $password){
-        $query = "SELECT IDuser, username, password, bio, pic FROM USER WHERE username=? AND password=?";
-        $stmt = $this->prepare($query);
-        $stmt->bind_param('ss',$username, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
+        if ($stmt = $this->prepare("SELECT IDuser, username, password, salt, bio, pic FROM USER WHERE username=? LIMIT 1")) { 
+            $stmt->bind_param('s', $username); 
+            $stmt->execute(); 
+            $result = $stmt->get_result();
+            $result = $result->fetch_all(MYSQLI_ASSOC); 
+            if(count($result) == 1) { // se l'utente esiste
+                $user_id = $result[0]["IDuser"];
+                $salt = $result[0]["salt"];
+                $db_password = $result[0]["password"];
+                $password = hash('sha512', $password.$salt); 
+                // verifichiamo che non sia disabilitato in seguito all'esecuzione di troppi tentativi di accesso errati.
+                if($this->checkbrute($user_id) == true) { 
+                    // Account disabilitato
+                    // Invia un e-mail all'utente avvisandolo che il suo account è stato disabilitato.
+                    $result["esito"] = false;
+                    $result["description"] = "Account bloccato!";
+                } else {
+                    if($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
+                        // Password corretta!
+                        // Login eseguito con successo.
+                        $result["esito"] = true;
+                    } else {
+                        // Password incorretta.
+                        // Registriamo il tentativo fallito nel database.
+                        $now = time();
+                        $stmt = $this->prepare("INSERT INTO LOGIN_ATTEMPTS (IDuser, time) VALUES (?, ?)");
+                        $stmt->bind_param('is', $user_id, $now);
+                        $stmt->execute();
+                        $result["description"] = "Password incorretta!";
+                        $result["esito"] = false;
+                    }
+                }
+            } else {
+            $result["description"] = "Utente non esistente!";
+            $result["esito"] = false;
+            }
+        }
+        else $result["esito"] = false;
+        return $result;
     }
+
+    private function checkbrute($IDuser) {
+        // Recupero il timestamp
+        $now = time();
+        // Vengono analizzati tutti i tentativi di login a partire dalle ultime due ore.
+        $valid_attempts = $now - (2 * 60 * 60); 
+        if ($stmt = $this->prepare("SELECT time FROM LOGIN_ATTEMPTS WHERE IDuser = ? AND time > ?")) { 
+            $stmt->bind_param('ii', $IDuser, $valid_attempts); 
+            // Eseguo la query creata.
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $result = $result->fetch_all(MYSQLI_ASSOC); 
+            // Verifico l'esistenza di più di 5 tentativi di login falliti.
+            if(count($result) > 5) {
+                return true;
+            } else {
+                return false;
+           }
+        }
+     }
 
     // Query di ottenimento dei follower
     public function getFollowers($IDuser){
@@ -290,7 +346,7 @@ class DatabaseHelper{
     }
 
     // Query che ritorna le info di un post usando il suo ID
-    function getPostByID($IDPost) {
+    public function getPostByID($IDPost) {
         $query = "SELECT POST.IDpost, POST.pic, title, avgRating, numComments, description, POST.date, POST.IDuser, username, IDrecipe FROM POST, INFOPOST, USER
         WHERE POST.IDpost=? AND INFOPOST.IDpost=POST.IDpost AND POST.IDuser=USER.IDuser";
         $stmt = $this->prepare($query);
@@ -302,7 +358,7 @@ class DatabaseHelper{
     }
 
     //Query che ritorna i commenti associati ad un post
-    function getCommentsByPostID($IDPost) {
+    public function getCommentsByPostID($IDPost) {
         $query = "SELECT COMMENT.IDcomment FROM COMMENT LEFT JOIN INFOCOMMENT ON COMMENT.IDcomment=INFOCOMMENT.IDcomment WHERE IDpost=? AND IDparent IS NULL ORDER BY numLikes DESC";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDPost);
@@ -312,7 +368,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //Query che ritorna il commento in base all'ID
-    function getCommentByID($IDComment, $IDuser = -1) {
+    public function getCommentByID($IDComment, $IDuser = -1) {
         $query = "SELECT COMMENT.IDcomment, COMMENT.text, COMMENT.date, U.IDuser, U.username, U.pic, COALESCE(numLikes, 0) AS likes, B.liked FROM COMMENT NATURAL LEFT JOIN INFOCOMMENT, USER AS U, (SELECT COUNT(*) AS liked FROM `LIKES` WHERE IDcomment=? AND IDuser=?) AS B
         WHERE COMMENT.IDuser=U.IDuser AND COMMENT.IDcomment=?";
         $stmt = $this->prepare($query);
@@ -323,7 +379,7 @@ class DatabaseHelper{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //Query che ritorna le risposte di un commento
-    function getRepliesByCommentID($IDcomment) {
+    public function getRepliesByCommentID($IDcomment) {
         $query = "SELECT IDcomment FROM COMMENT WHERE COMMENT.IDparent=?";
         $stmt = $this->prepare($query);
         $stmt->bind_param('i',$IDcomment);

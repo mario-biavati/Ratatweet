@@ -22,7 +22,8 @@ use RATATWEET;
 create table `USER` (
      IDuser bigint not null auto_increment,
      username varchar(50) not null,
-     password varchar(50) not null, 
+     password char(128) not null, 
+     salt char(128) NOT NULL,
      bio varchar(50),
      pic mediumblob,
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -116,11 +117,11 @@ create table `LIKES` (
      FOREIGN KEY (IDcomment) references COMMENT(IDcomment),
      PRIMARY KEY(IDcomment,IDuser));
 
--- CREATE VIEW INFOPOST AS 
---      SELECT P.IDpost, COALESCE(AVG(P.rating), 0) as avgRating, COUNT(C.IDcomment) as numComments 
---      FROM (POST JOIN RATING ON POST.IDpost = RATING.IDpos) AS P, COMMENT AS C 
---      GROUP BY P.IDpost
---      HAVING P.IDpost = C.IDpost;
+create table LOGIN_ATTEMPTS (
+     IDuser bigint not null,
+     time varchar(30) not null,
+     FOREIGN KEY (IDuser) references USER(IDuser),
+     PRIMARY KEY(IDuser,time));
     
 CREATE VIEW INFOPOST AS
      SELECT A.IDpost, A.avgRating, B.numComments

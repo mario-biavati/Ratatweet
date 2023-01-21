@@ -20,7 +20,8 @@ else if (isset($_GET["q"]) && $_GET["q"] == "search" && isset($_GET["text"])) {
     echo json_encode($dbh->search($_GET["text"]));
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getUserInfo") {
-    echo json_encode($dbh->getUserById($loggedUser)[0]);
+    $id = (isset($_GET["idUser"])) ? $_GET["idUser"] : $loggedUser;
+    echo json_encode($dbh->getUserById($id)[0]);
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getComments" && isset($_GET["id"])) {
     echo json_encode($dbh->getCommentsByPostID($_GET["id"]));
@@ -38,10 +39,12 @@ else if (isset($_GET["q"]) && $_GET["q"] == "getNotificationNumber") {
     echo json_encode($dbh->getNotificationNumber($loggedUser)[0]);
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getUserFollowers" && isset($_GET["idUser"])) {
-    echo json_encode($dbh->getFollowers($_GET["idUser"]));
+    $id = ($_GET["idUser"]!=-1) ? $_GET["idUser"] : $loggedUser;
+    echo json_encode($dbh->getFollowers($id));
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "getUserFollowed" && isset($_GET["idUser"])) {
-    echo json_encode($dbh->getFollowed($_GET["idUser"]));
+    $id = ($_GET["idUser"]!=-1) ? $_GET["idUser"] : $loggedUser;
+    echo json_encode($dbh->getFollowed($id));
 }
 else if (isset($_GET["q"]) && $_GET["q"] == "isRecipeSaved" && isset($_GET["id"])) { //!! questa funzione richiede l'id del POST
     echo json_encode($dbh->isRecipeSaved($loggedUser, $_GET["id"])[0]);
@@ -160,7 +163,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "deleteRecipe" && isset($_SESSION[
 else if (isset($_POST["q"]) && $_POST["q"] == "login" && isset($_POST["username"]) && isset($_POST["password"])) {
     $result["logineseguito"] = false;
     $login_result = $dbh->login($_POST["username"], $_POST["password"]);
-    if(count($login_result)==0) $result["errorelogin"] = "Errore! Controllare username o password!";
+    if($login_result["esito"]==false) $result["errorelogin"] = $login_result["description"];
     else registerLoggedUser($login_result[0]);
     if(isUserLoggedIn()) $result["logineseguito"] = true;
     
@@ -174,7 +177,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "register" && isset($_POST["userna
     if($register_result==0 || $register_result=="false") $result["errore"] = "Errore! Username già utilizzato!";
     else {
         $login_result = $dbh->login($_POST["username"], $_POST["password"]);
-        if(count($login_result)!=0) registerLoggedUser($login_result[0]);
+        if($login_result["esito"]==true) registerLoggedUser($login_result[0]);
     }
     if(isUserLoggedIn()) $result["esito"] = true;
     

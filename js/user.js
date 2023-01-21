@@ -15,8 +15,9 @@ var cur_lastFollowed = 0;
 var canPrintPost = true;
 var canPrintFollowers = true;
 var canPrintFollowed = true;
+var currentDiv = "posts";
 
-document.addEventListener("scroll", () => reloadPosts());
+document.addEventListener("scroll", () => reload());
 
 function login() {
     axios.get('template/login_form.php').then(file => {
@@ -107,6 +108,40 @@ function printPost(idPost) {
         });
     });
 }
+function printFollower(idUser, i) {
+    return new Promise((resolve) => {
+        axios.get('utils/api.php?q=getUserInfo&idUser=' + idUser).then(r => {
+            let userData = r.data;
+            let userHref = "user_page.php?id="+idUser;
+            let htmlContent = "";
+            if(i==0) htmlContent = `<ul class="list-group">`;
+            htmlContent+= `
+            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8">
+                <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" width = "50px" height = "50px" />
+                <a href="${userHref}">${userData["username"]}</a>   
+            </li> `;
+            if(i==arrayFollowers.length) htmlContent += `</ul>`;
+            resolve(htmlContent);
+        });
+    });
+}
+function printFollowed(idUser, i) {
+    return new Promise((resolve) => {
+        axios.get('utils/api.php?q=getUserInfo&idUser=' + idUser).then(r => {
+            let userData = r.data;
+            let userHref = "user_page.php?id="+idUser;
+            let htmlContent = "";
+            if(i==0) htmlContent = `<ul class="list-group">`;
+            htmlContent+= `
+            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8">
+                <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" width = "50px" height = "50px" />
+                <a href="${userHref}">${userData["username"]}</a>   
+            </li> `;
+            if(i==arrayFollowed.length) htmlContent += `</ul>`;
+            resolve(htmlContent);
+        });
+    });
+}
 
 async function loadPosts(n_post) {
     canPrintPost = false;
@@ -124,16 +159,52 @@ async function loadPosts(n_post) {
     cur_lastPost = cur_lastPost + n_post;
     canPrintPost = true;
 }
+async function loadFollowers(n_followers) {
+    canPrintFollowers = false;
+    let HTMLcontent = '';
+    for (let i = 0; i < n_followers; i++) {
+
+        if (i + cur_lastFollowers >= arrayFollowers.length) {
+            cur_lastFollowers += i;
+            followers.innerHTML += HTMLcontent;
+            return;
+        }
+        HTMLcontent += await printFollower(arrayFollowers[i + cur_lastFollowers], i + cur_lastFollowers);
+    }
+    followers.innerHTML += HTMLcontent;
+    cur_lastFollowers = cur_lastFollowers + n_followers;
+    canPrintFollowers = true;
+}
+async function loadFollowed(n_followed) {
+    canPrintFollowed = false;
+    let HTMLcontent = '';
+    for (let i = 0; i < n_followed; i++) {
+
+        if (i + cur_lastFollowed >= arrayFollowed.length) {
+            cur_lastFollowed += i;
+            followed.innerHTML += HTMLcontent;
+            return;
+        }
+        HTMLcontent += await printFollowed(arrayFollowed[i + cur_lastPost], i + cur_lastFollowed);
+    }
+    followed.innerHTML += HTMLcontent;
+    cur_lastFollowed = cur_lastFollowed + n_followed;
+    canPrintFollowed = true;
+}
 function isAtBottom() {
     return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
 }
-function reloadPosts() {
-    if (isAtBottom() && canPrintPost) {
-        loadPosts(5);
+function reload() {
+    if (isAtBottom()) {
+        if(currentDiv="posts" && canPrintPost) loadPosts(5);
+        else if(currentDiv="followers" && canPrintFollowers) loadFollowers(5);
+        else if(currentDiv="followed" && canPrintFollowed) loadFollowed(5);
     }
 }
 
-// on page load
+//ON PAGE LOAD
+let IDuser = (typeof id === 'undefined') ? -1 : id;
+//Get user posts
 axios.get('utils/api.php?q=getLoggedUser').then(r => {
     logged = r.data.idUser;
     let iduser = (typeof id === 'undefined') ? logged : id;
@@ -142,33 +213,30 @@ axios.get('utils/api.php?q=getLoggedUser').then(r => {
         r2.data.forEach(element => {
             arrayPost.push(element.IDpost);
         });
-
-        loadPosts(5);
     });
+    if(arrayPost.length==0) {
+        posts.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No posts</p>`;
+    }
 });
-axios.get('utils/api.php?q=getUserFollowers?idUser').then(r => {
-    logged = r.data.idUser;
-    let iduser = (typeof id === 'undefined') ? logged : id;
-    axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
-        console.log(r2.data);
-        r2.data.forEach(element => {
-            arrayPost.push(element.IDpost);
+//Get user followers list
+axios.get('utils/api.php?q=getUserFollowers&idUser='+IDuser).then(r => {
+        console.log(r.data);
+        r.data.forEach(element => {
+            arrayFollowers.push(element.IDuser);
         });
-
-        loadPosts(5);
-    });
+        if(arrayFollowers.length==0) {
+            followers.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followers</p>`;
+        }
 });
-axios.get('utils/api.php?q=getLoggedUser').then(r => {
-    logged = r.data.idUser;
-    let iduser = (typeof id === 'undefined') ? logged : id;
-    axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
-        console.log(r2.data);
-        r2.data.forEach(element => {
-            arrayPost.push(element.IDpost);
-        });
-
-        loadPosts(5);
+//Get user followed list
+axios.get('utils/api.php?q=getUserFollowed&idUser='+IDuser).then(r => {
+    console.log(r.data);
+    r.data.forEach(element => {
+        arrayFollowed.push(element.IDuser);
     });
+    if(arrayFollowed.length==0) {
+        followed.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followed</p>`;
+    }
 });
 
 function logout() {
@@ -189,8 +257,8 @@ function onPostsClick() {
     navButtons[0].classList.add('border-bottom', 'border-info', 'border-4');
     navButtons[1].classList.remove('border-bottom', 'border-info', 'border-4');
     navButtons[2].classList.remove('border-bottom', 'border-info', 'border-4');
-
-    //carica i post [TODO]
+    currentDiv="posts";
+    loadPosts(5);
 }
 
 navButtons[1].addEventListener("click", onFollowersClick);
@@ -198,8 +266,8 @@ function onFollowersClick() {
     navButtons[1].classList.add('border-bottom', 'border-info', 'border-4');
     navButtons[0].classList.remove('border-bottom', 'border-info', 'border-4');
     navButtons[2].classList.remove('border-bottom', 'border-info', 'border-4');
-
-    //carica i followers [TODO]
+    currentDiv="followers";
+    loadFollowers(5);
 }
 
 navButtons[2].addEventListener("click", onFollowedClick);
@@ -207,9 +275,9 @@ function onFollowedClick() {
     navButtons[2].classList.add('border-bottom', 'border-info', 'border-4');
     navButtons[1].classList.remove('border-bottom', 'border-info', 'border-4');
     navButtons[0].classList.remove('border-bottom', 'border-info', 'border-4');
-
-    //carica i seguiti [TODO]
+    currentDiv="followed";
+    loadFollowed(5);
 }
 
 //on page load
-navButtons[0].click();
+onPostsClick();
