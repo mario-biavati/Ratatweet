@@ -1,7 +1,7 @@
 <?php
 require_once("bootstrap.php");
 
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/registration.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/check_notifications.js", "js/registration.js");
 if(isUserLoggedIn()) {
     $templateParams["title"] = "Ratatweet - Registration"; 
 }

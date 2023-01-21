@@ -113,6 +113,5 @@
         endforeach;
     endif;
     ?>
-    <script src="js/check_notifications.js"></script>
 </body>
 </html>

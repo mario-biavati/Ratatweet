@@ -30,7 +30,7 @@ if (isUserLoggedIn()):
             }
             $userHref="user_page.php?id={$userData["IDuser"]}";
         ?>
-            <li class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8">
+            <li id="notification<?php echo $notification['IDnotification']; ?>" class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8">
                 <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt=<?php echo "{$userData["username"]}_Pic"; ?> width = "50px" height = "50px" class="icon-small"/>
                 <a href=<?php echo "{$userHref}"; ?>><?php echo "{$userData["username"]}"; ?></a>
                 <p>

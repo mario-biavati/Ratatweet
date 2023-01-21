@@ -1,7 +1,7 @@
 <?php
 require_once("bootstrap.php");
 
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/user.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/check_notifications.js", "js/user.js");
 $templateParams["title"] = "Ratatweet - User"; 
 if (isset($_GET["id"]) || isUserLoggedIn()) {
     if (isset($_GET["id"])) {                                   //pagina di un altro utente

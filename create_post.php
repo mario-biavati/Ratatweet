@@ -1,7 +1,7 @@
 <?php
 require_once("bootstrap.php");
 
-$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/create_post.js");
+$templateParams["js"] = array("https://unpkg.com/axios/dist/axios.min.js", "js/check_notifications.js", "js/create_post.js");
 $templateParams["title"] = "Ratatweet - New Post"; 
 $templateParams["header"] = "header_short.html";
 
