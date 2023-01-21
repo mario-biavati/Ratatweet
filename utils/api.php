@@ -197,10 +197,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "new_post" && isset($_POST["titolo
 
         //notify post
         $dbh->notifyPost($loggedUser, $result["IDpost"]);
-        if (isset($_POST["recipe"])) {
-            //notify recipe
-            $dbh->notifyRecipe($loggedUser, $result["IDpost"]);
-        }
+        $dbh->notifyRecipe($loggedUser, $result["IDpost"]);
     }
     
     header('Content-Type: application/json');

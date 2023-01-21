@@ -1,13 +1,3 @@
-<?php
-if(isUserLoggedIn()) {
-    $id = $_SESSION["idUser"];
-    $savedRecipes = $dbh->getSavedRecipes($id);
-    $userRecipes = $dbh->getUserRecipes($id);
-}
-else {
-    header("Location: registration_page.php");
-}
-?>
 <div class="d-block py-5 px-3 text-center">
     <form action="#" method="POST">
         <!-- Parametri del post -->
@@ -18,9 +8,9 @@ else {
                 <label for="titolo" class="fw-semibold">Title:</label>
                 <input type="text" id="titolo" name="titolo" class="form-control"/>
             </li>
-            <li class="list-group-item border-0 col-10 col-md-5 col-lg-4 mx-auto">
+            <li class="list-group-item border-0 col-10 mx-auto">
                 <label for="pic" class="fw-semibold d-block">Upload Picture:</label>
-                <input type="file" name="pic" id="pic" class="form-control-file d-block mx-auto w-100"/>
+                <input type="file" name="pic" id="pic" class="form-control-file d-block mx-auto"/>
             </li>
             <li class="list-group-item border-0 col-10 col-md-5 col-lg-4 mx-auto">
                 <label for="descrizione" class="fw-semibold">Description:</label>
@@ -40,8 +30,8 @@ else {
             <!-- Pulsante per l'utilizzo di una ricetta salvata -->
             <div id="ricette_salvate" class="collapse w-100 border rounded" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
                 <ul class="nav nav-tabs justify-content-around border-0">
-                    <li class="nav-item p-2 w-50 text-secondary" onclick="selectSavedRecipes(this)">Saved Recipes</li>
-                    <li class="nav-item p-2 w-50 text-secondary" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">My Recipes</li>
+                    <li role="button" class="nav-item p-2 w-50 text-secondary" onclick="selectSavedRecipes(this)">Saved Recipes</li>
+                    <li role="button" class="nav-item p-2 w-50 text-secondary" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">My Recipes</li>
                 </ul>
                 <ul class="list-group list-group-flush">
                     <div id="sr-container">
@@ -53,7 +43,8 @@ else {
                     <?php endif;
                     foreach($savedRecipes as $recipe) : ?>
                         <li class="list-group-item border-0 d-flex row">
-                            <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+                            <input type="radio" id="<?php echo "Recipe{$recipe["IDrecipe"]}"; ?>" name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-1 h-50 my-auto"/>
+                            <label for="Recipe<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-10 col-md-5 col-lg-3 text-center"><?php echo "{$recipe["title"]}"; ?></label>
                         </li>
                     <?php endforeach; ?>
                     </div>
@@ -65,8 +56,9 @@ else {
                         </li>
                     <?php endif;
                     foreach($userRecipes as $recipe) : ?>
-                        <li class="list-group-item border-0 d-flex row">
-                            <input type="radio" id=<?php echo "Recipe{$recipe["IDrecipe"]}"; ?> name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>"><label for="Ricetta<?php echo "{$recipe["IDrecipe"]}"; ?>"><?php echo "{$recipe["title"]}"; ?></label>
+                        <li class="list-group-item border-0 d-flex justify-content-center">
+                            <input type="radio" id="<?php echo "Recipe{$recipe["IDrecipe"]}"; ?>" name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-1 h-50 my-auto"/>
+                            <label for="Recipe<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-10 col-md-5 col-lg-3 text-center"><?php echo "{$recipe["title"]}"; ?></label>
                         </li>
                     <?php endforeach; ?>
                     </div>

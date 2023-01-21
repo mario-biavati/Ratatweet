@@ -59,5 +59,12 @@ function uploadImage($path, $image){
     }
     return array($result, $msg);
 }
+function contains_value($value, $array) { //per array associativi
+    $ret = false;
+    foreach ($array as $a) {
+        $ret = $ret || in_array($value, $a);
+    }
+    return $ret;
+}
 
 ?>

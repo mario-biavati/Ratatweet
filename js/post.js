@@ -13,30 +13,30 @@ function printComment(idComment, where, first = false) {
         console.log(comment);
         let htmlContent = 
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
-        <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
-            <img src="data:image/png;base64,${comment.pic}" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
-        </div>
         <div class="d-flex flex-column col-10 col-lg-11">
-            <a class="fw-bold" href="user_page.php?id=${comment.IDuser}">
-                ${comment.username}
-            </a>
+            <div class="d-flex justify-content-start">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small">
+                <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
+                    ${comment.username}
+                </a>
+            </div>
             <p>
                 ${comment.text}
             </p>
             <div class="d-flex">
-                <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like`;
+                <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" class="border-0 bg-white mr-3"><img src="img/like-icon.png" class="my-auto like`;
         if (comment.liked == 1) htmlContent += ' liked';
         htmlContent += `"/><span>${comment.likes}</span></button>
-                <button id="replyButton${comment.IDcomment}" class="ms-1 btn btn-info" style="max-height: 40px;" data-bs-toggle="collapse" role="button" aria-expanded="false" data-bs-target="#comment${comment.IDcomment}Replies" aria-controls="comment${comment.IDcomment}Replies">
+                <button id="replyButton${comment.IDcomment}" class="ms-1 btn btn-secondary" data-bs-toggle="collapse" role="button" aria-expanded="false" data-bs-target="#comment${comment.IDcomment}Replies" aria-controls="comment${comment.IDcomment}Replies">
                     Replies ▼
                 </button>
-                <button class="ms-1 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}"><img src="img/comment-icon.png" style="max-width: 35px"/></button>
+                <button class="ms-1 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}"><img src="img/comment-icon.png" class="icon-tiny"/></button>
             </div>
         </div>
         <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="postReply(${comment.IDcomment},this); return false;">
             <input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
-            <button type="submit" class="btn btn-info mt-1">Post Reply</button>
-            <button type="reset" class="btn btn-secondary mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
+            <button type="submit" class="btn btn-info text-white mt-1">Post Reply</button>
+            <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
         </form>
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
         </div>
@@ -75,7 +75,7 @@ function printReply(idComment, where, first = false) {
                 ${comment.text}
             </p>
             <div class="d-flex">
-            <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" style="border: none; background: none; margin-right: 5px;"><img src="img/like-icon.png" class="like`;
+            <button onclick="like(${comment.IDcomment}, ${comment.liked}, this)" class="border-0 bg-white mr-3"><img src="img/like-icon.png" class="like`;
             if (comment.liked == 1) htmlContent += ' liked';
             htmlContent += `"/><span>${comment.likes}</span></button>
             </div>
@@ -243,6 +243,8 @@ function updateAvgRating() {
             element = document.getElementById("star"+i);
             element.checked = true;
         }
+        let ratingRounded = Math.round(rating * 100) / 100;
+        document.getElementById("avgRating").innerText = ratingRounded;
         /*
         for(i=rating+1; i<=5; i++) {
             element = document.getElementById("star"+i);
@@ -251,6 +253,7 @@ function updateAvgRating() {
         */
     });
 }
+updateAvgRating();
 
 //-- on page load: recipe button manager
 
