@@ -9,7 +9,7 @@
     <link href="css/like.css" rel="stylesheet">
 </head>
 <body>
-    <header class="fixed-top bg-white row justify-content-end vw-100 overflow-hidden" style="height: 7vh;">
+    <header class="fixed-top bg-white d-flex justify-content-end overflow-hidden" style="height: 7vh;">
         <?php
         if(isset($templateParams["header"])){
             require($templateParams["header"]);

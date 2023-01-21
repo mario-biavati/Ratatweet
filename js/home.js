@@ -16,7 +16,7 @@ function printPost(idPost) {
             let ratingRounded = Math.round(post.avgRating);
             post.avgRating = Math.round(post.avgRating * 100) / 100;
             let htmlContent = 
-            `<article class="ms-2 me-2 me-md-0 d-flex flex-column flex-md-row">
+            `<article class="ms-2 me-2 me-md-0 d-flex flex-column flex-md-row justify-content-around">
                 <div class="d-flex d-md-none">
                     <div>
                         <h1>${post.title}</h1>
@@ -27,7 +27,7 @@ function printPost(idPost) {
                 <a href="post.php?id=${post.IDpost}" class="col-md-4 me-2">
                     <img src="data:image/png;base64,${post.pic}" class="img-fluid col-12 me-2" style="object-fit: cover;"/>
                 </a>
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column col-md-7">
                     <div class="d-flex d-none d-md-block flex-column">
                         <div class="d-flex flex-row">
                             <div class="d-flex flex-column">
