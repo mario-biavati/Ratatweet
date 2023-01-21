@@ -171,5 +171,11 @@ function checkAlreadySelectedRecipe(){
         btns[0].click();
         element = document.getElementById("Recipe"+IDrecipe);
         element.checked = true;
+
+        if (document.getElementById("sr-container").contains(element)) {
+            recps[0].click();
+        } else if (document.getElementById("mr-container").contains(element)) {
+            recps[1].click();
+        }
     }
 }
