@@ -243,6 +243,8 @@ function updateAvgRating() {
             element = document.getElementById("star"+i);
             element.checked = true;
         }
+        let ratingRounded = Math.round(rating * 100) / 100;
+        document.getElementById("avgRating").innerText = ratingRounded;
         /*
         for(i=rating+1; i<=5; i++) {
             element = document.getElementById("star"+i);
@@ -251,6 +253,7 @@ function updateAvgRating() {
         */
     });
 }
+updateAvgRating();
 
 //-- on page load: recipe button manager
 
