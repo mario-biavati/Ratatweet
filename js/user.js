@@ -4,9 +4,17 @@ var followButton = document.getElementById("followbutton");
 var notificationButton = document.getElementById("notificationbutton");
 
 var posts = document.getElementById("posts");
+var followers = document.getElementById("followers");
+var followed = document.getElementById("followed");
 var arrayPost = [];
+var arrayFollowers = [];
+var arrayFollowed = [];
 var cur_lastPost = 0;
+var cur_lastFollowers = 0;
+var cur_lastFollowed = 0;
 var canPrintPost = true;
+var canPrintFollowers = true;
+var canPrintFollowed = true;
 
 document.addEventListener("scroll", () => reloadPosts());
 
@@ -126,7 +134,30 @@ function reloadPosts() {
 }
 
 // on page load
+axios.get('utils/api.php?q=getLoggedUser').then(r => {
+    logged = r.data.idUser;
+    let iduser = (typeof id === 'undefined') ? logged : id;
+    axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
+        console.log(r2.data);
+        r2.data.forEach(element => {
+            arrayPost.push(element.IDpost);
+        });
 
+        loadPosts(5);
+    });
+});
+axios.get('utils/api.php?q=getUserFollowers?idUser').then(r => {
+    logged = r.data.idUser;
+    let iduser = (typeof id === 'undefined') ? logged : id;
+    axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
+        console.log(r2.data);
+        r2.data.forEach(element => {
+            arrayPost.push(element.IDpost);
+        });
+
+        loadPosts(5);
+    });
+});
 axios.get('utils/api.php?q=getLoggedUser').then(r => {
     logged = r.data.idUser;
     let iduser = (typeof id === 'undefined') ? logged : id;

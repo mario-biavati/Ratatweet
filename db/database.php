@@ -163,9 +163,18 @@ class DatabaseHelper{
 
     // Query di ottenimento dei follower
     public function getFollowers($IDuser){
-        $query = "SELECT IDuser, username, pic FROM FOLLOWER, USER WHERE IDfollowed=? AND IDuser=IDfollower";
+        $query = "SELECT IDuser FROM FOLLOWER, USER WHERE IDfollowed=? AND IDuser=IDfollower";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('s',$IDuser);
+        $stmt->bind_param('i',$IDuser);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    // Query di ottenimento dei followed
+    public function getFollowed($IDuser){
+        $query = "SELECT IDuser FROM FOLLOWER, USER WHERE IDfollower=? AND IDuser=IDfollowed";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('i',$IDuser);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);

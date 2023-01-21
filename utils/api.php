@@ -37,6 +37,12 @@ else if (isset($_GET["q"]) && $_GET["q"] == "getUserPosts" && isset($_GET["id"])
 else if (isset($_GET["q"]) && $_GET["q"] == "getNotificationNumber") {
     echo json_encode($dbh->getNotificationNumber($loggedUser)[0]);
 }
+else if (isset($_GET["q"]) && $_GET["q"] == "getUserFollowers" && isset($_GET["idUser"])) {
+    echo json_encode($dbh->getFollowers($_GET["idUser"]));
+}
+else if (isset($_GET["q"]) && $_GET["q"] == "getUserFollowed" && isset($_GET["idUser"])) {
+    echo json_encode($dbh->getFollowed($_GET["idUser"]));
+}
 else if (isset($_GET["q"]) && $_GET["q"] == "isRecipeSaved" && isset($_GET["id"])) { //!! questa funzione richiede l'id del POST
     echo json_encode($dbh->isRecipeSaved($loggedUser, $_GET["id"])[0]);
 }
