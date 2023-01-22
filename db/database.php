@@ -171,7 +171,7 @@ class DatabaseHelper{
                     // Account disabilitato
                     // Invia un e-mail all'utente avvisandolo che il suo account è stato disabilitato.
                     $result["esito"] = false;
-                    $result["description"] = "Account bloccato!";
+                    $result["description"] = "Banned Account!";
                 } else {
                     if($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
                         // Password corretta!
@@ -184,12 +184,12 @@ class DatabaseHelper{
                         $stmt = $this->prepare("INSERT INTO LOGIN_ATTEMPTS (IDuser, time) VALUES (?, ?)");
                         $stmt->bind_param('is', $user_id, $now);
                         $stmt->execute();
-                        $result["description"] = "Password incorretta!";
+                        $result["description"] = "Wrong username or password!";
                         $result["esito"] = false;
                     }
                 }
             } else {
-            $result["description"] = "Utente non esistente!";
+            $result["description"] = "Wrong username or password!";
             $result["esito"] = false;
             }
         }

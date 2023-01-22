@@ -12,7 +12,6 @@ if(isUserLoggedIn()) {
     $userData = $dbh->getUserById($_SESSION["idUser"])[0];
     $username = $userData["username"];
     $bio = $userData["bio"];
-    $password = $userData["password"];
     $text_for_image = "Update";
 }
 ?>
@@ -23,12 +22,17 @@ if(isUserLoggedIn()) {
         <p class="text-danger"></p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
+                <label for="username" class="fs-6 fw-semibold">Username:</label><br>
                 <input type="text" id="username" name="username" placeholder="Username" class="form-control w-100" value = "<?php echo $username;?>" />
             </li>
+            <?php if(!isUserLoggedIn()): ?>
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
-                <input type="password" name="password" id="password" placeholder="Password" class="form-control w-100" value = "<?php echo $password;?>" />
+                <label for="password" class="fs-6 fw-semibold">Password:</label><br>
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control w-100" />
             </li>
+            <?php endif; ?>
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto mt-3">
+                <label for="bio" class="fs-6 fw-semibold">Bio:</label><br>
                 <textarea id="bio" name="bio" rows="3" placeholder="Description" class="form-control w-100"><?php echo $bio;?></textarea>
             </li>
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto mt-3">

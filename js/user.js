@@ -209,7 +209,6 @@ axios.get('utils/api.php?q=getLoggedUser').then(r => {
     logged = r.data.idUser;
     let iduser = (typeof id === 'undefined') ? logged : id;
     axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
-        console.log(r2.data);
         r2.data.forEach(element => {
             arrayPost.push(element.IDpost);
         });
@@ -220,7 +219,6 @@ axios.get('utils/api.php?q=getLoggedUser').then(r => {
 });
 //Get user followers list
 axios.get('utils/api.php?q=getUserFollowers&idUser='+IDuser).then(r => {
-        console.log(r.data);
         r.data.forEach(element => {
             arrayFollowers.push(element.IDuser);
         });
@@ -230,7 +228,6 @@ axios.get('utils/api.php?q=getUserFollowers&idUser='+IDuser).then(r => {
 });
 //Get user followed list
 axios.get('utils/api.php?q=getUserFollowed&idUser='+IDuser).then(r => {
-    console.log(r.data);
     r.data.forEach(element => {
         arrayFollowed.push(element.IDuser);
     });

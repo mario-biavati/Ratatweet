@@ -3,8 +3,9 @@ document.querySelector("main form").addEventListener("submit", async function (e
     document.querySelector("form > p").innerText = "";
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
-    if (await login(username, password) == false) {
-        document.querySelector("form > p").innerText = "Error! Wrong Username or Password!";
+    const result = await login(username, password);
+    if (result.logineseguito == false) {
+        document.querySelector("form > p").innerText = result.errorelogin;
     }
 });
 
@@ -14,12 +15,9 @@ function login(username, password) {
     formData.append('username', username);
     formData.append('password', password);
     return axios.post('utils/api.php', formData).then(response => {
-        console.log(response.data);
         if (response.data["logineseguito"]) {
             location.reload();
-            return true;
-        } else {
-            return false;
         }
+        return response.data;
     });
 }

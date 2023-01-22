@@ -4,9 +4,11 @@
         <p class="text-danger"></p>
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
+                <label for="username" class="fs-6 fw-semibold">Username:</label><br>
                 <input type="text" id="username" name="username" placeholder="Username" class="form-control w-100"/>
             </li>
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto">
+                <label for="password" class="fs-6 fw-semibold">Password:</label><br>
                 <input type="password" id="password" name="password" placeholder="Password" class="form-control w-100"/>
             </li>
             <li class="list-group-item border-0 mt-3">
