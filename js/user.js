@@ -205,36 +205,46 @@ function reload() {
 //ON PAGE LOAD
 let IDuser = (typeof id === 'undefined') ? -1 : id;
 //Get user posts
-axios.get('utils/api.php?q=getLoggedUser').then(r => {
-    logged = r.data.idUser;
-    let iduser = (typeof id === 'undefined') ? logged : id;
-    axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
-        r2.data.forEach(element => {
-            arrayPost.push(element.IDpost);
+function setupPosts(){
+    return axios.get('utils/api.php?q=getLoggedUser').then(r => {
+        logged = r.data.idUser;
+        let iduser = (typeof id === 'undefined') ? logged : id;
+        axios.get('utils/api.php?q=getUserPosts&id='+iduser).then(r2 => {
+            r2.data.forEach(element => {
+                arrayPost.push(element.IDpost);
+            });
+            if(arrayPost.length==0) {
+                posts.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No posts</p>`;
+            }
+            else posts.innerHTML=``;
+            onPostsClick(); //We want to see the posts by default
         });
     });
-    if(arrayPost.length==0) {
-        posts.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No posts</p>`;
-    }
-});
+}
 //Get user followers list
-axios.get('utils/api.php?q=getUserFollowers&idUser='+IDuser).then(r => {
-        r.data.forEach(element => {
-            arrayFollowers.push(element.IDuser);
-        });
-        if(arrayFollowers.length==0) {
-            followers.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followers</p>`;
-        }
-});
-//Get user followed list
-axios.get('utils/api.php?q=getUserFollowed&idUser='+IDuser).then(r => {
-    r.data.forEach(element => {
-        arrayFollowed.push(element.IDuser);
+function setupFollowers(){
+    return axios.get('utils/api.php?q=getUserFollowers&idUser='+IDuser).then(r => {
+            r.data.forEach(element => {
+                arrayFollowers.push(element.IDuser);
+            });
+            if(arrayFollowers.length==0) {
+                followers.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followers</p>`;
+            }
+            else followers.innerHTML=``;
     });
-    if(arrayFollowed.length==0) {
-        followed.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followed</p>`;
-    }
-});
+}
+//Get user followed list
+function setupFollowed(){
+    return axios.get('utils/api.php?q=getUserFollowed&idUser='+IDuser).then(r => {
+        r.data.forEach(element => {
+            arrayFollowed.push(element.IDuser);
+        });
+        if(arrayFollowed.length==0) {
+            followed.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followed</p>`;
+        }
+        else followed.innerHTML=``;
+    });
+}
 
 function logout() {
     const formData = new FormData();
@@ -251,6 +261,7 @@ let navButtons = document.querySelectorAll("main ul.nav>li"); /* 0: Posts, 1: Fo
 
 navButtons[0].addEventListener("click", onPostsClick);
 function onPostsClick() {
+    console.log(arrayPost.length);
     navButtons[0].classList.add('border-bottom', 'border-info', 'border-4');
     navButtons[1].classList.remove('border-bottom', 'border-info', 'border-4');
     navButtons[2].classList.remove('border-bottom', 'border-info', 'border-4');
@@ -277,4 +288,10 @@ function onFollowedClick() {
 }
 
 //on page load
-onPostsClick();
+function setup(){
+    setupPosts();
+    setupFollowers();
+    setupFollowed();
+}
+
+document.onload = setup();

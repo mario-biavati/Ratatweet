@@ -73,16 +73,13 @@
         </ul>
         <div id="collapse-container" class="mt-5 mx-3">
             <!--Lista dei post di un utente-->
-            <div class="container collapse" id="posts">
-                <p class="fs-2 text-muted text-center p-5 m-0">No posts</p>
+            <div class="container collapse show" id="posts">
             </div>
             <!--Lista dei follower di un utente-->
             <div class="container collapse" id="followers">
-                <p class="fs-2 text-muted text-center p-5 m-0">No followers</p>
             </div>
             <!--Lista dei seguiti di un utente-->
             <div class="container collapse" id="followed">
-                <p class="fs-2 text-muted text-center p-5 m-0">No followed</p>
             </div>
         </div>
 </article>
