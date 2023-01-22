@@ -125,6 +125,7 @@ else if (isset($_POST["q"]) && $_POST["q"] == "addFollowed" && isset($_SESSION['
 }
 else if (isset($_POST["q"]) && $_POST["q"] == "removeFollowed" && isset($_SESSION["idUser"]) && isset($_POST["idFollowed"])) {
     $dbh->removeFollowed($loggedUser, $_POST["idFollowed"]);
+    $dbh->removeFollowNotification($loggedUser, $_POST["idFollowed"]);
     $result["esito"] = true;
     $result["errore"] = "Nessuno";
     header('Content-Type: application/json');

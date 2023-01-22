@@ -14,8 +14,8 @@
         </div>
         <!--Pulsanti-->
         <div class="d-flex justify-content-center my-3">
-        <?php $idLogged = $_SESSION["idUser"];
-            if($id == $idLogged): ?>
+        <?php $idLogged = isset($_SESSION["idUser"]) ? $_SESSION["idUser"] : -1;
+            if(isset($_SESSION["idUser"]) && $id == $_SESSION["idUser"]): ?>
             <div style="margin-right: 1em">
                 <button type="button" class="btn btn-info text-white" alt="Modify profile" id="Modify-Button" onclick="modify()" style="height:30px; width: auto; padding: auto; line-height: 10px;">
                     Modify

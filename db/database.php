@@ -310,6 +310,14 @@ class DatabaseHelper{
 
         return $stmt->execute();
     }
+    //toglie la notifica di follow se esiste
+    public function removeFollowNotification($idFollower, $idFollowed){
+        $query = "DELETE FROM NOTIFICATION WHERE IDuser=? AND notifier=? AND type='Follow'";
+        $stmt = $this->prepare($query);
+        $stmt->bind_param('ii', $idFollowed, $idFollower);
+
+        return $stmt->execute();
+    }
     //Query aggiornamento parametri dello user
     public function updateUser($IDuser, $username, $password, $bio){
         $query = "UPDATE USER SET username=? , password=? , bio=? WHERE IDuser=?";
