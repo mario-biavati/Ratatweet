@@ -17,3 +17,7 @@
 .icon-small {
     max-width: 50px!important; max-height: 50px!important;
 }
+.icon-post {
+    height: min(max(15vw, 120px), 200px);
+    width: min(max(15vw, 120px), 200px);
+}
