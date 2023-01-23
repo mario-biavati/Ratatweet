@@ -25,7 +25,7 @@ function printPost(idPost) {
                 <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" class="icon-tiny"/></a>
             </div>
             <a href="post.php?id=${post.IDpost}" class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
-                <img src="data:image/png;base64,${post.pic}" alt="${post.title}" class="h-100 w-auto"/>
+                <img src="data:image/png;base64,${post.pic}" alt="${post.title}" class="fit-cover"/>
             </a>
             <div class="d-flex flex-column col-md-7">
                 <div class="d-flex d-none d-md-block flex-column">

@@ -93,11 +93,11 @@ function printPost(idPost) {
             let post = r.data;
             const rating = r.data.avgRating;
             let htmlContent = `
-            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8 px-2">
+            <li class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8 px-2">
             <article id="${post.IDpost}">
             <a href="post.php?id=${post.IDpost}" class="d-flex m-0 w-100 decoration-none">
                 <picture class="icon-user overflow-hidden d-flex justify-content-center align-content-center rounded">
-                    <img src="data:image/png;base64,${post.pic}" class="h-100 w-auto"/>
+                    <img src="data:image/png;base64,${post.pic}" class="fit-cover"/>
                 </picture>
                 <div class="ps-2 col-7">
                     <h2 class="p-0 fs-5">${post.title}</h2>
@@ -125,10 +125,10 @@ function printFollower(idUser) {
             let userHref = "user_page.php?id="+idUser;
             let htmlContent = "";
             htmlContent+= `
-            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8 px-2">    
+            <li class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8 px-2">    
                 <a href="${userHref}" class="d-flex m-0 w-100">
                     <picture class="icon-user overflow-hidden d-flex justify-content-center align-content-center rounded">
-                        <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" class="h-100 w-auto"/>
+                        <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" class="fit-cover"/>
                     </picture>
                     <h2 class="fs-5 d-block ms-4 my-auto">${userData["username"]}</h2>
                 </a>   

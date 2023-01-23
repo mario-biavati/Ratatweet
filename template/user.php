@@ -3,7 +3,7 @@
         <div class="d-flex" style="padding-left: 21px;padding-right: 21px;padding-top: 17px;">
             <!--Pic-->
             <picture class="icon-user overflow-hidden d-flex justify-content-center align-content-center rounded">
-                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" class="h-100 w-auto" />
+                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" class="fit-cover" />
             </picture>
             <div style="padding-left: 13px;">
             <!--Username-->

@@ -262,21 +262,27 @@ let saved = false;
 let img = recipeButton.firstElementChild;
 
 axios.get('utils/api.php?q=isRecipeSaved&id='+id).then(response => {
-    if (response.data.isMyPost != 0) return;
-    saved = response.data.isSaved != 0;
-    if (saved) {
-        img.classList.add("liked");
-        img.setAttribute("src", "img/recipe-icon-saved.png");
+    if (response.data.isMyPost != 0) {
+        // "Delete" invece di "Save recipe"
     } else {
-        img.setAttribute("src", "img/recipe-icon-save.png");
+       saved = response.data.isSaved != 0;
+        if (saved) {
+            img.classList.add("liked");
+            img.setAttribute("src", "img/recipe-icon-saved.png");
+            img.setAttribute("alt", "Remove recipe");
+        } else {
+            img.setAttribute("src", "img/recipe-icon-save.png");
+            img.setAttribute("alt", "Save recipe");
+        }
+        recipeButton.addEventListener("click", event => {
+            event.preventDefault();
+            if (!saved)
+                saveRecipe();
+            else
+                removeRecipe();
+        }); 
     }
-    recipeButton.addEventListener("click", event => {
-        event.preventDefault();
-        if (!saved)
-            saveRecipe();
-        else
-            removeRecipe();
-    });
+    
 });
 
 function saveRecipe() {
@@ -289,7 +295,16 @@ function saveRecipe() {
             //aggiorna icona ricetta
             img.classList.add("liked");
             img.setAttribute("src", "img/recipe-icon-saved.png");
+            img.setAttribute("alt", "Remove recipe");
             saved = true;
+        } else if (r.data["errore"] == "Not Logged") {
+            // utente non loggato, redirect al login
+            axios.get('template/login_form.php').then(file => {
+                document.querySelector("main").innerHTML = file.data;
+                var tag = document.createElement("script");
+                tag.src = "js/login.js";
+                document.querySelector("body").appendChild(tag);
+            });
         }
     });
 }
@@ -303,6 +318,7 @@ function removeRecipe() {
             //aggiorna icona ricetta
             img.classList.remove("liked");
             img.setAttribute("src", "img/recipe-icon-save.png");
+            img.setAttribute("alt", "Save recipe");
             saved = false;
         }
     });

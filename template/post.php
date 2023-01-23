@@ -13,16 +13,17 @@ if (isset($_GET["id"])) :
         <div class="d-block w-100">
             <div class="d-flex justify-content-between">
                 <h1><?php echo $postData["title"];?></h1>
-                <span id="recipe-button" role="button"><img src="img/recipe-icon.png" style="height: calc(1.5rem + 1.5vw);"/></span>
+                <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
+                <button id="deletePostButton" aria-label="Delete post" alt="Delete post" class="btn btn-danger text-white py-1 my-auto" onclick="deletePost(<?php echo $id;?>)">Delete</button>
+                <?php else: ?>
+                <button id="recipe-button" class="bg-white border-0"><img src="img/recipe-icon.png" aria-label="Save recipe" alt="Save recipe" style="height: calc(1.5rem + 1.5vw);"/></button>
+                <?php endif; ?>
             </div>
             <h2 class="fs-5"><a href="user_page.php?id=<?php echo $postData["IDuser"]; ?>"><?php echo $postData["username"];?></a></h2>
-            <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
-            <button id="deletePostButton" onclick="deletePost(<?php echo $id;?>)">Delete</button>
-            <?php endif; ?>
         </div>
     </div>
     <div>
-        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" class="mw-100 w-100 h-auto"/>
+        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" alt="<?php echo $postData["title"];?>" class="mw-100 w-100 h-auto rounded"/>
     </div>
     <div class="w-100 row mt-1">
         <div class="d-flex justify-content-between">
@@ -49,7 +50,7 @@ if (isset($_GET["id"])) :
     </section>
 </article>
 <section class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
-    <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" class="icon-tiny"/></button></h2>
+    <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" alt="Comment post" class="icon-tiny"/></button></h2>
     <form id="collapseAddComment" method="post" class="collapse" onsubmit="return false;">
         <input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment"/>
         <button type="submit" class="btn btn-info text-white mb-2 mt-1">Post Comment</button>

@@ -30,4 +30,7 @@
         height: calc(100vw - 2rem);
         width: 100%;
     }
-  }
+}
+.fit-cover {
+    object-fit: cover!important;
+}
