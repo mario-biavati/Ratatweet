@@ -24,8 +24,8 @@ function printPost(idPost) {
                 </div>
                 <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" class="icon-tiny"/></a>
             </div>
-            <a href="post.php?id=${post.IDpost}" class="col-md-4 me-2">
-                <img src="data:image/png;base64,${post.pic}" class="img-fluid col-12 me-2" style="object-fit: cover;"/>
+            <a href="post.php?id=${post.IDpost}" class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
+                <img src="data:image/png;base64,${post.pic}" alt="${post.title}" class="h-100 w-auto"/>
             </a>
             <div class="d-flex flex-column col-md-7">
                 <div class="d-flex d-none d-md-block flex-column">
@@ -34,12 +34,12 @@ function printPost(idPost) {
                             <h1>${post.title}</h1>
                             <h2 class="fs-5"><a href="user_page.php?id=${post.IDuser}">${post.username}</a></h2>
                         </div>
-                        <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" class="icon-tiny"/></a>
+                        <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" alt="Read recipe of ${post.title}" class="icon-tiny"/></a>
                     </div>
                     <p class="mt-4" style="max-height: 150px; overflow:hidden;">${post.description}</p>
                 </div>
                 <div class="d-flex mt-auto mb-md-3 rating">
-                    <div class="d-flex flex-fill justify-content-end mt-1"><a href="post.php?id=${post.IDpost}#comments"><img src="img/comment-icon.png" class="icon-tiny"/></a></div>
+                    <div class="d-flex flex-fill justify-content-end mt-1"><a href="post.php?id=${post.IDpost}#comments"><img src="img/comment-icon.png" alt="Read comments of ${post.title}" class="icon-tiny"/></a></div>
                     <span class="ratingScore">${post.avgRating}</span>`
             for (let i = 5; i > 0; i--) {
                     htmlContent += `<span`;
