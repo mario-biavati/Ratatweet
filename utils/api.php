@@ -230,11 +230,11 @@ else if (isset($_POST["q"]) && $_POST["q"] == "insertRating" && isset($_SESSION[
     header('Content-Type: application/json');
     echo json_encode($result);
 }
-else if (isset($_POST["q"]) && $_POST["q"] == "updateUser" && isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["bio"])) {
+else if (isset($_POST["q"]) && $_POST["q"] == "updateUser" && isset($_POST["username"]) && isset($_POST["bio"])) {
     $result["esito"] = false;
     $result["errore"] = "Non so!";
     if(isset($_POST["pic"])) $result["esito"] = $dbh->updateUserWithPic($_SESSION["idUser"], $_POST["username"], $_POST["password"], $_POST["bio"], $_POST["pic"]);
-    else $result["esito"] = $dbh->updateUser($_SESSION["idUser"], $_POST["username"], $_POST["password"], $_POST["bio"]);
+    else $result["esito"] = $dbh->updateUser($_SESSION["idUser"], $_POST["username"], $_POST["bio"]);
     
     header('Content-Type: application/json');
     echo json_encode($result);

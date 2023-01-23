@@ -5,9 +5,12 @@ notifNum.forEach(num => {
     num.setAttribute("hidden", "hidden");
 });
 function check() {
-    axios.get('utils/api.php?q=getNotificationNumber').then(response => {
-        notificationNumber = response.data['count'];
-        updateNotificationNum();
+    return new Promise (resolve => {
+        axios.get('utils/api.php?q=getNotificationNumber').then(response => {
+            notificationNumber = response.data['count'];
+            updateNotificationNum();
+            resolve(notificationNumber);
+        });
     });
 }
 function updateNotificationNum() {

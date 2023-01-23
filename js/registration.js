@@ -1,12 +1,12 @@
 document.querySelector("main form").addEventListener("submit", async function (event) {
     event.preventDefault();
     document.querySelector("form > p").innerText = "";
+    const submitValue = document.querySelector("#submitButton").value;
     const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
     const bio = document.querySelector("#bio").value;
     const pic = document.querySelector("input[name='pic']");
-    const submitValue = document.querySelector("#submitButton").value;
     if(submitValue == "Register") {
+        const password = document.querySelector("#password").value;
         let i = await register(username, password, bio, pic);
         if (i == -1) {
             document.querySelector("form > p").innerText = "Error! You must choose an Username and a Password!";
@@ -17,7 +17,7 @@ document.querySelector("main form").addEventListener("submit", async function (e
         }
     }
     else if (submitValue == "Modify") {
-        let i = await modify(username, password, bio, pic);
+        let i = await modify(username, bio, pic);
         if (i == -1) {
             document.querySelector("form > p").innerText = "Error! You must choose an Username and a Password!";
         } else if (i == -2) {
@@ -78,14 +78,13 @@ function register(username, password, bio, picElem) {
     });
 }
 
-function modify(username, password, bio, picElem) {
-    if (username == '' || password == '') {
+function modify(username, bio, picElem) {
+    if (username == '') {
         return -1;
     }
     const formData = new FormData();
     formData.append('q', "updateUser");
     formData.append('username', username);
-    formData.append('password', password);
     formData.append('bio', bio);
 
     if (picElem.files.length == 0) { //Update user without updating profile image
