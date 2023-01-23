@@ -71,15 +71,15 @@
                 </span>
             </li>
         </ul>
-        <div id="collapse-container" class="mt-5 mx-3">
+        <div id="collapse-container" class="mt-5">
             <!--Lista dei post di un utente-->
-            <div class="container collapse show" id="posts">
+            <div class="collapse show" id="posts">
             </div>
             <!--Lista dei follower di un utente-->
-            <div class="container collapse" id="followers">
+            <div class="collapse" id="followers">
             </div>
             <!--Lista dei seguiti di un utente-->
-            <div class="container collapse" id="followed">
+            <div class="collapse" id="followed">
             </div>
         </div>
 </article>

@@ -19,7 +19,7 @@ function printPost(idPost) {
             `<article class="ms-2 me-2 me-md-0 d-flex flex-column flex-md-row justify-content-around">
             <div class="d-flex d-md-none justify-content-between">
                 <div>
-                    <h1>${post.title}</h1>
+                    <h1><a href="post.php?id=${post.IDpost}" class="decoration-none">${post.title}</a></h1>
                     <h2 class="fs-5"><a href="user_page.php?id=${post.IDuser}">${post.username}</a></h2>
                 </div>
                 <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" class="icon-tiny"/></a>

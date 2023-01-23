@@ -85,13 +85,14 @@ function printPost(idPost) {
             let post = r.data;
             const rating = r.data.avgRating;
             let htmlContent = `
+            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8 px-2">
             <article id="${post.IDpost}">
-            <a href="post.php?id=${post.IDpost}" class="d-flex" style="margin-bottom: 10px; text-decoration: none; color: black;">
-                <picture>
-                    <img src="data:image/png;base64,${post.pic}" style="max-width: 100px;max-height: 100px;" />
+            <a href="post.php?id=${post.IDpost}" class="d-flex m-0 w-100 decoration-none">
+                <picture class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
+                    <img src="data:image/png;base64,${post.pic}" class="h-100 w-auto"/>
                 </picture>
-                <div style="padding-left:7px;">
-                    <h3 style="padding-top: 0px;padding-left: 0px;">${post.title}</h3>
+                <div class="ps-2 col-7">
+                    <h2 class="p-0 fs-5">${post.title}</h2>
                     <div class="rating"> `;
             let i;
             for(i=5; i>rating; i--) htmlContent+="<span>☆</span>";
@@ -102,42 +103,28 @@ function printPost(idPost) {
                 </div>
             </a>
             </article>
+            </li>
             `;
             //main.innerHTML += htmlContent;
             resolve(htmlContent);
         });
     });
 }
-function printFollower(idUser, i) {
+function printFollower(idUser) {
     return new Promise((resolve) => {
         axios.get('utils/api.php?q=getUserInfo&idUser=' + idUser).then(r => {
             let userData = r.data;
             let userHref = "user_page.php?id="+idUser;
             let htmlContent = "";
-            if(i==0) htmlContent = `<ul class="list-group">`;
             htmlContent+= `
-            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8">
-                <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" width = "50px" height = "50px" />
-                <a href="${userHref}">${userData["username"]}</a>   
+            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8 px-2">    
+                <a href="${userHref}" class="d-flex m-0 w-100">
+                    <picture class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
+                        <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" class="h-100 w-auto"/>
+                    </picture>
+                    <h2 class="fs-5 d-block ms-4 my-auto">${userData["username"]}</h2>
+                </a>   
             </li> `;
-            if(i==arrayFollowers.length) htmlContent += `</ul>`;
-            resolve(htmlContent);
-        });
-    });
-}
-function printFollowed(idUser, i) {
-    return new Promise((resolve) => {
-        axios.get('utils/api.php?q=getUserInfo&idUser=' + idUser).then(r => {
-            let userData = r.data;
-            let userHref = "user_page.php?id="+idUser;
-            let htmlContent = "";
-            if(i==0) htmlContent = `<ul class="list-group">`;
-            htmlContent+= `
-            <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8">
-                <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" width = "50px" height = "50px" />
-                <a href="${userHref}">${userData["username"]}</a>   
-            </li> `;
-            if(i==arrayFollowed.length) htmlContent += `</ul>`;
             resolve(htmlContent);
         });
     });
@@ -169,7 +156,7 @@ async function loadFollowers(n_followers) {
             followers.innerHTML += HTMLcontent;
             return;
         }
-        HTMLcontent += await printFollower(arrayFollowers[i + cur_lastFollowers], i + cur_lastFollowers);
+        HTMLcontent += await printFollower(arrayFollowers[i + cur_lastFollowers]);
     }
     followers.innerHTML += HTMLcontent;
     cur_lastFollowers = cur_lastFollowers + n_followers;
@@ -185,7 +172,7 @@ async function loadFollowed(n_followed) {
             followed.innerHTML += HTMLcontent;
             return;
         }
-        HTMLcontent += await printFollowed(arrayFollowed[i + cur_lastPost], i + cur_lastFollowed);
+        HTMLcontent += await printFollower(arrayFollowed[i + cur_lastPost]);
     }
     followed.innerHTML += HTMLcontent;
     cur_lastFollowed = cur_lastFollowed + n_followed;
@@ -216,7 +203,10 @@ function setupPosts(){
             if(arrayPost.length==0) {
                 posts.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No posts</p>`;
             }
-            else posts.innerHTML=``;
+            else {
+                posts.innerHTML=`<ul class="list-group"></ul>`;
+                posts = posts.firstChild;
+            }
             onPostsClick(); //We want to see the posts by default
         });
     });
@@ -230,7 +220,10 @@ function setupFollowers(){
             if(arrayFollowers.length==0) {
                 followers.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followers</p>`;
             }
-            else followers.innerHTML=``;
+            else {
+                followers.innerHTML=`<ul class="list-group"></ul>`;
+                followers = followers.firstChild;
+            }
     });
 }
 //Get user followed list
@@ -242,7 +235,10 @@ function setupFollowed(){
         if(arrayFollowed.length==0) {
             followed.innerHTML=`<p class="fs-2 text-muted text-center p-5 m-0">No followed</p>`;
         }
-        else followed.innerHTML=``;
+        else {
+            followed.innerHTML=`<ul class="list-group"></ul>`;
+            followed = followed.firstChild;
+        }
     });
 }
 

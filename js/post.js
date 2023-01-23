@@ -15,12 +15,12 @@ function printComment(idComment, where, first = false) {
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex flex-column col-10 col-lg-11">
             <div class="d-flex justify-content-start">
-                <img src="data:image/png;base64,${comment.pic}" class="icon-small">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded">
                 <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
                     ${comment.username}
                 </a>
             </div>
-            <p>
+            <p class="my-2">
                 ${comment.text}
             </p>
             <div class="d-flex">
@@ -64,14 +64,14 @@ function printReply(idComment, where, first = false) {
         let comment = r.data;
         let htmlContent = 
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
-        <div class="d-flex col-1" style="max-width: 60px; min-width: 50px;">
-            <img src="${comment.pic}" style="max-width: 40px; max-height: 40px; margin-top: 10px;">
-        </div>
         <div class="d-flex flex-column col-10 col-lg-11">
-            <a class="fw-bold" href="user_page.php?id=${comment.IDuser}">
-                ${comment.username}
-            </a>
-            <p>
+            <div class="d-flex justify-content-start">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded">
+                <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
+                    ${comment.username}
+                </a>
+            </div>
+            <p class="my-2">
                 ${comment.text}
             </p>
             <div class="d-flex">
