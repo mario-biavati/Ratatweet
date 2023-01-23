@@ -319,17 +319,17 @@ class DatabaseHelper{
         return $stmt->execute();
     }
     //Query aggiornamento parametri dello user
-    public function updateUser($IDuser, $username, $password, $bio){
-        $query = "UPDATE USER SET username=? , password=? , bio=? WHERE IDuser=?";
+    public function updateUser($IDuser, $username, $bio){
+        $query = "UPDATE USER SET username=?, bio=? WHERE IDuser=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('sssi', $username, $password, $bio, $IDuser);
+        $stmt->bind_param('ssi', $username, $bio, $IDuser);
 
         return $stmt->execute();
     }
-    public function updateUserWithPic($IDuser, $username, $password, $bio, $pic){
-        $query = "UPDATE USER SET username=? , password=? , bio=? , pic=? WHERE IDuser=?";
+    public function updateUserWithPic($IDuser, $username, $bio, $pic){
+        $query = "UPDATE USER SET username=? , bio=? , pic=? WHERE IDuser=?";
         $stmt = $this->prepare($query);
-        $stmt->bind_param('ssssi', $username, $password, $bio, $pic, $IDuser);
+        $stmt->bind_param('sssi', $username, $bio, $pic, $IDuser);
 
         return $stmt->execute();
     }

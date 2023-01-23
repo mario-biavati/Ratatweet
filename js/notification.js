@@ -18,4 +18,10 @@ function notifCheck() {
         </div>`;
     }
 }
-notifCheck();
+
+async function setupNotifications(){
+    await check();
+    notifCheck();
+}
+
+setupNotifications();
