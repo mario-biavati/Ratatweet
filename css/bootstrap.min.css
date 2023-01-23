@@ -17,7 +17,17 @@
 .icon-small {
     max-width: 50px!important; max-height: 50px!important;
 }
-.icon-post {
+.icon-user {
     height: min(max(15vw, 120px), 200px);
     width: min(max(15vw, 120px), 200px);
 }
+.icon-post {
+    height: min(max(25vw, 270px), 400px);
+    width: min(max(25vw, 270px), 400px);
+}
+@media (max-width: 767.98px) {
+    .icon-post {
+        height: calc(100vw - 2rem);
+        width: 100%;
+    }
+  }

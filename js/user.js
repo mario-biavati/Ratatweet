@@ -37,6 +37,8 @@ function follow() {
 
     followButton.innerHTML="Unfollow";
     followButton.alt="Unfollow user";
+    followButton.setAttribute("title", "Unfollow user");
+    followButton.setAttribute("aria-label", "Unfollow user");
     followButton.classList.replace("btn-info", "btn-secondary");
     document.getElementById("NumFollowers").textContent = +document.getElementById("NumFollowers").textContent + 1;
     followButton.setAttribute('onclick', 'unfollow()');
@@ -51,6 +53,8 @@ function unfollow() {
 
     followButton.innerHTML="Follow";
     followButton.alt="Follow user";
+    followButton.setAttribute("title", "Follow user");
+    followButton.setAttribute("aria-label", "Follow user");
     followButton.classList.replace("btn-secondary", "btn-info");
     document.getElementById("NumFollowers").textContent = +document.getElementById("NumFollowers").textContent - 1;
     followButton.setAttribute('onclick', 'follow()');
@@ -66,6 +70,8 @@ function enableNotifications() {
 
     notificationButton.classList.replace("btn-secondary", "btn-info");
     notificationButton.alt="Disable notifications";
+    notificationButton.setAttribute("title", "Disable notifications");
+    notificationButton.setAttribute("aria-label", "Disable notifications");
     notificationButton.setAttribute('onclick', 'disableNotifications()');
 }
 function disableNotifications() {
@@ -76,6 +82,8 @@ function disableNotifications() {
 
     notificationButton.classList.replace("btn-info", "btn-secondary");
     notificationButton.alt="Enable notifications";
+    notificationButton.setAttribute("title", "Enable notifications");
+    notificationButton.setAttribute("aria-label", "Enable notifications");
     notificationButton.setAttribute('onclick', 'enableNotifications()');
 }
 
@@ -88,7 +96,7 @@ function printPost(idPost) {
             <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8 px-2">
             <article id="${post.IDpost}">
             <a href="post.php?id=${post.IDpost}" class="d-flex m-0 w-100 decoration-none">
-                <picture class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
+                <picture class="icon-user overflow-hidden d-flex justify-content-center align-content-center rounded">
                     <img src="data:image/png;base64,${post.pic}" class="h-100 w-auto"/>
                 </picture>
                 <div class="ps-2 col-7">
@@ -119,7 +127,7 @@ function printFollower(idUser) {
             htmlContent+= `
             <li class="list-group-item mx-auto col-10 col-md-9 col-lg-8 px-2">    
                 <a href="${userHref}" class="d-flex m-0 w-100">
-                    <picture class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
+                    <picture class="icon-user overflow-hidden d-flex justify-content-center align-content-center rounded">
                         <img src="data:image/png;base64,${userData["pic"]}" alt="${userData["username"]}_Pic" class="h-100 w-auto"/>
                     </picture>
                     <h2 class="fs-5 d-block ms-4 my-auto">${userData["username"]}</h2>
