@@ -30,7 +30,7 @@
             $notif="Disable";
             if(!empty($notificationStatus) && $notificationStatus[0]["notification"]==0) $notif="Enable"; ?>
             <button type="button" title="<?php echo $notif; ?> notifications" aria-label="<?php echo $notif; ?> notifications" class="btn <?php echo ($notif == "Enable") ? "btn-secondary" : "btn-info"; ?> py-1 col-3 col-md-2 mx-2" alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?>>
-                <img src="img/notification-icon.png" style="height: 20px;">
+                <img src="img/<?php echo ($notif == "Enable") ? "notification-disabled-icon.png" : "notification-icon.png"; ?>" style="height: 20px;">
             </button>
             <?php endif; ?>
         </div>

@@ -73,6 +73,7 @@ function enableNotifications() {
     notificationButton.setAttribute("title", "Disable notifications");
     notificationButton.setAttribute("aria-label", "Disable notifications");
     notificationButton.setAttribute('onclick', 'disableNotifications()');
+    notificationButton.firstElementChild.setAttribute("src", "img/notification-icon.png");
 }
 function disableNotifications() {
     const formData = new FormData();
@@ -85,6 +86,7 @@ function disableNotifications() {
     notificationButton.setAttribute("title", "Enable notifications");
     notificationButton.setAttribute("aria-label", "Enable notifications");
     notificationButton.setAttribute('onclick', 'enableNotifications()');
+    notificationButton.firstElementChild.setAttribute("src", "img/notification-disabled-icon.png");
 }
 
 function printPost(idPost) {
