@@ -172,7 +172,7 @@ async function loadFollowed(n_followed) {
             followed.innerHTML += HTMLcontent;
             return;
         }
-        HTMLcontent += await printFollower(arrayFollowed[i + cur_lastPost]);
+        HTMLcontent += await printFollower(arrayFollowed[i + cur_lastFollowed]);
     }
     followed.innerHTML += HTMLcontent;
     cur_lastFollowed = cur_lastFollowed + n_followed;
@@ -257,7 +257,6 @@ let navButtons = document.querySelectorAll("main ul.nav>li"); /* 0: Posts, 1: Fo
 
 navButtons[0].addEventListener("click", onPostsClick);
 function onPostsClick() {
-    console.log(arrayPost.length);
     navButtons[0].classList.add('border-bottom', 'border-info', 'border-4');
     navButtons[1].classList.remove('border-bottom', 'border-info', 'border-4');
     navButtons[2].classList.remove('border-bottom', 'border-info', 'border-4');
