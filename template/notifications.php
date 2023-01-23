@@ -41,7 +41,7 @@ if (isUserLoggedIn()):
                     <?php endif; ?>
                 </p>
                 <div class="d-flex w-100 justify-content-end">
-                    <button type="button" class="btn btn-info text-white" data-bs-toggle="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
+                    <button type="button" aria-label="Seen notification" class="btn btn-info text-white" data-bs-toggle="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
                 </div>    
             </li>
         <?php endforeach;?>

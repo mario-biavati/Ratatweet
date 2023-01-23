@@ -449,7 +449,7 @@ class DatabaseHelper{
     }
     //Query ottenimento ricette salvate da un utente
     public function getSavedRecipes($idUser){
-        $query = "SELECT RECIPE.IDrecipe, RECIPE.ingredients, RECIPE.method, USER.username, POST.IDpost, POST.title FROM SAVED_RECIPE, RECIPE, POST, USER 
+        $query = "SELECT RECIPE.IDrecipe, RECIPE.ingredients, RECIPE.method, USER.username, USER.IDuser, POST.IDpost, POST.title FROM SAVED_RECIPE, RECIPE, POST, USER 
                   WHERE SAVED_RECIPE.IDuser=? AND SAVED_RECIPE.IDpost=POST.IDpost
                   AND RECIPE.IDrecipe=POST.IDrecipe AND POST.IDuser=USER.IDuser";
         $stmt = $this->prepare($query);
