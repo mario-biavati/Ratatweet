@@ -24,7 +24,7 @@ create table `USER` (
      username varchar(50) not null,
      password char(128) not null, 
      salt char(128) NOT NULL,
-     bio varchar(50),
+     bio TEXT,
      pic mediumblob,
      date DATETIME DEFAULT CURRENT_TIMESTAMP,
      constraint IDUSERS_1 unique (username),
