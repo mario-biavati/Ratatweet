@@ -35,8 +35,8 @@ if(isUserLoggedIn()) {
                 <label for="bio" class="fs-6 fw-semibold">Bio:</label><br>
                 <textarea id="bio" name="bio" rows="3" placeholder="Description" class="form-control w-100"><?php echo $bio;?></textarea>
             </li>
-            <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto mt-3">
-                <label for="pic" class="fs-6 fw-semibold"><?php echo $text_for_image;?> Profile icon:</label>
+            <li class="list-group-item border-0 px-0 col-12 mx-auto mt-3">
+                <label for="pic" class="fs-6 fw-semibold w-100"><?php echo $text_for_image;?> Profile icon:</label>
                 <input type="file" accept=".jpg,.jpeg,.png" name="pic" id="pic" class="form-control-file mt-2"/>
             </li>
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto mt-3">

@@ -10,7 +10,7 @@
             </li>
             <li class="list-group-item border-0 col-10 mx-auto">
                 <label for="pic" class="fw-semibold d-block">Upload Picture:</label>
-                <input type="file" name="pic" id="pic" class="form-control-file d-block mx-auto"/>
+                <input type="file" accept=".jpg,.jpeg,.png" name="pic" id="pic" class="form-control-file d-block mx-auto"/>
             </li>
             <li class="list-group-item border-0 col-10 col-md-5 col-lg-4 mx-auto">
                 <label for="descrizione" class="fw-semibold">Description:</label>
@@ -34,7 +34,7 @@
                     <li role="button" class="nav-item p-2 w-50 text-secondary" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">My Recipes</li>
                 </ul>
                 <ul class="list-group list-group-flush">
-                    <div id="sr-container">
+                    <div id="sr-container" class="mx-2">
                     <?php 
                     if (count($savedRecipes) == 0) : ?>
                         <li class="list-group-item border-0 d-block text-center">
@@ -42,13 +42,13 @@
                         </li>
                     <?php endif;
                     foreach($savedRecipes as $recipe) : ?>
-                        <li class="list-group-item border-0 d-flex row">
-                            <input type="radio" id="<?php echo "Recipe{$recipe["IDrecipe"]}"; ?>" name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-1 h-50 my-auto"/>
+                        <li class="list-group-item border-0 d-flex justify-content-center">
+                            <input type="radio" id="<?php echo "Recipe{$recipe["IDrecipe"]}"; ?>" name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-1 h-50 my-auto d-block"/>
                             <label for="Recipe<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-10 col-md-5 col-lg-3 text-center"><?php echo "{$recipe["title"]}"; ?></label>
                         </li>
                     <?php endforeach; ?>
                     </div>
-                    <div id="mr-container" class="d-none">
+                    <div id="mr-container" class="d-none mx-2">
                     <?php 
                     if (count($userRecipes) == 0) : ?>
                         <li class="list-group-item border-0 d-block text-center">
@@ -57,7 +57,7 @@
                     <?php endif;
                     foreach($userRecipes as $recipe) : ?>
                         <li class="list-group-item border-0 d-flex justify-content-center">
-                            <input type="radio" id="<?php echo "Recipe{$recipe["IDrecipe"]}"; ?>" name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-1 h-50 my-auto"/>
+                            <input type="radio" id="<?php echo "Recipe{$recipe["IDrecipe"]}"; ?>" name="recipe" value="<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-1 h-50 my-auto d-block"/>
                             <label for="Recipe<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-10 col-md-5 col-lg-3 text-center"><?php echo "{$recipe["title"]}"; ?></label>
                         </li>
                     <?php endforeach; ?>
@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <input type="submit" id="uploadButton" aria-label="Create post" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info text-white"/>
+        <input type="submit" id="uploadButton" aria-label="Create post" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info border-dark"/>
         <!-- <a href="index.php">Annulla</a> -->
     </form>
 </div>
