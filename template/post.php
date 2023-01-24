@@ -14,7 +14,7 @@ if (isset($_GET["id"])) :
             <div class="d-flex justify-content-between">
                 <h1><?php echo $postData["title"];?></h1>
                 <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
-                <button id="deletePostButton" aria-label="Delete post" alt="Delete post" class="btn btn-danger border-dark py-1 my-auto" onclick="deletePost(<?php echo $id;?>)">Delete</button>
+                <button id="deletePostButton" aria-label="Delete post" class="btn btn-danger border-dark py-1 my-auto" onclick="deletePost(<?php echo $id;?>)">Delete</button>
                 <?php else: ?>
                 <button id="recipe-button" class="bg-white border-0"><img src="img/recipe-icon.png" aria-label="Save recipe" alt="Save recipe" style="height: calc(1.5rem + 1.5vw);"/></button>
                 <?php endif; ?>
