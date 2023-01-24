@@ -3,7 +3,7 @@
         <div class="d-flex" style="padding-left: 21px;padding-right: 21px;padding-top: 17px;">
             <!--Pic-->
             <picture class="icon-user overflow-hidden d-flex justify-content-center align-content-center rounded">
-                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" class="h-100 w-auto" />
+                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" class="h-100 w-auto" alt="Profile_icon"/>
             </picture>
             <div style="padding-left: 13px;">
             <!--Username-->
@@ -16,7 +16,7 @@
         <div class="d-flex justify-content-center my-3">
         <?php $idLogged = isset($_SESSION["idUser"]) ? $_SESSION["idUser"] : -1;
             if(isset($_SESSION["idUser"]) && $id == $_SESSION["idUser"]): ?>
-            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info text-white py-1 col-3 col-md-2 mx-2" alt="Modify profile" id="Modify-Button" onclick="modify()">
+            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info text-white py-1 col-3 col-md-2 mx-2" id="Modify-Button" onclick="modify()">
                 Modify
             </button>
             <?php else: 
@@ -36,30 +36,36 @@
         </div>
         <!--Statistiche utente-->
         <ul class="nav list-group-horizontal text-center justify-content-evenly my-3">
-            <li class="nav-item d-flex flex-column" role="button" data-bs-toggle="collapse" data-bs-target="#posts:not(.show),#followers.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="posts">
-                <span>
-                    <strong>Posts</strong>
-                </span>
-                <span>
-                    <strong id="NumPosts"><?php echo $userStat["post"]; ?></strong>
-                </span>
-            </li>
-            <li class="nav-item d-flex flex-column" role="button" data-bs-toggle="collapse" data-bs-target="#followers:not(.show),#posts.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followers">
-                <span>
-                    <strong>Followers</strong>
-                </span>
-                <span>
-                    <strong id="NumFollowers"><?php echo $userStat["follower"]; ?></strong>
-                </span>
-            </li>
-            <li class="nav-item d-flex flex-column" role="button" data-bs-toggle="collapse" data-bs-target="#followed:not(.show),#posts.show,#followers.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followed">
-                <span>
-                    <strong>Followed</strong>
-                </span>
-                <span>
-                    <strong id="NumFollowed"><?php echo $userStat["followed"]; ?></strong>
-                </span>
-            </li>
+            <button>
+                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#posts:not(.show),#followers.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="posts">
+                    <span>
+                        <strong>Posts</strong>
+                    </span>
+                    <span>
+                        <strong id="NumPosts"><?php echo $userStat["post"]; ?></strong>
+                    </span>
+                </li>
+            </button>
+            <button>
+                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followers:not(.show),#posts.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followers">
+                    <span>
+                        <strong>Followers</strong>
+                    </span>
+                    <span>
+                        <strong id="NumFollowers"><?php echo $userStat["follower"]; ?></strong>
+                    </span>
+                </li>
+            </button>
+            <button>
+                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followed:not(.show),#posts.show,#followers.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followed">
+                    <span>
+                        <strong>Followed</strong>
+                    </span>
+                    <span>
+                        <strong id="NumFollowed"><?php echo $userStat["followed"]; ?></strong>
+                    </span>
+                </li>
+            </button>
             <li class="nav-item d-flex flex-column" >
                 <span>
                     <strong>Rating</strong>

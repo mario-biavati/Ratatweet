@@ -33,7 +33,7 @@ if (isUserLoggedIn()):
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-auto">
-                        <a class="btn btn-info text-white" style="max-height: 40px;" data-bs-toggle="collapse" href="#more<?php echo "{$recipe["IDpost"]}"; ?>" role="button" aria-expanded="false" aria-controls="more<?php echo "{$recipe["IDpost"]}"; ?>">
+                        <a class="btn btn-info text-white" style="max-height: 40px;" aria-label="See all ingredients" data-bs-toggle="collapse" href="#more<?php echo "{$recipe["IDpost"]}"; ?>" role="button" aria-expanded="false" aria-controls="more<?php echo "{$recipe["IDpost"]}"; ?>">
                             See ▼
                         </a>
                     </div>
