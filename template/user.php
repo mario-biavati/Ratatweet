@@ -16,7 +16,7 @@
         <div class="d-flex justify-content-center my-3">
         <?php $idLogged = isset($_SESSION["idUser"]) ? $_SESSION["idUser"] : -1;
             if(isset($_SESSION["idUser"]) && $id == $_SESSION["idUser"]): ?>
-            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info text-white py-1 col-3 col-md-2 mx-2" alt="Modify profile" id="Modify-Button" onclick="modify()">
+            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info border-dark py-1 col-3 col-md-2 mx-2" alt="Modify profile" id="Modify-Button" onclick="modify()">
                 Modify
             </button>
             <?php else: 
@@ -29,48 +29,51 @@
             $notificationStatus = $dbh->getFollowerStatus($idLogged, $id);
             $notif="Disable";
             if(!empty($notificationStatus) && $notificationStatus[0]["notification"]==0) $notif="Enable"; ?>
-            <button type="button" title="<?php echo $notif; ?> notifications" aria-label="<?php echo $notif; ?> notifications" class="btn <?php echo ($notif == "Enable") ? "btn-secondary" : "btn-info"; ?> py-1 col-3 col-md-2 mx-2" alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?>>
+            <button type="button" title="<?php echo $notif; ?> notifications" aria-label="<?php echo $notif; ?> notifications" class="btn <?php echo ($notif == "Enable") ? "btn-secondary" : "btn-info"; ?> border-dark py-1 col-3 col-md-2 mx-2" alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?>>
                 <img src="img/<?php echo ($notif == "Enable") ? "notification-disabled-icon.png" : "notification-icon.png"; ?>" style="height: 20px;">
             </button>
             <?php endif; ?>
         </div>
         <!--Statistiche utente-->
-        <ul class="nav list-group-horizontal text-center justify-content-evenly my-3">
-            <button>
-                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#posts:not(.show),#followers.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="posts">
-                    <span>
+        <ul class="nav list-group-horizontal justify-content-evenly my-3">
+            <li class="nav-item" data-bs-toggle="collapse" data-bs-target="#posts:not(.show),#followers.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="posts">
+                <button class="d-flex flex-column bg-none border-0">
+                    <span class="mx-auto">
                         <strong>Posts</strong>
                     </span>
-                    <span>
+                    <span class="mx-auto">
                         <strong id="NumPosts"><?php echo $userStat["post"]; ?></strong>
                     </span>
-                </li>
-            </button>
-            <button>
-                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followers:not(.show),#posts.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followers">
-                    <span>
+                </button>
+            </li>
+        
+            <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followers:not(.show),#posts.show,#followed.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followers">
+                <button  class="d-flex flex-column bg-none border-0">    
+                    <span class="mx-auto">
                         <strong>Followers</strong>
                     </span>
-                    <span>
+                    <span class="mx-auto">
                         <strong id="NumFollowers"><?php echo $userStat["follower"]; ?></strong>
                     </span>
-                </li>
-            </button>
-            <button>
-                <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followed:not(.show),#posts.show,#followers.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followed">
-                    <span>
+                </button>
+            </li>
+
+            <li class="nav-item d-flex flex-column" data-bs-toggle="collapse" data-bs-target="#followed:not(.show),#posts.show,#followers.show" data-parent="#collapse-container" aria-expanded="false" aria-controls="followed">
+                <button class="d-flex flex-column bg-none border-0">    
+                    <span class="mx-auto">
                         <strong>Followed</strong>
                     </span>
-                    <span>
+                    <span class="mx-auto">
                         <strong id="NumFollowed"><?php echo $userStat["followed"]; ?></strong>
                     </span>
-                </li>
-            </button>
+                </button>
+            </li>
+
             <li class="nav-item d-flex flex-column" >
-                <span>
+                <span class="mx-auto">
                     <strong>Rating</strong>
                 </span>
-                <span>
+                <span class="mx-auto">
                     <strong><?php echo $userStat["avg_rating"]; ?></strong>
                 </span>
             </li>
