@@ -6,8 +6,12 @@ if (isUserLoggedIn()):
     
     <!-- tabs -->
     <ul class="nav justify-content-around">
-        <li class="nav-item p-2 w-50 text-secondary text-center fs-6 border border-bottom-0 rounded-top" role="button">Saved Recipes</li>
-        <li class="nav-item p-2 w-50 text-secondary text-center fs-6 border border-bottom-0 rounded-top" role="button">My Recipes</li>
+        <li class="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top">
+            <button class="bg-none border-0 text-secondary  p-2 w-100 h-100">Saved Recipes</button>
+        </li>
+        <li class="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top">
+            <button class="bg-none border-0 text-secondary p-2 w-100 h-100">My Recipes</button>
+        </li>
     </ul>
     <!-- containers -->
     <?php foreach($allRecipes as $n => $recipes): ?>
@@ -22,7 +26,7 @@ if (isUserLoggedIn()):
             <li id=<?php echo "Post{$recipe["IDpost"]}"; ?> class="list-group-item border rounded w-100 mx-auto mt-2">
                 <div class="d-block d-md-flex justify-content-between">
                     <div class="d-flex col-9">
-                        <img src="img/recipe-icon.png" class="icon-tiny">
+                        <img src="img/recipe-icon.png" alt="Recipe icon" class="icon-tiny">
                         <div class="d-block h-100 ms-3">
                             <h1 class="fw-bold fs-5 h-50 m-0">
                                 <a href="post.php?id=<?php echo $recipe["IDpost"]?>" class="decoration-none"><?php echo "{$recipe["title"]}"; ?></a>
@@ -33,7 +37,7 @@ if (isUserLoggedIn()):
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-auto">
-                        <a class="btn btn-info text-white" style="max-height: 40px;" aria-label="See all ingredients" data-bs-toggle="collapse" href="#more<?php echo "{$recipe["IDpost"]}"; ?>" role="button" aria-expanded="false" aria-controls="more<?php echo "{$recipe["IDpost"]}"; ?>">
+                        <a class="btn btn-info border-dark" style="max-height: 40px;" aria-label="See all ingredients" data-bs-toggle="collapse" href="#more<?php echo "{$recipe["IDpost"]}"; ?>" role="button" aria-expanded="false" aria-controls="more<?php echo "{$recipe["IDpost"]}"; ?>">
                             See ▼
                         </a>
                     </div>
@@ -63,8 +67,8 @@ if (isUserLoggedIn()):
                         </div>
                     </div>
                     <!-- Pulsanti "Usa" ed "Elimina" -->
-                    <button type="button" aria-label="Use recipe" alt="Use recipe" class="btn btn-info border-dark" id="UseRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="useRecipe(<?php echo $recipe['IDrecipe']; ?>)">Use</button>
-                    <?php if($n == 0): ?><button type="button" aria-label="Delete recipe" alt="Delete recipe" class="ms-3 btn btn-danger border-dark" id="DeleteRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="deleteRecipe(<?php echo $recipe['IDpost']; ?>)">Delete</button><?php endif; ?>
+                    <button type="button" aria-label="Use recipe" class="btn btn-info border-dark" id="UseRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="useRecipe(<?php echo $recipe['IDrecipe']; ?>)">Use</button>
+                    <?php if($n == 0): ?><button type="button" aria-label="Delete recipe" class="ms-3 btn btn-danger border-dark" id="DeleteRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="deleteRecipe(<?php echo $recipe['IDpost']; ?>)">Delete</button><?php endif; ?>
                 </div>
 
             </li>
