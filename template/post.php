@@ -28,7 +28,7 @@ if (isset($_GET["id"])) :
     <div class="w-100 row mt-1">
         <div class="d-flex justify-content-between">
             <div class="rating">
-                <input type="radio" name="rating" value="5" id="star5" onclick="insertRating(5)"><label alt="vota 5 stelle" for="star5">☆</label> <input type="radio" name="rating" value="4" id="star4" onclick="insertRating(4)"><label alt="vota 4 stelle" for="star4">☆</label> <input type="radio" name="rating" value="3" id="star3" onclick="insertRating(3)"><label alt="vota 3 stelle" for="star3">☆</label> <input type="radio" name="rating" value="2" id="star2" onclick="insertRating(2)"><label alt="vota 2 stelle" for="star2">☆</label> <input type="radio" name="rating" value="1" id="star1" onclick="insertRating(1)"><label alt="vota 1 stella" for="star1">☆</label>
+                <input type="radio" aria-label="vota 5 stelle" name="rating" value="5" id="star5" onclick="insertRating(5)"><label for="star5">☆</label> <input type="radio" aria-label="vota 4 stelle" name="rating" value="4" id="star4" onclick="insertRating(4)"><label for="star4">☆</label> <input type="radio" aria-label="vota 3 stelle" name="rating" value="3" id="star3" onclick="insertRating(3)"><label for="star3">☆</label> <input type="radio" aria-label="vota 2 stelle" name="rating" value="2" id="star2" onclick="insertRating(2)"><label for="star2">☆</label> <input type="radio" aria-label="vota 1 stelle" name="rating" value="1" id="star1" onclick="insertRating(1)"><label for="star1">☆</label>
             </div>
             <span id="avgRating" class="fs-3 pt-2 ps-1">??</span>
         </div>
