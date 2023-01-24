@@ -138,4 +138,4 @@ CREATE VIEW INFOCOMMENT AS
      FROM `LIKES`
      GROUP BY IDcomment;
 
-INSERT INTO USER (IDuser, username, password, bio) VALUES (1, "anonimo", "anonimo", "anonimo") 
+INSERT INTO USER (IDuser, username, password, salt, bio) VALUES (1, "anonimo", "anonimo", "anonimo", "anonimo") 
