@@ -1,2 +1,0 @@
--Messaggio e mail di account bloccato
--Modify password with a button -> old password, new password

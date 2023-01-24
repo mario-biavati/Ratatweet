@@ -10,7 +10,6 @@ function printComment(idComment, where, first = false) {
     //load comment
     axios.get('utils/api.php?q=getComment&id=' + idComment).then(r => {
         let comment = r.data;
-        console.log(comment);
         let htmlContent = 
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex flex-column col-10 col-lg-11">
@@ -215,7 +214,6 @@ axios.get("utils/api.php?q=getComments&id=" + id).then(r => {
     r.data.forEach(element => {
         arrayComment.push(element.IDcomment);
     });
-    console.log(arrayComment);
     document.getElementById("addCommentButton").firstChild.innerText = arrayComment.length;
     loadComments(5);
 });
@@ -230,7 +228,6 @@ function insertRating(rating) {
     formData.append('idPost', id);
     formData.append('rating', rating);
     axios.post('utils/api.php', formData).then(r => {
-        console.log(r.data);
         if (r.data["esito"] == true) {
             //aggiorno rating medio
             updateAvgRating();
@@ -242,7 +239,6 @@ function updateAvgRating() {
         const rating = r.data.avgRating;
         let element;
         let i;
-        console.log(rating);
         for(i=1; i<=rating; i++) {
             element = document.getElementById("star"+i);
             element.checked = true;
@@ -294,7 +290,6 @@ function saveRecipe() {
     formData.append('q', "saveRecipe");
     formData.append('id', id);
     axios.post('utils/api.php', formData).then(r => {
-        console.log(r.data);
         if (r.data["esito"] == true) {
             //aggiorna icona ricetta
             img.classList.add("liked");
@@ -317,7 +312,6 @@ function removeRecipe() {
     formData.append('q', "deleteRecipe");
     formData.append('idPost', id);
     axios.post('utils/api.php', formData).then(r => {
-        console.log(r.data);
         if (r.data["esito"] == true) {
             //aggiorna icona ricetta
             img.classList.remove("liked");
@@ -334,7 +328,6 @@ function deletePost(idPost) {
     formData.append('q', "deletePost");
     formData.append('idPost', idPost);
     axios.post('utils/api.php', formData).then(r => {
-        console.log(r.data);
         let deleteButton = document.getElementById("deletePostButton");
         if (r.data["esito"] == true) {
             deleteButton.innerText="Deleted";

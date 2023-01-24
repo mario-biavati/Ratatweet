@@ -50,13 +50,10 @@ function register(username, password, bio, picElem) {
                 "Content-Type": "multipart/form-data",
                 }
                 }).then(response => {
-                console.log(response.data);
                 if (response.data["esito"]==true) {
-                    console.log("ACK");
                     location.href="user_page.php";
                     resolve(0);
                 } else {
-                    console.log("NACK");
                     resolve(-2);
                 }
                 }).catch(function (error) {
@@ -90,13 +87,10 @@ function modify(username, bio, picElem) {
     if (picElem.files.length == 0) { //Update user without updating profile image
         return new Promise(resolve => {
             axios.post('utils/api.php', formData).then(response => {
-                console.log(response.data);
                 if (response.data["esito"]==true) {
-                    console.log("ACK");
                     location.href="user_page.php";
                     resolve(0);
                 } else {
-                    console.log("NACK");
                     resolve(-2);
                 }
             }).catch(function (error) {
@@ -126,13 +120,10 @@ function modify(username, bio, picElem) {
                     "Content-Type": "multipart/form-data",
                     }
                     }).then(response => {
-                    console.log(response.data);
                     if (response.data["esito"]==true) {
-                        console.log("ACK");
                         location.href="user_page.php";
                         resolve(0);
                     } else {
-                        console.log("NACK");
                         resolve(-2);
                     }
                     }).catch(function (error) {

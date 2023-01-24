@@ -104,7 +104,6 @@ function psearch(n_post) {
         r2.data.forEach(element => {
             arrayPost.push(element.IDpost);
         });
-        console.log(arrayPost);
         loadPosts(n_post);
     });
 }
@@ -125,7 +124,6 @@ function saveRecipe(IDrecipe) {
     formData.append('q', "saveRecipe");
     formData.append('id', IDrecipe);
     axios.post('utils/api.php', formData);
-    console.log('recipe '+IDrecipe+' saved!');
 }
 
 // on page load
