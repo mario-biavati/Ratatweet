@@ -22,7 +22,9 @@ function printPost(idPost) {
                     <h1>
                         <a href="post.php?id=${post.IDpost}" class="decoration-none">${post.title}</a>
                     </h1>
-                    <h2 class="fs-5"><a href="user_page.php?id=${post.IDuser}">${post.username}</a></h2>
+                    <h2 class="fs-5"><a `;
+            htmlContent += (post.IDuser == 1) ? `role="link" aria-disabled="true"` : `href="user_page.php?id=${post.IDuser}"`; //controlla che non sia lo user anonimo
+            htmlContent += `>${post.username}</a></h2>
                 </div>
                 <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" class="icon-tiny"/></a>
             </div>

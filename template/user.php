@@ -16,13 +16,13 @@
         <div class="d-flex justify-content-center my-3">
         <?php $idLogged = isset($_SESSION["idUser"]) ? $_SESSION["idUser"] : -1;
             if(isset($_SESSION["idUser"]) && $id == $_SESSION["idUser"]): ?>
-            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info text-white py-1 col-3 col-md-2 mx-2" alt="Modify profile" id="Modify-Button" onclick="modify()">
+            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info border-dark py-1 col-3 col-md-2 mx-2" alt="Modify profile" id="Modify-Button" onclick="modify()">
                 Modify
             </button>
             <?php else: 
             $FollowStatus = "Follow";
             if(isUserLoggedIn() && !empty($dbh->getFollowerStatus($idLogged, $id))) $FollowStatus = "Unfollow"; ?>
-            <button type="button" title="<?php echo $FollowStatus; ?> user" aria-label="<?php echo $FollowStatus; ?> user" class="btn <?php echo ($FollowStatus=="Follow") ? "btn-info" : "btn-secondary"?> text-white py-1 col-3 col-md-2 mx-2" alt="<?php echo $FollowStatus; ?> user" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>">
+            <button type="button" title="<?php echo $FollowStatus; ?> user" aria-label="<?php echo $FollowStatus; ?> user" class="btn <?php echo ($FollowStatus=="Follow") ? "btn-info" : "btn-secondary"?> border-dark py-1 col-3 col-md-2 mx-2" alt="<?php echo $FollowStatus; ?> user" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>">
                 <?php echo $FollowStatus; ?> 
             </button>
             <?php 

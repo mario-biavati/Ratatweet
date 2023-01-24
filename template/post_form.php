@@ -75,7 +75,7 @@
                             <input type="text" name="quantita" class="form-control w-50" placeholder="Quantity"/>
                         </li>
                         <li class="list-group-item border-0 mx-auto">
-                            <button type="button" class="btn btn-info text-white" id="new_ingredient" onclick="addIngredient()">Add Ingredient</button>
+                            <button type="button" class="btn btn-info border-dark" id="new_ingredient" onclick="addIngredient()">Add Ingredient</button>
                         </li>
                     </ul>  
                 </div>
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <input type="submit" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info text-white"/>
+        <input type="submit" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info border-dark"/>
         <!-- <a href="index.php">Annulla</a> -->
     </form>
 </div>

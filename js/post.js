@@ -34,8 +34,8 @@ function printComment(idComment, where, first = false) {
             </div>
         </div>
         <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="postReply(${comment.IDcomment},this); return false;">
-            <input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
-            <button type="submit" class="btn btn-info text-white mt-1">Post Reply</button>
+            <label for="addComment" hidden>Write Comment</label><input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
+            <button type="submit" class="btn btn-info mt-1 border-dark">Post Reply</button>
             <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
         </form>
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
@@ -121,11 +121,13 @@ function reloadComments() {
 
 /* Post Comments Functions */
 function postComment(form) {
-    if (form["comment"].value.length == 0) return;
+    let comm = form["comment"].value.trim();
+
+    if (comm.length == 0) return;
     const formData = new FormData();
     formData.append('q', "postComment");
     formData.append('id', id);
-    formData.append('comment', form["comment"].value);
+    formData.append('comment', comm);
     axios.post('utils/api.php', formData).then(r => {
         if (r.data["esito"] == false) {
             // utente non loggato, redirect al login
@@ -145,12 +147,14 @@ function postComment(form) {
     document.getElementById("addCommentButton").click();
 }
 function postReply(idComment, form) {
-    if (form["comment"].value.length == 0) return;
+    let comm = form["comment"].value.trim();
+
+    if (comm.length == 0) return;
     const formData = new FormData();
     formData.append('q', "postReply");
     formData.append('id', id);
     formData.append('idComment', idComment);
-    formData.append('comment', form["comment"].value);
+    formData.append('comment', comm);
     axios.post('utils/api.php', formData).then(r => {
         if (r.data["esito"] == false) {
             // utente non loggato, redirect al login

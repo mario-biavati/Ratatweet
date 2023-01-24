@@ -33,7 +33,7 @@ if (isUserLoggedIn()):
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mt-auto">
-                        <a class="btn btn-info text-white" style="max-height: 40px;" data-bs-toggle="collapse" href="#more<?php echo "{$recipe["IDpost"]}"; ?>" role="button" aria-expanded="false" aria-controls="more<?php echo "{$recipe["IDpost"]}"; ?>">
+                        <a class="btn btn-info border-dark" style="max-height: 40px;" data-bs-toggle="collapse" href="#more<?php echo "{$recipe["IDpost"]}"; ?>" role="button" aria-expanded="false" aria-controls="more<?php echo "{$recipe["IDpost"]}"; ?>">
                             See ▼
                         </a>
                     </div>
@@ -63,8 +63,8 @@ if (isUserLoggedIn()):
                         </div>
                     </div>
                     <!-- Pulsanti "Usa" ed "Elimina" -->
-                    <button type="button" aria-label="Use recipe" alt="Use recipe" class="btn btn-info text-white" id="UseRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="useRecipe(<?php echo $recipe['IDrecipe']; ?>)">Use</button>
-                    <?php if($n == 0): ?><button type="button" aria-label="Delete recipe" alt="Delete recipe" class="ms-3 btn btn-danger text-white" id="DeleteRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="deleteRecipe(<?php echo $recipe['IDpost']; ?>)">Delete</button><?php endif; ?>
+                    <button type="button" aria-label="Use recipe" alt="Use recipe" class="btn btn-info border-dark" id="UseRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="useRecipe(<?php echo $recipe['IDrecipe']; ?>)">Use</button>
+                    <?php if($n == 0): ?><button type="button" aria-label="Delete recipe" alt="Delete recipe" class="ms-3 btn btn-danger border-dark" id="DeleteRecipe-button<?php echo $recipe['IDpost']; ?>" onclick="deleteRecipe(<?php echo $recipe['IDpost']; ?>)">Delete</button><?php endif; ?>
                 </div>
 
             </li>

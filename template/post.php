@@ -14,7 +14,7 @@ if (isset($_GET["id"])) :
             <div class="d-flex justify-content-between">
                 <h1><?php echo $postData["title"];?></h1>
                 <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
-                <button id="deletePostButton" aria-label="Delete post" alt="Delete post" class="btn btn-danger text-white py-1 my-auto" onclick="deletePost(<?php echo $id;?>)">Delete</button>
+                <button id="deletePostButton" aria-label="Delete post" alt="Delete post" class="btn btn-danger border-dark py-1 my-auto" onclick="deletePost(<?php echo $id;?>)">Delete</button>
                 <?php else: ?>
                 <button id="recipe-button" class="bg-white border-0"><img src="img/recipe-icon.png" aria-label="Save recipe" alt="Save recipe" style="height: calc(1.5rem + 1.5vw);"/></button>
                 <?php endif; ?>
@@ -52,8 +52,8 @@ if (isset($_GET["id"])) :
 <section class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
     <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" alt="Comment post" class="icon-tiny"/></button></h2>
     <form id="collapseAddComment" method="post" class="collapse" onsubmit="return false;">
-        <input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment"/>
-        <button type="submit" class="btn btn-info text-white mb-2 mt-1">Post Comment</button>
+        <label for="addComment" hidden>Write Comment</label><input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment"/>
+        <button type="submit" class="btn btn-info border-dark mb-2 mt-1">Post Comment</button>
         <button type="reset" class="btn btn-outline-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment">Cancel</button>
     </form>
     <!--commenti-->

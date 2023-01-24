@@ -40,7 +40,7 @@ if(isUserLoggedIn()) {
                 <input type="file" accept=".jpg,.jpeg,.png" name="pic" id="pic" class="form-control-file mt-2"/>
             </li>
             <li class="list-group-item border-0 col-9 col-md-5 col-lg-4 mx-auto mt-3">
-                <input type="submit" name="submit" value=<?php echo $submitValue;?> class="btn btn-info text-white" id="submitButton"/>
+                <input type="submit" name="submit" value=<?php echo $submitValue;?> class="btn btn-info border-dark" id="submitButton"/>
             </li>
         </ul>
     </form>
