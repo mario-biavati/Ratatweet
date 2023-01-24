@@ -5,7 +5,6 @@ function deleteRecipe(idPost) {
     formData.append('q', "deleteRecipe");
     formData.append('idPost', idPost);
     axios.post('utils/api.php', formData).then(response => {
-        //console.log(response.data);
         const idRecipe = "#Post" + idPost;
         document.querySelector(idRecipe).remove();
     });

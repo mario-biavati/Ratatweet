@@ -30,14 +30,12 @@ document.querySelector("main form").addEventListener("submit", function (event) 
         let ingr = {};
         for (let i = 0; i<ingredients.length; i++) {
             if (ingredients[i].value == '' || quantities[i].value == '') {
-                console.log("Formato ingredienti non valido");
                 document.querySelector("form > p").innerText = "Cannot create recipe with empty fields!";
                 return;
             }
             //add ingredients
             ingr[ingredients[i].value] = quantities[i].value;
         }
-        console.log("INGREDIENTS = " +JSON.stringify(ingr));
         new_recipe_new_post(titolo, descrizione, pic, JSON.stringify(ingr), procedimento);
     }
     else if(currentSelection=="Usa ricetta") {
@@ -56,14 +54,12 @@ function select(i) {
 }
 //Switch tra "usa ricetta" e "crea ricetta"
 btns[1].addEventListener("click", function (event) {
-    console.log("Premuto crea ricetta");
     currentSelection = "Crea ricetta";
 
     select(1);
 });
 //switch tra "crea ricetta" e "usa ricetta"
 btns[0].addEventListener("click", function (event) {
-    console.log("Premuto usa ricetta");
     currentSelection = "Usa ricetta";
 
     select(0);
@@ -75,7 +71,6 @@ function new_recipe_new_post(titolo, descrizione, pic, ingredienti, procedimento
     formData.append('ingredients', ingredienti);
     formData.append('method', procedimento);
     axios.post('utils/api.php', formData).then(response => {
-        console.log(response.data);
         if (response.data["esito"]==true) { //Abbiamo creato la ricetta, possiamo creare il post ad essa associato
             id_recipe = response.data["IDrecipe"];
             new_post(titolo, descrizione, pic, id_recipe);
@@ -85,8 +80,6 @@ function new_recipe_new_post(titolo, descrizione, pic, ingredienti, procedimento
             formData.append('id', id_recipe);
             axios.post('utils/api.php', formData2);
         } else {
-            console.log(response.data["esito"]);
-            console.log("NACK");
             document.querySelector("form > p").innerText = response.data["errore"];
         }
     });
@@ -98,7 +91,6 @@ function new_post(titolo, descrizione, pic, idRicetta) {
     formData.append('titolo', titolo);
     formData.append('descrizione', descrizione);
     formData.append('IDricetta', idRicetta);
-    console.log(idRicetta);
     var reader = new FileReader();
     reader.onload = () => {
         formData.append('pic', btoa(reader.result));
@@ -107,14 +99,10 @@ function new_post(titolo, descrizione, pic, idRicetta) {
               "Content-Type": "multipart/form-data",
             }
             }).then(response => {
-            console.log(response.data);
             if (response.data["esito"]==true) {
-                console.log("ACK");
                 id_post = response.data["IDpost"];
                 location.href="post.php?id="+id_post;
             } else {
-                console.log(response.data["esito"]);
-                console.log("NACK");
                 document.querySelector("form > p").innerText = response.data["errore"];
             }
             }).catch(function (error) {
