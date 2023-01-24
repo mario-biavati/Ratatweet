@@ -35,13 +35,13 @@ if (isUserLoggedIn()):
                 <a href="<?php echo "{$userHref}"; ?>" class="fw-bold"><?php echo "{$userData["username"]}"; ?></a>
                 <p class="my-2">
                     <?php echo $notificationType; if($notification["type"]=="Post" || $notification["type"]=="Comment"): ?>
-                        <a href=<?php echo "{$postHref}"; ?>>post</a>
+                        <a href="<?php echo "{$postHref}"; ?>">post</a>
                     <?php elseif($notification["type"]=="Recipe"): ?>
-                        <a href=<?php echo "{$postHref}"; ?>>recipe</a>
+                        <a href="<?php echo "{$postHref}"; ?>">recipe</a>
                     <?php endif; ?>
                 </p>
                 <div class="d-flex w-100 justify-content-end">
-                    <button type="button" aria-label="Seen notification" class="btn btn-info border-dark" data-bs-toggle="button" alt="Seen notification" id="SeenNotification-button" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
+                    <button type="button" aria-label="Seen notification" class="btn btn-info border-dark" data-bs-toggle="button" id="SeenNotification-button<?php echo $notification['IDnotification']; ?>" onclick="seenNotification(<?php echo $notification['IDnotification']; ?>)">Seen</button>
                 </div>    
             </li>
         <?php endforeach;?>

@@ -85,8 +85,7 @@
                 </div>
             </div>
         </div>
-
-        <input type="submit" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info border-dark"/>
+        <input type="submit" id="uploadButton" aria-label="Create post" name="submit" value="Upload" class="mt-3 mx-auto btn btn-info text-white"/>
         <!-- <a href="index.php">Annulla</a> -->
     </form>
 </div>
