@@ -19,13 +19,17 @@ function printPost(idPost) {
             `<article class="ms-2 me-2 me-md-0 d-flex flex-column flex-md-row justify-content-around">
             <div class="d-flex d-md-none justify-content-between">
                 <div>
-                    <h1><a href="post.php?id=${post.IDpost}" class="decoration-none">${post.title}</a></h1>
-                    <h2 class="fs-5"><a href="user_page.php?id=${post.IDuser}">${post.username}</a></h2>
+                    <h1>
+                        <a href="post.php?id=${post.IDpost}" class="decoration-none">${post.title}</a>
+                    </h1>
+                    <h2 class="fs-5"><a `;
+            htmlContent += (post.IDuser == 1) ? `role="link" aria-disabled="true"` : `href="user_page.php?id=${post.IDuser}"`; //controlla che non sia lo user anonimo
+            htmlContent += `>${post.username}</a></h2>
                 </div>
                 <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" class="icon-tiny"/></a>
             </div>
             <a href="post.php?id=${post.IDpost}" class="icon-post overflow-hidden d-flex justify-content-center align-content-center rounded">
-                <img src="data:image/png;base64,${post.pic}" alt="${post.title}" class="h-100 w-auto"/>
+                <img src="data:image/png;base64,${post.pic}" alt="${post.title}" class="fit-cover"/>
             </a>
             <div class="d-flex flex-column col-md-7">
                 <div class="d-flex d-none d-md-block flex-column">
@@ -34,7 +38,7 @@ function printPost(idPost) {
                             <h1>${post.title}</h1>
                             <h2 class="fs-5"><a href="user_page.php?id=${post.IDuser}">${post.username}</a></h2>
                         </div>
-                        <a href="post.php?id=${post.IDpost}#recipe"><img src="img/recipe-icon.png" alt="Read recipe of ${post.title}" class="icon-tiny"/></a>
+                        <a href="post.php?id=${post.IDpost}#recipe" class="mt-2 mb-auto"><img src="img/recipe-icon.png" alt="Read recipe of ${post.title}" class="icon-tiny"/></a>
                     </div>
                     <p class="mt-4" style="max-height: 150px; overflow:hidden;">${post.description}</p>
                 </div>
@@ -54,7 +58,6 @@ function printPost(idPost) {
                 </div>
             </article>
             <hr/>`;
-            main.innerHTML += htmlContent;
             resolve(htmlContent);
         });
     });

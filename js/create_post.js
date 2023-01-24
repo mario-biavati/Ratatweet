@@ -49,10 +49,10 @@ function select(i) {
     let other = (i+1)%2;
     btns[i].classList.remove("btn-outline-secondary");
     btns[i].classList.add("btn-info");
-    btns[i].classList.add("text-white");
+    btns[i].classList.add("border-dark");
     btns[other].classList.add("btn-outline-secondary");
     btns[other].classList.remove("btn-info");
-    btns[other].classList.remove("text-white");
+    btns[other].classList.remove("border-dark");
 }
 //Switch tra "usa ricetta" e "crea ricetta"
 btns[1].addEventListener("click", function (event) {

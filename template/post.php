@@ -13,21 +13,22 @@ if (isset($_GET["id"])) :
         <div class="d-block w-100">
             <div class="d-flex justify-content-between">
                 <h1><?php echo $postData["title"];?></h1>
-                <span id="recipe-button" role="button"><img src="img/recipe-icon.png" style="height: calc(1.5rem + 1.5vw);"/></span>
+                <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
+                <button id="deletePostButton" aria-label="Delete post" alt="Delete post" class="btn btn-danger border-dark py-1 my-auto" onclick="deletePost(<?php echo $id;?>)">Delete</button>
+                <?php else: ?>
+                <button id="recipe-button" class="bg-white border-0"><img src="img/recipe-icon.png" aria-label="Save recipe" alt="Save recipe" style="height: calc(1.5rem + 1.5vw);"/></button>
+                <?php endif; ?>
             </div>
             <h2 class="fs-5"><a href="user_page.php?id=<?php echo $postData["IDuser"]; ?>"><?php echo $postData["username"];?></a></h2>
-            <?php if(isset($_SESSION["idUser"]) && $_SESSION["idUser"]==$postData["IDuser"]):?> 
-            <button id="deletePostButton" onclick="deletePost(<?php echo $id;?>)">Delete</button>
-            <?php endif; ?>
         </div>
     </div>
     <div>
-        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" class="mw-100 w-100 h-auto"/>
+        <img src="data:image/png;base64,<?php echo $postData["pic"]; ?>" alt="<?php echo $postData["title"];?>" class="mw-100 w-100 h-auto rounded"/>
     </div>
     <div class="w-100 row mt-1">
         <div class="d-flex justify-content-between">
             <div class="rating">
-                <input type="radio" name="rating" value="5" id="star5" onclick="insertRating(5)"><label alt="vota 5 stelle" for="star5">☆</label> <input type="radio" name="rating" value="4" id="star4" onclick="insertRating(4)"><label alt="vota 4 stelle" for="star4">☆</label> <input type="radio" name="rating" value="3" id="star3" onclick="insertRating(3)"><label alt="vota 3 stelle" for="star3">☆</label> <input type="radio" name="rating" value="2" id="star2" onclick="insertRating(2)"><label alt="vota 2 stelle" for="star2">☆</label> <input type="radio" name="rating" value="1" id="star1" onclick="insertRating(1)"><label alt="vota 1 stella" for="star1">☆</label>
+                <input type="radio" aria-label="vota 5 stelle" name="rating" value="5" id="star5" onclick="insertRating(5)"><label for="star5">☆</label> <input type="radio" aria-label="vota 4 stelle" name="rating" value="4" id="star4" onclick="insertRating(4)"><label for="star4">☆</label> <input type="radio" aria-label="vota 3 stelle" name="rating" value="3" id="star3" onclick="insertRating(3)"><label for="star3">☆</label> <input type="radio" aria-label="vota 2 stelle" name="rating" value="2" id="star2" onclick="insertRating(2)"><label for="star2">☆</label> <input type="radio" aria-label="vota 1 stelle" name="rating" value="1" id="star1" onclick="insertRating(1)"><label for="star1">☆</label>
             </div>
             <span id="avgRating" class="fs-3 pt-2 ps-1">??</span>
         </div>
@@ -49,10 +50,10 @@ if (isset($_GET["id"])) :
     </section>
 </article>
 <section class="container mt-5 mb-5 col-12 col-md-10 col-lg-8">
-    <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" class="icon-tiny"/></button></h2>
+    <h2 class="fw-bold" id="commentsAmount">Comments: <button id="addCommentButton" class="fs-4 fw-bold" style="float: right; border: none; background: none; padding-right: 10px;" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment"><span style="padding-right: 0.5em">666</span><img src="img/comment-icon.png" alt="Comment post" class="icon-tiny"/></button></h2>
     <form id="collapseAddComment" method="post" class="collapse" onsubmit="return false;">
-        <input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment"/>
-        <button type="submit" class="btn btn-info text-white mb-2 mt-1">Post Comment</button>
+        <label for="addComment" hidden>Write Comment</label><input type="text" name="comment" class="form-control" id="addComment" placeholder="Comment"/>
+        <button type="submit" class="btn btn-info border-dark mb-2 mt-1">Post Comment</button>
         <button type="reset" class="btn btn-outline-secondary mb-2 mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment" aria-expanded="false" aria-controls="collapseAddComment">Cancel</button>
     </form>
     <!--commenti-->

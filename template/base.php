@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8"/>
     <title><?php echo $templateParams["title"]; ?></title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -30,11 +31,11 @@
                 <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <input type="image" src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
                 </li>
-                <div class="col-9 me-2 collapse collapse-horizontal" id="collapseSearch">
+                <li class="col-9 me-2 collapse collapse-horizontal" id="collapseSearch">
                     <form class="py-2" action="index.php">
                         <input type="search" name="search" id="searchBar" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 30px; width: 72vw"/>
                     </form>
-                </div>
+                </li>
                 <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
                     <a href="index.php"><img src="img/home-icon.png" alt="Home" class="img-fluid" style="max-height: 30px"/></a>
                 </li>
@@ -58,10 +59,10 @@
             <ul class="fixed-top col-1 col-lg-3 border-dark border-end d-flex flex-column bg-info text-dark p-3 navbar-nav" style="height: 100vh;">
                 <li class="navbar-item">
                 <a href="#" class="d-flex mt-2 mb-3 p-1 d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px"/><span class="d-none d-lg-block ms-5 me-5 fs-5 fw-semibold">Search</span></a>
-                </li>
                 <form action="index.php" class="collapse justify-content-center" id="collapseSearchMD">
                     <input type="search" name="search" id="searchBarLG" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
                 </form>
+                </li>
                 <li class="navbar-item">
                     <a href="index.php" class="d-flex mt-3 mb-3 p-1 text-decoration-none text-dark"><img src="img/home-icon.png" alt="Home" class="img-fluid" style="max-height: 30px"/><span class="d-none d-lg-block ms-5 me-5 fs-5 fw-semibold">Home</span></a>
                 </li>
@@ -99,7 +100,7 @@
         ?>
     </main>
     <!--Inclusione script Javascript-->
-    <script type="text/javascript">
+    <script>
     <?php foreach($_GET as $key => $val) {
         echo 'var '.$key.'="'.$val.'";';
     }?>

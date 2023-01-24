@@ -34,8 +34,8 @@ function printComment(idComment, where, first = false) {
             </div>
         </div>
         <form id="collapseAddComment${comment.IDcomment}" class="collapse col-11 offset-1" onsubmit="postReply(${comment.IDcomment},this); return false;">
-            <input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
-            <button type="submit" class="btn btn-info text-white mt-1">Post Reply</button>
+            <label for="addComment" hidden>Write Comment</label><input type="text" name="comment" class="mt-1 form-control" placeholder="Reply">
+            <button type="submit" class="btn btn-info mt-1 border-dark">Post Reply</button>
             <button type="reset" class="btn btn-outline-secondary mt-1" data-bs-toggle="collapse" data-bs-target="#collapseAddComment${comment.IDcomment}" aria-expanded="false" aria-controls="collapseAddComment${comment.IDcomment}">Cancel</button>
         </form>
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
@@ -121,11 +121,13 @@ function reloadComments() {
 
 /* Post Comments Functions */
 function postComment(form) {
-    if (form["comment"].value.length == 0) return;
+    let comm = form["comment"].value.trim();
+
+    if (comm.length == 0) return;
     const formData = new FormData();
     formData.append('q', "postComment");
     formData.append('id', id);
-    formData.append('comment', form["comment"].value);
+    formData.append('comment', comm);
     axios.post('utils/api.php', formData).then(r => {
         if (r.data["esito"] == false) {
             // utente non loggato, redirect al login
@@ -145,12 +147,14 @@ function postComment(form) {
     document.getElementById("addCommentButton").click();
 }
 function postReply(idComment, form) {
-    if (form["comment"].value.length == 0) return;
+    let comm = form["comment"].value.trim();
+
+    if (comm.length == 0) return;
     const formData = new FormData();
     formData.append('q', "postReply");
     formData.append('id', id);
     formData.append('idComment', idComment);
-    formData.append('comment', form["comment"].value);
+    formData.append('comment', comm);
     axios.post('utils/api.php', formData).then(r => {
         if (r.data["esito"] == false) {
             // utente non loggato, redirect al login
@@ -262,21 +266,27 @@ let saved = false;
 let img = recipeButton.firstElementChild;
 
 axios.get('utils/api.php?q=isRecipeSaved&id='+id).then(response => {
-    if (response.data.isMyPost != 0) return;
-    saved = response.data.isSaved != 0;
-    if (saved) {
-        img.classList.add("liked");
-        img.setAttribute("src", "img/recipe-icon-saved.png");
+    if (response.data.isMyPost != 0) {
+        // "Delete" invece di "Save recipe"
     } else {
-        img.setAttribute("src", "img/recipe-icon-save.png");
+       saved = response.data.isSaved != 0;
+        if (saved) {
+            img.classList.add("liked");
+            img.setAttribute("src", "img/recipe-icon-saved.png");
+            img.setAttribute("alt", "Remove recipe");
+        } else {
+            img.setAttribute("src", "img/recipe-icon-save.png");
+            img.setAttribute("alt", "Save recipe");
+        }
+        recipeButton.addEventListener("click", event => {
+            event.preventDefault();
+            if (!saved)
+                saveRecipe();
+            else
+                removeRecipe();
+        }); 
     }
-    recipeButton.addEventListener("click", event => {
-        event.preventDefault();
-        if (!saved)
-            saveRecipe();
-        else
-            removeRecipe();
-    });
+    
 });
 
 function saveRecipe() {
@@ -289,7 +299,16 @@ function saveRecipe() {
             //aggiorna icona ricetta
             img.classList.add("liked");
             img.setAttribute("src", "img/recipe-icon-saved.png");
+            img.setAttribute("alt", "Remove recipe");
             saved = true;
+        } else if (r.data["errore"] == "Not Logged") {
+            // utente non loggato, redirect al login
+            axios.get('template/login_form.php').then(file => {
+                document.querySelector("main").innerHTML = file.data;
+                var tag = document.createElement("script");
+                tag.src = "js/login.js";
+                document.querySelector("body").appendChild(tag);
+            });
         }
     });
 }
@@ -303,6 +322,7 @@ function removeRecipe() {
             //aggiorna icona ricetta
             img.classList.remove("liked");
             img.setAttribute("src", "img/recipe-icon-save.png");
+            img.setAttribute("alt", "Save recipe");
             saved = false;
         }
     });
