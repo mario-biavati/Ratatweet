@@ -16,21 +16,21 @@
         <div class="d-flex justify-content-center my-3">
         <?php $idLogged = isset($_SESSION["idUser"]) ? $_SESSION["idUser"] : -1;
             if(isset($_SESSION["idUser"]) && $id == $_SESSION["idUser"]): ?>
-            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info border-dark py-1 col-3 col-md-2 mx-2" alt="Modify profile" id="Modify-Button" onclick="modify()">
+            <button type="button" title="Modify profile" aria-label="Modify profile" class="btn btn-info border-dark py-1 col-3 col-md-2 mx-2" id="Modify-Button" onclick="modify()">
                 Modify
             </button>
             <?php else: 
             $FollowStatus = "Follow";
             if(isUserLoggedIn() && !empty($dbh->getFollowerStatus($idLogged, $id))) $FollowStatus = "Unfollow"; ?>
-            <button type="button" title="<?php echo $FollowStatus; ?> user" aria-label="<?php echo $FollowStatus; ?> user" class="btn <?php echo ($FollowStatus=="Follow") ? "btn-info" : "btn-secondary"?> border-dark py-1 col-3 col-md-2 mx-2" alt="<?php echo $FollowStatus; ?> user" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>">
+            <button type="button" title="<?php echo $FollowStatus; ?> user" aria-label="<?php echo $FollowStatus; ?> user" class="btn <?php echo ($FollowStatus=="Follow") ? "btn-info" : "btn-secondary"?> border-dark py-1 col-3 col-md-2 mx-2" id="followbutton" onclick="<?php echo strtolower($FollowStatus)."()"?>">
                 <?php echo $FollowStatus; ?> 
             </button>
             <?php 
             $notificationStatus = $dbh->getFollowerStatus($idLogged, $id);
             $notif="Disable";
             if(!empty($notificationStatus) && $notificationStatus[0]["notification"]==0) $notif="Enable"; ?>
-            <button type="button" title="<?php echo $notif; ?> notifications" aria-label="<?php echo $notif; ?> notifications" class="btn <?php echo ($notif == "Enable") ? "btn-secondary" : "btn-info"; ?> border-dark py-1 col-3 col-md-2 mx-2" alt="<?php echo $notif; ?> notifications" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?>>
-                <img src="img/<?php echo ($notif == "Enable") ? "notification-disabled-icon.png" : "notification-icon.png"; ?>" style="height: 20px;">
+            <button type="button" title="<?php echo $notif; ?> notifications" aria-label="<?php echo $notif; ?> notifications" class="btn <?php echo ($notif == "Enable") ? "btn-secondary" : "btn-info"; ?> border-dark py-1 col-3 col-md-2 mx-2" id="notificationbutton" onclick="<?php echo ($notif == "Enable") ? "enableNotifications()" : "disableNotifications()"; ?>" <?php if ($FollowStatus == "Follow") echo "disabled"; ?>>
+                <img src="img/<?php echo ($notif == "Enable") ? "notification-disabled-icon.png" : "notification-icon.png"; ?>" alt="Enable/disable notifications" style="height: 20px;">
             </button>
             <?php endif; ?>
         </div>

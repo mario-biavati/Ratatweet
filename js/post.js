@@ -330,6 +330,8 @@ function removeRecipe() {
 
 //Eliminazione di un post 
 function deletePost(idPost) {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+
     const formData = new FormData();
     formData.append('q', "deletePost");
     formData.append('idPost', idPost);
