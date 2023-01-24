@@ -36,3 +36,6 @@
 .fit-cover {
     object-fit: cover!important;
 }
+.search-bar {
+    width: calc(25vw - 2rem);
+}

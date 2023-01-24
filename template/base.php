@@ -59,8 +59,10 @@
             <ul class="fixed-top col-1 col-lg-3 border-dark border-end d-flex flex-column bg-info text-dark p-3 navbar-nav" style="height: 100vh;">
                 <li class="navbar-item">
                 <a href="#" class="d-flex mt-2 mb-3 p-1 d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px"/><span class="d-none d-lg-block ms-5 me-5 fs-5 fw-semibold">Search</span></a>
-                <form action="index.php" class="collapse justify-content-center" id="collapseSearchMD">
-                    <input type="search" name="search" id="searchBarLG" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
+                <form action="index.php" class="collapse justify-content-center search-bar" id="collapseSearchMD">
+                    <div class="py-2 pe-2 bg-info rounded">
+                       <input type="search" name="search" id="searchBarLG" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 40px"/> 
+                    </div>
                 </form>
                 </li>
                 <li class="navbar-item">
