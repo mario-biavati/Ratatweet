@@ -1,13 +1,3 @@
-<?php
-if (isset($_GET["id"])) :
-    $id = $_GET["id"];
-    $postData = $dbh->getPostById($id);
-    //$recipeData = $dbh->getRecipe($id)[0];
-    //$commentData = $dbh->getCommentsByPostID($id);
-    if (count($postData) == 1) :
-        $postData = $postData[0];
-        $recipeData = $dbh->getRecipe($postData["IDrecipe"])[0];
-        ?>
 <article class="container col-12 col-md-10 col-lg-8">
     <div>
         <div class="d-block w-100">
@@ -59,5 +49,3 @@ if (isset($_GET["id"])) :
     <!--commenti-->
     <div id="comments"></div>
 </section>
-    <?php endif; ?>  
-<?php endif; ?>
