@@ -20,6 +20,6 @@ Nel momento in cui si crea un nuovo post si può scegliere di usare una ricetta 
 ![Create post image](https://github.com/mario-biavati/Ratatweet/blob/main/img/schermata_create_post.png)
 
 ## Autori:
-simone.fabbri10@studio.unibo.it
-michele.ravaioli3@studio.unibo.it
-mario.biavati@studio.unibo.it
+- simone.fabbri10@studio.unibo.it
+- michele.ravaioli3@studio.unibo.it
+- mario.biavati@studio.unibo.it
