@@ -30,8 +30,12 @@
             <!-- Pulsante per l'utilizzo di una ricetta salvata -->
             <div id="ricette_salvate" class="collapse w-100 border rounded" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
                 <ul class="nav nav-tabs justify-content-around border-0">
-                    <li role="button" class="nav-item p-2 w-50 text-secondary" onclick="selectSavedRecipes(this)">Saved Recipes</li>
-                    <li role="button" class="nav-item p-2 w-50 text-secondary" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">My Recipes</li>
+                    <li class="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top" onclick="selectSavedRecipes(this)">
+                        <button class="bg-none border-0 text-secondary  p-2 w-100 h-100">Saved Recipes</button>
+                    </li>
+                    <li rclass="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">
+                        <button class="bg-none border-0 text-secondary  p-2 w-100 h-100">My Recipes</button>
+                    </li>
                 </ul>
                 <ul class="list-group list-group-flush">
                     <div id="sr-container" class="mx-2">
