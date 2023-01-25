@@ -256,10 +256,9 @@ function updateAvgRating() {
 updateAvgRating();
 
 //-- on page load: recipe button manager
-
 var recipeButton = document.getElementById("recipe-button");
 let saved = false;
-let img = recipeButton.firstElementChild;
+if(typeof recipeButton!="undefined") var img = recipeButton.firstElementChild;
 
 axios.get('utils/api.php?q=isRecipeSaved&id='+id).then(response => {
     if (response.data.isMyPost != 0) {
