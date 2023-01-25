@@ -86,9 +86,7 @@ function isAtBottom() {
     return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 30;
 }
 function reloadFeed() {
-    console.log("Reload posts?");
     if (isAtBottom() && canPrintPost) {
-        console.log("Reload posts");
         loadPosts(5);
     }
 }
