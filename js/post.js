@@ -239,9 +239,15 @@ function updateAvgRating() {
         const rating = r.data.avgRating;
         let element;
         let i;
+        for(i=1;i<=5; i++) {
+            element = document.getElementById("star"+i);
+            element.checked = false;
+            element.classList.remove("ratingDisplay");
+        }
         for(i=1; i<=rating; i++) {
             element = document.getElementById("star"+i);
             element.checked = true;
+            element.classList.add("ratingDisplay");
         }
         let ratingRounded = Math.round(rating * 100) / 100;
         document.getElementById("avgRating").innerText = ratingRounded;
