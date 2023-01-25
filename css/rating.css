@@ -43,9 +43,8 @@
     opacity: 0
 }
 
-.rating>label:hover, 
-.rating>label:hover ~ label:not(.ratingDisplay,.ratingDisplay~label){
-    color: #ffe876!important;
+.rating>label:hover, .rating>label:hover ~ label {
+    -webkit-text-stroke: 1px #ce8b0f !important; 
 }
 
 .rating>label:hover:before,
