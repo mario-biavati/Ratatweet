@@ -17,7 +17,7 @@ Con Ratatweet è possibile creare un proprio profilo utente, creare nuovi post, 
 * "Profile": visualizzazione del proprio profile utente, che è possibile modificare con tasto "Modify";
 * "Create post": creazione di un nuovo post.
 Nel momento in cui si crea un nuovo post si può scegliere di usare una ricetta salavata (propria o di altri utenti) oppure di crearne una nuova, definendone gli ingredienti.
-![Create post image](https://github.com/mario-biavati/Ratatweet/blob/main/img/schemata_create_post.png)
+![Create post image](https://github.com/mario-biavati/Ratatweet/blob/main/img/schermata_create_post.png)
 
 ## Autori:
 simone.fabbri10@studio.unibo.it
