@@ -15,4 +15,4 @@ simone.fabbri10@studio.unibo.it
 michele.ravaioli3@studio.unibo.it
 mario.biavati@studio.unibo.it
 
-![Ecco un’immagine di esempio](https://github.com/mario-biavati/Ratatweet/tree/main/img/schermata.png)
+![Ecco un’immagine di esempio](https://github.com/mario-biavati/Ratatweet/blob/main/img/schemata.png)
