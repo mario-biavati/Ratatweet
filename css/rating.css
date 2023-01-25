@@ -43,10 +43,14 @@
     opacity: 0
 }
 
+.rating>label:hover ~ label{
+    color: #FFD600!important;
+    opacity: 0.4;
+}
+
 .rating>label:hover:before,
 .rating>label:hover ~ label:before {
-    opacity: 1 !important;
-    color: #FFD600;
+    opacity: 1 !important
 }
 
 .rating>input:checked ~ label:before {
@@ -54,8 +58,7 @@
 }
 
 .rating:hover>input:checked ~ label:before {
-    opacity: 0.4;
-    color: #FFD600;
+    opacity: 0.4
 }
 
 .buttons{
