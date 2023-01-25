@@ -44,7 +44,7 @@
 }
 
 .rating>label:hover, 
-.rating>label:hover ~ label:not(.ratingDisplay,.ratingDisplay~){
+.rating>label:hover ~ label:not(.ratingDisplay,.ratingDisplay~label){
     color: #ffe876!important;
 }
 
