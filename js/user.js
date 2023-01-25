@@ -17,7 +17,7 @@ var canPrintFollowers = true;
 var canPrintFollowed = true;
 var currentDiv = "posts";
 
-document.addEventListener("scroll", () => reload());
+setInterval(() => reload(), 500);
 
 function login() {
     axios.get('template/login_form.php').then(file => {
@@ -198,7 +198,7 @@ async function loadFollowed(n_followed) {
     canPrintFollowed = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 30;
 }
 function reload() {
     if (isAtBottom()) {

@@ -4,7 +4,7 @@ var canPrintComment = true;
 var arrayComment = [];
 var arrayReply = [];
 
-document.addEventListener("scroll", () => reloadComments());
+setInterval(() => reloadComments(), 500);
 
 function printComment(idComment, where, first = false) {
     //load comment
@@ -40,6 +40,7 @@ function printComment(idComment, where, first = false) {
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
         </div>
     </div>`;
+    
         where.innerHTML = (first) ? (htmlContent + where.innerHTML) : (where.innerHTML + htmlContent);
     }).then(r1 => {
         //get replies
@@ -109,7 +110,7 @@ function loadComments(n_comments) {
     canPrintComment = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 30;
 }
 function reloadComments() {
     if (isAtBottom() && canPrintComment) {

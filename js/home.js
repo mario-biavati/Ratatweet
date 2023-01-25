@@ -5,7 +5,7 @@ var isFeedPage = true;
 
 var main = document.getElementsByTagName("main")[0];
 
-document.addEventListener("scroll", () => reloadFeed());
+setInterval(() => reloadFeed(), 500);
 
 var searchBars = document.querySelectorAll("input[type=search]");
 
@@ -65,11 +65,13 @@ function printPost(idPost) {
 
 async function loadPosts(n_post) {
     canPrintPost = false;
+    main.innerHTML += `<div id="loading" class="d-flex py-3 justify-content-center" aria-label="Loading Content..."><img src="img/loading.gif" alt="Loading Gif" class="d-block mx-auto icon-small"/></div>`;
     let htmlContent = "";
     for (let i = 0; i < n_post; i++) {
 
         if (i + cur_lastPost >= arrayPost.length) {
             cur_lastPost += i;
+            document.getElementById("loading").remove();
             main.innerHTML += htmlContent;
             if (isFeedPage) {
                 feed(n_post - i);
@@ -78,6 +80,7 @@ async function loadPosts(n_post) {
         }
         htmlContent += await printPost(arrayPost[i + cur_lastPost]);
     }
+    document.getElementById("loading").remove();
     main.innerHTML += htmlContent;
     cur_lastPost = cur_lastPost + n_post;
     canPrintPost = true;
