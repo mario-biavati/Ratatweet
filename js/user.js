@@ -198,7 +198,7 @@ async function loadFollowed(n_followed) {
     canPrintFollowed = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 30;
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 100;
 }
 function reload() {
     if (isAtBottom()) {
