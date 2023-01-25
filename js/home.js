@@ -50,7 +50,7 @@ function printPost(idPost) {
                     if (ratingRounded == i) {
                         htmlContent += ` class="ratingDisplay"`;
                     }
-                    htmlContent += `>☆</span>`;
+                    htmlContent += `>★</span>`;
                 }
                 
             htmlContent += `
@@ -83,10 +83,12 @@ async function loadPosts(n_post) {
     canPrintPost = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 30;
 }
 function reloadFeed() {
+    console.log("Reload posts?");
     if (isAtBottom() && canPrintPost) {
+        console.log("Reload posts");
         loadPosts(5);
     }
 }
@@ -104,7 +106,11 @@ function psearch(n_post) {
         r2.data.forEach(element => {
             arrayPost.push(element.IDpost);
         });
-        loadPosts(n_post);
+        if (arrayPost.length == 0) {
+            canPrintPost = false;
+        } else {
+            loadPosts(n_post);
+        }
     });
 }
 function feed(n_post) {
@@ -112,10 +118,16 @@ function feed(n_post) {
 
         arrayPost = [];
         cur_lastPost = 0;
+
         r2.data.forEach(element => {
             arrayPost.push(element.IDpost);
         });
-        loadPosts(n_post);
+
+        if (arrayPost.length == 0) {
+            canPrintPost = false;
+        } else {
+            loadPosts(n_post);
+        }
     });
 }
 

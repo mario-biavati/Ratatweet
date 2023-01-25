@@ -86,6 +86,9 @@ function new_recipe_new_post(titolo, descrizione, pic, ingredienti, procedimento
 }
 //Funzione di creazione di un nuovo post 
 function new_post(titolo, descrizione, pic, idRicetta) {
+
+    document.getElementById("uploadButton").disabled = true;
+
     const formData = new FormData();
     formData.append('q', "new_post");
     formData.append('titolo', titolo);

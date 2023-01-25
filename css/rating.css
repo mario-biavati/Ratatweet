@@ -8,22 +8,19 @@
     display: none
 }
 
-.rating>label {
+.rating>:not(.ratingScore) {
+    -webkit-text-stroke: 1px black; /* width and color */
     position: relative;
     width: 1em;
     font-size: 30px;
     font-weight: 300;
-    color: #FFD600;
+    color: white;
+}
+
+.rating>label {
     cursor: pointer
 }
 
-.rating>span {
-    position: relative;
-    width: 1em;
-    font-size: 30px;
-    font-weight: 300;
-    color: #FFD600;
-}
 
 .rating>.ratingScore {
     color:black;
@@ -31,14 +28,17 @@
     margin-top: 6px;
 }
 
+.ratingDisplay, .ratingDisplay ~ :not(.ratingScore) {
+    color: #FFD600!important;
+}
+
 .ratingDisplay::before,
 .ratingDisplay ~ span:before {
-    content: "\2605";
     position: absolute;
+    color: #FFD600;
 }
 
 .rating>label::before {
-    content: "\2605";
     position: absolute;
     opacity: 0
 }
