@@ -43,9 +43,9 @@
     opacity: 0
 }
 
-.rating>label:hover ~ label{
-    color: #FFD600!important;
-    opacity: 0.4;
+.rating>label:hover, 
+.rating>label:hover ~ label:not(.ratingDisplay,.ratingDisplay~){
+    color: #ffe876!important;
 }
 
 .rating>label:hover:before,
