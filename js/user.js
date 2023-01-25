@@ -94,6 +94,7 @@ function printPost(idPost) {
         axios.get('utils/api.php?q=getPost&id=' + idPost).then(r => {
             let post = r.data;
             const rating = r.data.avgRating;
+            let ratingRounded = Math.round(rating);
             let htmlContent = `
             <li class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8 px-2">
             <article id="${post.IDpost}">
@@ -104,10 +105,18 @@ function printPost(idPost) {
                 <div class="ps-2 col-7">
                     <h2 class="p-0 fs-5">${post.title}</h2>
                     <div class="rating"> `;
-            let i;
+            /*
             for(i=5; i>rating; i--) htmlContent+="<span>☆</span>";
-            if(rating!=0) htmlContent+=`<span class="ratingDisplay">☆</span>`;
-            for(i=rating-1; i>0; i--) htmlContent+="<span>☆</span>";
+            if(rating!=0) htmlContent+=`<span class="ratingDisplay">★</span>`;
+            for(i=rating-1; i>0; i--) htmlContent+="<span>★</span>";
+            */
+            for (let i = 5; i > 0; i--) {
+                htmlContent += `<span`;
+                if (ratingRounded == i) {
+                    htmlContent += ` class="ratingDisplay"`;
+                }
+                htmlContent += `>★</span>`;
+            }
             htmlContent+=`
                     </div>
                 </div>

@@ -237,6 +237,7 @@ function insertRating(rating) {
 function updateAvgRating() {
     axios.get("utils/api.php?q=getPost&id=" + id).then(r => {
         const rating = r.data.avgRating;
+        let ratingRounded = Math.round(rating);
         let element;
         let i;
         for(i=1;i<=5; i++) {
@@ -244,13 +245,13 @@ function updateAvgRating() {
             element.checked = false;
             element.classList.remove("ratingDisplay");
         }
-        for(i=1; i<=rating; i++) {
+        for(i=1; i<=ratingRounded; i++) {
             element = document.getElementById("star"+i);
             element.checked = true;
             element.classList.add("ratingDisplay");
         }
-        let ratingRounded = Math.round(rating * 100) / 100;
-        document.getElementById("avgRating").innerText = ratingRounded;
+        let ratingRounded2 = Math.round(rating * 100) / 100;
+        document.getElementById("avgRating").innerText = ratingRounded2;
         /*
         for(i=rating+1; i<=5; i++) {
             element = document.getElementById("star"+i);
