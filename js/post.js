@@ -14,7 +14,7 @@ function printComment(idComment, where, first = false) {
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex flex-column col-10 col-lg-11">
             <div class="d-flex justify-content-start">
-                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded fit-cover">
                 <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
                     ${comment.username}
                 </a>
@@ -66,7 +66,7 @@ function printReply(idComment, where, first = false) {
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex flex-column col-10 col-lg-11">
             <div class="d-flex justify-content-start">
-                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded fit-cover">
                 <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
                     ${comment.username}
                 </a>

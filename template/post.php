@@ -9,7 +9,7 @@
                 <button id="recipe-button" class="bg-white border-0"><img src="img/recipe-icon.png" aria-label="Save recipe" alt="Save recipe" style="height: calc(1.5rem + 1.5vw);"/></button>
                 <?php endif; ?>
             </div>
-            <h2 class="fs-5"><a href="user_page.php?id=<?php echo $postData["IDuser"]; ?>"><?php echo $postData["username"];?></a></h2>
+            <h2 class="fs-5"><a <?php echo ($postData["IDuser"]==1) ? 'role="link" aria-disabled="true"': 'href="user_page.php?id='.$postData["IDuser"].'"'?>><?php echo $postData["username"];?></a></h2>
         </div>
     </div>
     <div>
