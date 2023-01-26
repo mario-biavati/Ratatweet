@@ -44,7 +44,7 @@ function register(username, password, bio, picElem) {
     var reader = new FileReader();
     return new Promise(resolve => {
         reader.onload = () => {
-            formData.append('pic', btoa(reader.result));
+            formData.append('pic', resize_base64(btoa(reader.result)));
             axios.post('utils/api.php', formData, {
                 headers: {
                 "Content-Type": "multipart/form-data",
@@ -75,7 +75,7 @@ function register(username, password, bio, picElem) {
     });
 }
 
-function modify(username, bio, picElem) {
+async function modify(username, bio, picElem) {
     if (username == '') {
         return -1;
     }
@@ -114,7 +114,7 @@ function modify(username, bio, picElem) {
         var reader = new FileReader();
         return new Promise(resolve => {
             reader.onload = () => {
-                formData.append('pic', btoa(reader.result));
+                formData.append('pic', resize_base64(btoa(reader.result)));
                 axios.post('utils/api.php', formData, {
                     headers: {
                     "Content-Type": "multipart/form-data",
@@ -145,3 +145,39 @@ function modify(username, bio, picElem) {
         });
     }
 }
+
+function resize_base64(base64, maxWidth, maxHeight){
+
+    // Max size for thumbnail
+      if(typeof(maxWidth) === 'undefined')  maxWidth = 256;
+      if(typeof(maxHeight) === 'undefined')  maxHeight = 256;
+    
+      // Create and initialize two canvas
+      var canvas = document.createElement("canvas");
+      var ctx = canvas.getContext("2d");
+      var canvasCopy = document.createElement("canvas");
+      var copyContext = canvasCopy.getContext("2d");
+    
+      // Create original image
+      var img = new Image();
+      img.src = 'data:image/png;base64,' + base64;
+    
+      // Determine new ratio based on max size
+      var ratio = 1;
+      if(img.width > maxWidth)
+        ratio = maxWidth / img.width;
+      else if(img.height > maxHeight)
+        ratio = maxHeight / img.height;
+    
+      // Draw original image in second canvas
+      canvasCopy.width = img.width;
+      canvasCopy.height = img.height;
+      copyContext.drawImage(img, 0, 0);
+    
+      // Copy and resize second canvas to first canvas
+      canvas.width = img.width * ratio;
+      canvas.height = img.height * ratio;
+      ctx.drawImage(canvasCopy, 0, 0, canvasCopy.width, canvasCopy.height, 0, 0, canvas.width, canvas.height);
+    
+      return canvas.toDataURL().slice(22);
+    }
