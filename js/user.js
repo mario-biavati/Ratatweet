@@ -150,6 +150,7 @@ function printFollower(idUser) {
 }
 
 async function loadPosts(n_post) {
+    if (!canPrintPost) return;
     canPrintPost = false;
     let HTMLcontent = '';
     for (let i = 0; i < n_post; i++) {
@@ -166,6 +167,7 @@ async function loadPosts(n_post) {
     canPrintPost = true;
 }
 async function loadFollowers(n_followers) {
+    if (!canPrintFollowers) return;
     canPrintFollowers = false;
     let HTMLcontent = '';
     for (let i = 0; i < n_followers; i++) {
@@ -182,6 +184,7 @@ async function loadFollowers(n_followers) {
     canPrintFollowers = true;
 }
 async function loadFollowed(n_followed) {
+    if (!canPrintFollowed) return;
     canPrintFollowed = false;
     let HTMLcontent = '';
     for (let i = 0; i < n_followed; i++) {
