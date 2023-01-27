@@ -29,11 +29,12 @@
         <div class="d-md-none container">
             <ul class="border-top border-dark fixed-bottom navbar-nav d-flex flex-row bg-info" style="height: 7vh;">
                 <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
-                    <input type="image" src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px;" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"/>
+                    <button class="bg-none border-0 p-0 mb-auto" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"><img src="img/search-icon.png" alt="Seach" class="img-fluid" style="max-height: 30px"/></button>
                 </li>
                 <li class="col-9 me-2 collapse collapse-horizontal" id="collapseSearch">
                     <form class="py-2" action="index.php">
                         <input type="search" name="search" id="searchBar" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 30px; width: 72vw"/>
+                        <label for="searchBar" hidden>Insert search text</label>
                     </form>
                 </li>
                 <li class="d-flex justify-content-center p-2 navbar-item" style="min-width: 20%">
@@ -58,10 +59,11 @@
         <div class="d-none d-md-block">
             <ul class="fixed-top col-1 col-lg-3 border-dark border-end d-flex flex-column bg-info text-dark p-3 navbar-nav" style="height: 100vh;">
                 <li class="navbar-item">
-                <a href="#" class="d-flex mt-5 mb-3 p-1 d-flex text-decoration-none text-dark" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px"/><span class="d-none d-lg-block ms-5 me-5 fs-5 fw-semibold">Search</span></a>
+                <button class="d-flex mt-5 mb-3 p-1 d-flex text-decoration-none text-dark border-0 bg-none" data-bs-toggle="collapse" data-bs-target="#collapseSearchMD" aria-expanded="false" aria-controls="collapseSearchMD"><img src="img/search-icon.png" alt="Search" class="img-fluid" style="max-height: 30px"/><span class="d-none d-lg-block ms-5 me-5 fs-5 fw-semibold">Search</span></button>
                 <form action="index.php" class="collapse justify-content-center search-bar" id="collapseSearchMD">
                     <div class="py-2 pe-2 bg-info rounded">
-                       <input type="search" name="search" id="searchBarLG" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 40px"/> 
+                       <input type="search" name="search" id="searchBarLG" class="form-control" placeholder="Search" aria-label="Search" style="max-height: 40px"/>
+                       <label for="searchBarLG" hidden>Insert search text</label>
                     </div>
                 </form>
                 </li>

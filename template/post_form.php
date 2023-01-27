@@ -28,17 +28,18 @@
 
         <div id="collapse-container" class="d-block justify-content-center col-11 mx-3">
             <!-- Pulsante per l'utilizzo di una ricetta salvata -->
-            <div id="ricette_salvate" class="collapse w-100 border rounded" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
+            <div id="ricette_salvate" class="collapse w-100" aria-labelledby="usa_ricetta" data-parent="#collapse-container">
                 <ul class="nav nav-tabs justify-content-around border-0">
                     <li class="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top" onclick="selectSavedRecipes(this)">
-                        <button class="bg-none border-0 text-secondary  p-2 w-100 h-100">Saved Recipes</button>
+                        <button type="button" class="bg-none border-0 text-secondary  p-2 w-100 h-100">Saved Recipes</button>
                     </li>
-                    <li rclass="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">
-                        <button class="bg-none border-0 text-secondary  p-2 w-100 h-100">My Recipes</button>
+                    <li class="nav-item w-50 text-center fs-6 border border-bottom-0 rounded-top" style="background-color: #dee2e6;" onclick="selectMyRecipes(this)">
+                        <button type="button" class="bg-none border-0 text-secondary  p-2 w-100 h-100">My Recipes</button>
                     </li>
                 </ul>
-                <ul class="list-group list-group-flush">
-                    <div id="sr-container" class="mx-2">
+                <div class="list-group list-group-flush border border-top-0 rounded-bottom">
+                    <fieldset id="sr-container" class="mx-2">
+                        <ul class="list-group list-group-flush">
                     <?php 
                     if (count($savedRecipes) == 0) : ?>
                         <li class="list-group-item border-0 d-block text-center">
@@ -51,8 +52,10 @@
                             <label for="Recipe<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-10 col-md-5 col-lg-3 text-center"><?php echo "{$recipe["title"]}"; ?></label>
                         </li>
                     <?php endforeach; ?>
-                    </div>
-                    <div id="mr-container" class="d-none mx-2">
+                        </ul>
+                    </fieldset>
+                    <fieldset id="mr-container" class="d-none mx-2">
+                        <ul class="list-group list-group-flush">
                     <?php 
                     if (count($userRecipes) == 0) : ?>
                         <li class="list-group-item border-0 d-block text-center">
@@ -65,8 +68,9 @@
                             <label for="Recipe<?php echo "{$recipe["IDrecipe"]}"; ?>" class="col-10 col-md-5 col-lg-3 text-center"><?php echo "{$recipe["title"]}"; ?></label>
                         </li>
                     <?php endforeach; ?>
+                        </ul>
+                    </fieldset>
                     </div>
-                </ul>
             </div>
             
             <!-- Pulsante per la creazione di una nuova ricetta -->
@@ -75,8 +79,8 @@
                     <label class="fs-5 fw-semibold">Ingredients:</label>
                     <ul id="ingredients_list" class="list-group list-group-flush">
                         <li class="list-group-item border-0 d-flex row mx-0 px-0">
-                            <input type="text" name="ingrediente" class="form-control w-50" placeholder="Ingredient"/>
-                            <input type="text" name="quantita" class="form-control w-50" placeholder="Quantity"/>
+                            <input type="text" id="ingrediente" name="ingrediente" class="form-control w-50" placeholder="Ingredient"/><label for="ingrediente" hidden>Ingredient</label>
+                            <input type="text" id="quantita" name="quantita" class="form-control w-50" placeholder="Quantity"/><label for="quantita" hidden>Quantity</label>
                         </li>
                         <li class="list-group-item border-0 mx-auto">
                             <button type="button" class="btn btn-info border-dark" id="new_ingredient" onclick="addIngredient()">Add Ingredient</button>
