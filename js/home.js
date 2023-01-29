@@ -109,6 +109,7 @@ function psearch(n_post) {
         });
         if (arrayPost.length == 0) {
             canPrintPost = false;
+            main.innerHTML = `<div class="py-5"><p class="fs-4 text-muted text-center">Nothing found...</p></div>`;
         } else {
             loadPosts(n_post);
         }
