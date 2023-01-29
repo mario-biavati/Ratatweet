@@ -1,6 +1,6 @@
 let timer = 30000; // periodo in ms di refresh delle notifiche
 let notifNum = document.querySelectorAll("span.notification");
-var notificationNumber = 0;
+let notificationNumber = 0;
 notifNum.forEach(num => {
     num.setAttribute("hidden", "hidden");
 });

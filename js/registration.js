@@ -41,7 +41,7 @@ function register(username, password, bio, picElem) {
     formData.append('username', username);
     formData.append('password', password);
     formData.append('bio', bio);
-    var reader = new FileReader();
+    let reader = new FileReader();
     return new Promise(resolve => {
         reader.onload = () => {
             formData.append('pic', resize_base64(btoa(reader.result)));
@@ -111,7 +111,7 @@ async function modify(username, bio, picElem) {
     }
     else { //Update user updating profile image
         let pic = picElem.files[0];
-        var reader = new FileReader();
+        let reader = new FileReader();
         return new Promise(resolve => {
             reader.onload = () => {
                 formData.append('pic', resize_base64(btoa(reader.result)));
@@ -153,17 +153,17 @@ function resize_base64(base64, maxWidth, maxHeight){
       if(typeof(maxHeight) === 'undefined')  maxHeight = 256;
     
       // Create and initialize two canvas
-      var canvas = document.createElement("canvas");
-      var ctx = canvas.getContext("2d");
-      var canvasCopy = document.createElement("canvas");
-      var copyContext = canvasCopy.getContext("2d");
+      let canvas = document.createElement("canvas");
+      let ctx = canvas.getContext("2d");
+      let canvasCopy = document.createElement("canvas");
+      let copyContext = canvasCopy.getContext("2d");
     
       // Create original image
-      var img = new Image();
+      let img = new Image();
       img.src = 'data:image/png;base64,' + base64;
     
       // Determine new ratio based on max size
-      var ratio = 1;
+      let ratio = 1;
       if(img.width > maxWidth)
         ratio = maxWidth / img.width;
       else if(img.height > maxHeight)

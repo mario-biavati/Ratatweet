@@ -1,8 +1,8 @@
-var comments = document.getElementById("comments");
-var cur_lastComment = 0;
-var canPrintComment = true;
-var arrayComment = [];
-var arrayReply = [];
+let comments = document.getElementById("comments");
+let cur_lastComment = 0;
+let canPrintComment = true;
+let arrayComment = [];
+let arrayReply = [];
 
 setInterval(() => reloadComments(), 500);
 
@@ -133,7 +133,7 @@ function postComment(form) {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
                 document.querySelector("main").innerHTML = file.data;
-                var tag = document.createElement("script");
+                let tag = document.createElement("script");
                 tag.src = "js/login.js";
                 document.querySelector("body").appendChild(tag);
             });
@@ -160,7 +160,7 @@ function postReply(idComment, form) {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
                 document.querySelector("main").innerHTML = file.data;
-                var tag = document.createElement("script");
+                let tag = document.createElement("script");
                 tag.src = "js/login.js";
                 document.querySelector("body").appendChild(tag);
             });
@@ -185,7 +185,7 @@ function like(idComment, liked, button) {
                 // utente non loggato, redirect al login
                 axios.get('template/login_form.php').then(file => {
                     document.querySelector("main").innerHTML = file.data;
-                    var tag = document.createElement("script");
+                    let tag = document.createElement("script");
                     tag.src = "js/login.js";
                     document.querySelector("body").appendChild(tag);
                 });
@@ -264,9 +264,9 @@ function updateAvgRating() {
 updateAvgRating();
 
 //-- on page load: recipe button manager
-var recipeButton = document.getElementById("recipe-button");
+let recipeButton = document.getElementById("recipe-button");
 let saved = false;
-if(recipeButton) var img = recipeButton.firstElementChild;
+let img = (recipeButton) ? recipeButton.firstElementChild : null;
 
 axios.get('utils/api.php?q=isRecipeSaved&id='+id).then(response => {
     if (response.data.isMyPost != 0) {
@@ -307,7 +307,7 @@ function saveRecipe() {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
                 document.querySelector("main").innerHTML = file.data;
-                var tag = document.createElement("script");
+                let tag = document.createElement("script");
                 tag.src = "js/login.js";
                 document.querySelector("body").appendChild(tag);
             });

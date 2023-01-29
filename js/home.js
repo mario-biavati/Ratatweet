@@ -1,13 +1,13 @@
-var arrayPost = [];
-var cur_lastPost = 0;
-var canPrintPost = true;
-var isFeedPage = true;
+let arrayPost = [];
+let cur_lastPost = 0;
+let canPrintPost = true;
+let isFeedPage = true;
 
-var main = document.getElementsByTagName("main")[0];
+let main = document.getElementsByTagName("main")[0];
 
 setInterval(() => reloadFeed(), 500);
 
-var searchBars = document.querySelectorAll("input[type=search]");
+let searchBars = document.querySelectorAll("input[type=search]");
 
 function printPost(idPost) {
     return new Promise((resolve) => {

@@ -1,28 +1,28 @@
 
-var logged = -1;
-var followButton = document.getElementById("followbutton");
-var notificationButton = document.getElementById("notificationbutton");
+let logged = -1;
+let followButton = document.getElementById("followbutton");
+let notificationButton = document.getElementById("notificationbutton");
 
-var posts = document.getElementById("posts");
-var followers = document.getElementById("followers");
-var followed = document.getElementById("followed");
-var arrayPost = [];
-var arrayFollowers = [];
-var arrayFollowed = [];
-var cur_lastPost = 0;
-var cur_lastFollowers = 0;
-var cur_lastFollowed = 0;
-var canPrintPost = true;
-var canPrintFollowers = true;
-var canPrintFollowed = true;
-var currentDiv = "posts";
+let posts = document.getElementById("posts");
+let followers = document.getElementById("followers");
+let followed = document.getElementById("followed");
+let arrayPost = [];
+let arrayFollowers = [];
+let arrayFollowed = [];
+let cur_lastPost = 0;
+let cur_lastFollowers = 0;
+let cur_lastFollowed = 0;
+let canPrintPost = true;
+let canPrintFollowers = true;
+let canPrintFollowed = true;
+let currentDiv = "posts";
 
 setInterval(() => reload(), 500);
 
 function login() {
     axios.get('template/login_form.php').then(file => {
         document.querySelector("main").innerHTML = file.data;
-        var tag = document.createElement("script");
+        let tag = document.createElement("script");
         tag.src = "js/login.js";
         document.querySelector("body").appendChild(tag);
     });

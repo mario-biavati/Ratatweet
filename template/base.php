@@ -107,7 +107,7 @@
     <!--Inclusione script Javascript-->
     <script>
     <?php foreach($_GET as $key => $val) {
-        echo 'var '.$key.'="'.$val.'";';
+        echo 'const '.$key.'="'.$val.'";';
     }?>
     </script>
     <?php

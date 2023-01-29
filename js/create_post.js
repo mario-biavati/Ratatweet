@@ -94,7 +94,7 @@ function new_post(titolo, descrizione, pic, idRicetta) {
     formData.append('titolo', titolo);
     formData.append('descrizione', descrizione);
     formData.append('IDricetta', idRicetta);
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = () => {
         formData.append('pic', btoa(reader.result));
         axios.post('utils/api.php', formData, {
