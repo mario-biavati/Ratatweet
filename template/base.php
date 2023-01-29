@@ -5,9 +5,10 @@
     <meta charset="UTF-8"/>
     <title><?php echo $templateParams["title"]; ?></title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/rating.css" rel="stylesheet">
-    <link href="css/like.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/rating.css" rel="stylesheet"/>
+    <link href="css/like.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/png" href="img/ratatweet-icon.png"/>
 </head>
 <body>
     <header class="fixed-top bg-white d-flex justify-content-end overflow-hidden" style="height: 7vh;">
