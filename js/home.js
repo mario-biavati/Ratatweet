@@ -86,7 +86,7 @@ async function loadPosts(n_post) {
     canPrintPost = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 100;
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - (document.documentElement.clientHeight * 0.15);
 }
 function reloadFeed() {
     if (isAtBottom() && canPrintPost) {
