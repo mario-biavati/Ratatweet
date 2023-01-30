@@ -1,6 +1,8 @@
 let navs = document.querySelectorAll("main ul.nav li");
 
 function deleteRecipe(idPost) {
+    if (!confirm("Are you sure you want to remove this recipe?")) return;
+
     const formData = new FormData();
     formData.append('q', "deleteRecipe");
     formData.append('idPost', idPost);

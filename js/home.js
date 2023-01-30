@@ -1,13 +1,13 @@
-var arrayPost = [];
-var cur_lastPost = 0;
-var canPrintPost = true;
-var isFeedPage = true;
+let arrayPost = [];
+let cur_lastPost = 0;
+let canPrintPost = true;
+let isFeedPage = true;
 
-var main = document.getElementsByTagName("main")[0];
+let main = document.getElementsByTagName("main")[0];
 
-document.addEventListener("scroll", () => reloadFeed());
+setInterval(() => reloadFeed(), 500);
 
-var searchBars = document.querySelectorAll("input[type=search]");
+let searchBars = document.querySelectorAll("input[type=search]");
 
 function printPost(idPost) {
     return new Promise((resolve) => {
@@ -65,11 +65,13 @@ function printPost(idPost) {
 
 async function loadPosts(n_post) {
     canPrintPost = false;
+    main.innerHTML += `<div id="loading" class="d-flex py-3 justify-content-center" aria-label="Loading Content..."><img src="img/loading.gif" alt="Loading Gif" class="d-block mx-auto icon-small"/></div>`;
     let htmlContent = "";
     for (let i = 0; i < n_post; i++) {
 
         if (i + cur_lastPost >= arrayPost.length) {
             cur_lastPost += i;
+            document.getElementById("loading").remove();
             main.innerHTML += htmlContent;
             if (isFeedPage) {
                 feed(n_post - i);
@@ -78,12 +80,13 @@ async function loadPosts(n_post) {
         }
         htmlContent += await printPost(arrayPost[i + cur_lastPost]);
     }
+    document.getElementById("loading").remove();
     main.innerHTML += htmlContent;
     cur_lastPost = cur_lastPost + n_post;
     canPrintPost = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - 30;
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - (document.documentElement.clientHeight * 0.15);
 }
 function reloadFeed() {
     if (isAtBottom() && canPrintPost) {
@@ -106,6 +109,7 @@ function psearch(n_post) {
         });
         if (arrayPost.length == 0) {
             canPrintPost = false;
+            main.innerHTML = `<div class="py-5"><p class="fs-4 text-muted text-center">Nothing found...</p></div>`;
         } else {
             loadPosts(n_post);
         }

@@ -31,7 +31,7 @@ if (isUserLoggedIn()):
             $userHref="user_page.php?id={$userData["IDuser"]}";
         ?>
             <li id="notification<?php echo $notification['IDnotification']; ?>" class="list-group-item rounded border my-2 mx-auto col-10 col-md-9 col-lg-8">
-                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt="<?php echo "{$userData["username"]}_Pic"; ?>" class="icon-small border rounded"/>
+                <img src="data:image/png;base64,<?php echo $userData["pic"]; ?>" alt="<?php echo "{$userData["username"]}_Pic"; ?>" class="icon-small border rounded fit-cover"/>
                 <a href="<?php echo "{$userHref}"; ?>" class="fw-bold"><?php echo "{$userData["username"]}"; ?></a>
                 <p class="my-2">
                     <?php echo $notificationType; if($notification["type"]=="Post" || $notification["type"]=="Comment"): ?>

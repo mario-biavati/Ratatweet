@@ -8,7 +8,7 @@ Social Network user centered, mobile first, per la condivisione di ricette di cu
 4. Realizzazione modifiche suggerite
 
 ## Utilizzo:
-Per collegarsi al social usare il link: https://e7d9-146-241-151-3.eu.ngrok.io/ .
+Per collegarsi al social usare il link: https://5917-146-241-151-3.eu.ngrok.io/Ratatweet/ .
 
 Con Ratatweet è possibile creare un proprio profilo utente, creare nuovi post, commentare e recensire post di altri utenti e visualizzare le proprie notifiche.
 ![User page image](https://github.com/mario-biavati/Ratatweet/blob/main/img/schemata_utente.png)

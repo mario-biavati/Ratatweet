@@ -1,10 +1,10 @@
-var comments = document.getElementById("comments");
-var cur_lastComment = 0;
-var canPrintComment = true;
-var arrayComment = [];
-var arrayReply = [];
+let comments = document.getElementById("comments");
+let cur_lastComment = 0;
+let canPrintComment = true;
+let arrayComment = [];
+let arrayReply = [];
 
-document.addEventListener("scroll", () => reloadComments());
+setInterval(() => reloadComments(), 500);
 
 function printComment(idComment, where, first = false) {
     //load comment
@@ -14,7 +14,7 @@ function printComment(idComment, where, first = false) {
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex flex-column col-10 col-lg-11">
             <div class="d-flex justify-content-start">
-                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded fit-cover">
                 <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
                     ${comment.username}
                 </a>
@@ -40,6 +40,7 @@ function printComment(idComment, where, first = false) {
         <div class="offset-1 collapse col-11" id="comment${comment.IDcomment}Replies">
         </div>
     </div>`;
+    
         where.innerHTML = (first) ? (htmlContent + where.innerHTML) : (where.innerHTML + htmlContent);
     }).then(r1 => {
         //get replies
@@ -65,7 +66,7 @@ function printReply(idComment, where, first = false) {
         `<div id="${comment.IDcomment}" class="mt-2 pb-2 border-bottom">
         <div class="d-flex flex-column col-10 col-lg-11">
             <div class="d-flex justify-content-start">
-                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded">
+                <img src="data:image/png;base64,${comment.pic}" class="icon-small border rounded fit-cover">
                 <a class="fw-bold my-auto ms-3" href="user_page.php?id=${comment.IDuser}">
                     ${comment.username}
                 </a>
@@ -109,7 +110,7 @@ function loadComments(n_comments) {
     canPrintComment = true;
 }
 function isAtBottom() {
-    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight);
+    return document.documentElement.clientHeight + window.scrollY >= (document.documentElement.scrollHeight) - (document.documentElement.clientHeight * 0.15);
 }
 function reloadComments() {
     if (isAtBottom() && canPrintComment) {
@@ -132,7 +133,7 @@ function postComment(form) {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
                 document.querySelector("main").innerHTML = file.data;
-                var tag = document.createElement("script");
+                let tag = document.createElement("script");
                 tag.src = "js/login.js";
                 document.querySelector("body").appendChild(tag);
             });
@@ -159,7 +160,7 @@ function postReply(idComment, form) {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
                 document.querySelector("main").innerHTML = file.data;
-                var tag = document.createElement("script");
+                let tag = document.createElement("script");
                 tag.src = "js/login.js";
                 document.querySelector("body").appendChild(tag);
             });
@@ -184,7 +185,7 @@ function like(idComment, liked, button) {
                 // utente non loggato, redirect al login
                 axios.get('template/login_form.php').then(file => {
                     document.querySelector("main").innerHTML = file.data;
-                    var tag = document.createElement("script");
+                    let tag = document.createElement("script");
                     tag.src = "js/login.js";
                     document.querySelector("body").appendChild(tag);
                 });
@@ -263,9 +264,9 @@ function updateAvgRating() {
 updateAvgRating();
 
 //-- on page load: recipe button manager
-var recipeButton = document.getElementById("recipe-button");
+let recipeButton = document.getElementById("recipe-button");
 let saved = false;
-if(recipeButton) var img = recipeButton.firstElementChild;
+let img = (recipeButton) ? recipeButton.firstElementChild : null;
 
 axios.get('utils/api.php?q=isRecipeSaved&id='+id).then(response => {
     if (response.data.isMyPost != 0) {
@@ -306,7 +307,7 @@ function saveRecipe() {
             // utente non loggato, redirect al login
             axios.get('template/login_form.php').then(file => {
                 document.querySelector("main").innerHTML = file.data;
-                var tag = document.createElement("script");
+                let tag = document.createElement("script");
                 tag.src = "js/login.js";
                 document.querySelector("body").appendChild(tag);
             });
