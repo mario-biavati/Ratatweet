@@ -11,7 +11,7 @@ Social Network user-centered, mobile-first, to share cooking recipes.
 Visit the social at: https://5917-146-241-151-3.eu.ngrok.io/Ratatweet/ .
 
 With Ratatweet you can create your own profile, create new posts, comment and review other users' posts. Moreover, you will receive notifications that you can see from the suitable page.
-![User page image](https://github.com/mario-biavati/Ratatweet/blob/main/img/schemata_utente.png)
+![User page image](https://github.com/mario-biavati/Ratatweet/blob/main/img/schemata.png)
 * **Search**: search of a particular post;
 * **Home**: followed users' posts (if logged in) or casual posts from all the users of the social;
 * **Notifications**: visualization of the notifications page;
